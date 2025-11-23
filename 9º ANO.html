@@ -1,0 +1,3311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Estudos - 9º Ano</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f1f8 100%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+            width: 90%;
+            max-width: 700px;
+            min-height: 400px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            background: linear-gradient(45deg, #dc3545, #d90429);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        h2 { text-align: center; color: #444; }
+
+        /* --- Controle de Abas e Cards --- */
+        .question-card, .results-card, .intro-card, #roteiro-content-tab, #apostila-content-tab, #vocab-quiz-card { 
+            display: none; 
+            flex-direction: column; 
+        }
+        
+        .intro-card { 
+            text-align: center; 
+        }
+        .intro-card input { padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box; }
+        
+        #student-code {
+            text-transform: uppercase;
+        }
+
+        /* --- (NOVO) Estilo de Abas de Navegação (Colorido) --- */
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap; /* Permite quebra de linha */
+            justify-content: space-around;
+            margin-bottom: 25px;
+            gap: 8px; /* Espaçamento entre os botões */
+        }
+        .tab-buttons button {
+            border: 1px solid transparent; /* Borda sutil */
+            font-weight: 600;
+            padding: 12px 10px; /* Mais preenchimento */
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            flex-grow: 1; /* Ocupa espaço igual */
+            flex-basis: 180px; /* Largura mínima (cria 2 ou 3 colunas) */
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.95rem; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* Cores Específicas das Abas (Inativas) */
+        .tab-buttons .tab-inicio { 
+            background-color: #e9ecef; /* Cinza claro */
+            color: #495057; /* Cinza escuro */
+            border-color: #dee2e6;
+        }
+        .tab-buttons .tab-quiz-g { 
+            background-color: #e6f2ff; /* Azul claro */
+            color: #0056b3; /* Azul escuro */
+            border-color: #b3d7ff;
+        }
+        .tab-buttons .tab-quiz-v { 
+            background-color: #eafff0; /* Verde claro */
+            color: #155724; /* Verde escuro */
+            border-color: #b9f0c8;
+        }
+        .tab-buttons .tab-roteiro { 
+            background-color: #fdf5e6; /* Creme */
+            color: #c55a11; /* Laranja escuro */
+            border-color: #fce3c0;
+        }
+        .tab-buttons .tab-apostila { 
+            background-color: #f4efff; /* Lilás claro */
+            color: #3b1c6b; /* Roxo escuro */
+            border-color: #dcd0ff;
+        }
+        .tab-buttons .tab-resultados { 
+            background-color: #ffeef0; /* Rosa claro */
+            color: #721c24; /* Vermelho escuro */
+            border-color: #ffd0d6;
+        }
+        
+        .tab-buttons button:hover {
+            opacity: 0.85; /* Leve transparência */
+            transform: translateY(-2px); /* Efeito de levantar */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* O botão ATIVO fica branco e destacado */
+        .tab-buttons button.active {
+            background-color: #fff; /* Fundo branco */
+            color: #007bff; /* Texto azul */
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.25); /* Sombra azul */
+            transform: translateY(-3px);
+            opacity: 1;
+            border-color: #007bff; /* Borda azul */
+        }
+
+        /* --- Estilos do Quiz --- */
+        .progress-bar-container { width: 100%; background-color: #e9ecef; border-radius: 25px; margin-bottom: 20px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 20px; background: linear-gradient(90deg, #007bff, #0056b3); text-align: center; line-height: 20px; color: white; font-weight: bold; transition: width 0.4s ease-in-out; }
+
+        .audio-container {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .audio-container audio {
+            display: none;
+        }
+        
+        #audio-play-container, 
+        #vocab-audio-play-container { /* ADICIONADO #vocab-audio-play-container AQUI */
+            width: 100%;
+            text-align: center; 
+            margin-bottom: 15px;
+        }
+        .audio-play-btn {
+            background: linear-gradient(45deg, #17a2b8, #117a8b);
+            color: white;
+            font-size: 1.1rem;
+            width: 80%;
+            max-width: 300px;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .audio-play-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+
+        .question-text-wrapper {
+            display: flex;
+            align-items: center; 
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            flex-grow: 1; 
+            min-height: 50px; 
+            display: flex;
+            justify-content: flex-start; 
+            align-items: center;
+            text-align: left; 
+        }
+
+        .translate-btn {
+            background: transparent; 
+            border: none;            
+            color: #007bff;          
+            font-size: 2.5rem;       
+            cursor: pointer;
+            flex-shrink: 0;
+            padding: 0;
+            margin: 0;
+            line-height: 1;
+            transition: transform 0.2s; 
+        }
+        .translate-btn:hover {
+            transform: scale(1.15); 
+        }
+        .translate-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+
+        .translation-text {
+            margin-top: -15px; 
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #ffc107; 
+            border-radius: 5px;
+            font-style: italic;
+            display: none; 
+        }
+
+
+        .options-list { list-style: none; padding: 0; margin: 0; }
+
+        .option-item { 
+            background-color: #fff;
+            border: 2px solid #ccc; /* <-- Borda padrão mais realçada (da correção anterior) */
+            padding: 16px; 
+            margin-bottom: 10px; 
+            border-radius: 8px;
+            cursor: pointer; 
+            font-weight: 500;
+            transition: all 0.2s ease; 
+        }
+        .option-item:hover { 
+            background-color: #f8f9fa; 
+            border-color: #007bff;
+            color: #007bff;
+            transform: scale(1.01);
+        }
+        .option-item.correct { 
+            background-color: #d4edda; 
+            border-color: #28a745; 
+            color: #155724; 
+            transform: scale(1.02); 
+            font-weight: 700;
+        }
+        .option-item.incorrect { 
+            background-color: #f8d7da; 
+            border-color: #dc3545; 
+            color: #721c24; 
+            animation: shake 0.5s ease-in-out; 
+            font-weight: 700;
+        }
+
+        .justification { margin-top: 15px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #007bff; border-radius: 5px; display: block; }
+
+        /* --- Estilo de Botão Geral Aprimorado --- */
+        .btn, .next-btn, .skip-btn, .hint-btn { 
+            border: none; 
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px; 
+            text-decoration: none; 
+            display: inline-block; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover, .next-btn:hover, .skip-btn:hover, .hint-btn:hover,
+        .start-btn:hover, .restart-btn:hover, .send-report-btn:hover, 
+        .print-btn:hover, .share-btn:hover, .save-report-btn:hover, 
+        .continue-btn:hover, .check-btn:hover, .performance-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .next-btn, .skip-btn { float: right; margin-left: 10px; }
+        
+        /* Gradientes nos Botões */
+        .next-btn { background: linear-gradient(45deg, #007bff, #0056b3); color: white; display: none; }
+        .skip-btn { background: linear-gradient(45deg, #ffc107, #e0a800); color: #333; display: none; }
+        .hint-btn { background: linear-gradient(45deg, #6a0dad, #510a83); color: white; float: none; }
+        .hint-btn:disabled { background: #ccc; }
+
+        .hint-text { margin-top: 15px; padding: 10px; background-color: #e9ecef; border-left: 5px solid #6c757d; border-radius: 5px; font-style: italic; display: none; white-space: pre-wrap; }
+
+        .question-actions { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; margin-top: 15px; }
+        
+        .start-btn, .restart-btn, .send-report-btn, .print-btn, .share-btn, .save-report-btn, .continue-btn, .check-btn { 
+            display: inline-block; 
+            color: white; 
+            border: none; 
+            padding: 14px 28px; 
+            border-radius: 8px;
+            cursor: pointer; 
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .start-btn, .continue-btn { 
+            background: linear-gradient(45deg, #28a745, #218838); /* Gradiente Verde */
+            animation: pulse 2s infinite; 
+        }
+        
+        .restart-btn { 
+            background: linear-gradient(45deg, #dc3545, #c82333); /* Gradiente Vermelho */
+        }
+        .send-report-btn { 
+            background: linear-gradient(45deg, #6c757d, #5a6268); /* Gradiente Cinza */
+        }
+        .print-btn { 
+            background: linear-gradient(45deg, #17a2b8, #117a8b); /* Gradiente Ciano */
+        } 
+        .share-btn { 
+            background: linear-gradient(45deg, #25d366, #128C7E); /* Gradiente WhatsApp */
+        }
+        .share-btn img { width: 24px; height: 24px; vertical-align: middle; margin-right: 8px; }
+        .save-report-btn { 
+            background: linear-gradient(45deg, #007bff, #0056b3); /* Gradiente Azul */
+        }
+
+        .results-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+        .results-card h2 { margin-bottom: 20px; }
+        .results-card p { font-size: 1.1rem; line-height: 1.5; }
+        .results-card .score-display { font-size: 2.2rem; font-weight: bold; color: #007bff; }
+
+        .question-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: #555; }
+        
+        .full-report-list { margin-top: 30px; padding-top: 20px; border-top: 2px solid #ccc; }
+        .full-report-list h3 { color: #007bff; }
+        .report-question-item { background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        .report-question-item p { margin: 5px 0; }
+        .report-question-item .option-item-report.correct { background-color: #d4edda; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+        .report-question-item .option-item-report.incorrect { background-color: #f8d7da; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+
+        .classification-red { color: red; }
+        .classification-blue { color: #007bff; }
+        .classification-orange { color: #FFA500; font-weight: bold; animation: blink-text 1s linear infinite; }
+
+        .performance-btn { 
+            background: linear-gradient(45deg, #FFA500, #e08e00);
+            color: white; 
+            margin-right: auto; 
+        }
+        .performance-display { width: 100%; margin-top: 10px; padding: 10px; background-color: #fff3cd; border-left: 5px solid #ffc107; border-radius: 5px; font-weight: bold; color: #856404; text-align: left; }
+
+        #fill-in-input { padding: 12px; width: 100%; border-radius: 8px; border: 2px solid #ccc; font-size: 1rem; box-sizing: border-box; margin-bottom: 10px; transition: border-color 0.2s; }
+        #fill-in-input:focus { border-color: #007bff; outline: none; }
+        #fill-in-input.correct { border: 2px solid #28a745; background-color: #f0fffb; }
+        #fill-in-input.incorrect { border: 2px solid #dc3545; background-color: #fff5f5; }
+        .check-btn { 
+            background: linear-gradient(45deg, #fca311, #e69100);
+            color: #14213d; 
+            float: left; 
+        }
+        
+        #drop-zone { padding: 15px 25px; border: 2px dashed #007bff; border-radius: 8px; background-color: #f8f9fa; display: inline-block; margin: 0 5px; transition: background-color 0.3s; min-width: 150px; text-align: center; font-style: italic; color: #6c757d; vertical-align: middle; }
+        #drop-zone.over { background-color: #e0e9ed; }
+        #drop-zone.correct { border-style: solid; border-color: #28a745; background-color: #d4edda; font-style: normal; color: #155724; }
+        #drop-zone.incorrect { border-style: solid; border-color: #dc3545; background-color: #f8d7da; font-style: normal; color: #721c24; }
+        
+        .drag-options-wrapper { margin-top: 20px; text-align: center; }
+        .drag-option { padding: 10px 15px; border: 1px solid #ccc; border-radius: 8px; background-color: #e9ecef; cursor: move; margin: 5px; display: inline-block; user-select: none; transition: background-color 0.2s; }
+        .drag-option:hover { background-color: #d1e0e6; }
+        .drag-option.dragging { opacity: 0.5; }
+        
+        .personal-summary-item {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .personal-summary-item h4 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .personal-summary-item p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* --- ESTILOS DA ABA DE CONTEÚDO (PDF) --- */
+        #roteiro-content-tab, #apostila-content-tab {
+            text-align: left; /* Alinhamento padrão */
+            padding: 10px;
+            line-height: 1.6;
+        }
+        /* Painel de Admin */
+        .admin-panel {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .admin-panel h2 {
+            margin-top: 0;
+            color: #856404;
+        }
+        .admin-panel code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: #c82333;
+            font-family: monospace;
+        }
+        /* Visão do Aluno */
+        .student-content-view {
+            text-align: center; /* Centraliza os botões */
+        }
+        .student-content-view .btn {
+            width: 80%; /* Botões maiores */
+            margin: 10px auto;
+            display: block;
+        }
+        
+
+        /* --- ESTILOS DO MODAL DE LEITURA --- */
+        .modal-overlay {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+.modal-header h2 {
+            margin: 0;
+            color: #007bff;
+        }
+        .modal-close-btn {
+            color: #aaa;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close-btn:hover {
+            color: #333;
+        }
+        .btn-night-mode {
+            background: #495047;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn-night-mode:hover {
+            background: #343a40;
+        }
+        .modal-body {
+            /* (Alterado) Otimizado para <iframe> */
+            padding: 0;
+            height: 70vh; /* Altura fixa para o PDF */
+            overflow: hidden; /* Iframe vai cuidar do scroll */
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        /* ESTILOS DO MODO NOTURNO */
+        .modal-content.night-mode {
+            background-color: #2c2c2c; /* Fundo escuro */
+            color: #f1f1f1; /* Texto claro */
+            border-color: #555;
+        }
+        .modal-content.night-mode .modal-header { border-bottom-color: #555; }
+        .modal-content.night-mode .modal-header h2 { color: #58a6ff; } /* Azul claro */
+        .modal-content.night-mode .modal-close-btn { color: #999; }
+        .modal-content.night-mode .modal-close-btn:hover { color: #f1f1f1; }
+        
+
+        /* --- Animações --- */
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); } 20%, 40%, 60%, 80% { transform: translateX(10px); } }
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); } 50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5); } 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); } }
+        @keyframes blink-text { 50% { opacity: 0; } }
+
+        
+        /* --- Estilos de Impressão --- */
+        @media print { 
+            body { background-color: #fff; padding-top: 0; display: block; }
+            .container { box-shadow: none; border: none; width: 100%; max-width: none; }
+            
+            .tab-buttons, #intro-card, #question-card, #vocab-quiz-card, #roteiro-content-tab, #apostila-content-tab, .results-actions, .progress-bar-container, .question-header { 
+                display: none !important; 
+            }
+            #results-card { display: block !important; }
+            .modal-overlay { display: none !important; } /* Esconde modal na impressão */
+            
+            .full-report-list { 
+                border-top: 1px solid #ccc; 
+                padding-top: 10px; 
+            }
+            .report-question-item { page-break-inside: avoid; border: 1px solid #ddd; }
+            
+            #print-personal-btn {
+                display: none !important;
+            }
+        }
+        
+        /* --- Ajustes para Celular --- */
+        @media (max-width: 600px) {
+            body {
+                padding-top: 15px; 
+            }
+
+            .container {
+                width: 95%; 
+                padding: 15px; 
+                min-height: 0; 
+            }
+
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.3rem; }
+            
+            .tab-buttons {
+                padding: 3px;
+                gap: 5px; /* Espaçamento menor no celular */
+            }
+            .tab-buttons button {
+                padding: 10px 5px;
+                font-size: 0.8rem;
+                flex-basis: 100px; /* Permite 3 botões por linha */
+            }
+
+            .question-text { font-size: 1.1rem; }
+            .translate-btn { font-size: 2.0rem; padding-left: 10px; }
+            .option-item { padding: 12px; }
+            .btn, .next-btn, .skip-btn, .hint-btn, .check-btn { padding: 14px 20px; font-size: 1rem; }
+            
+            .question-actions { flex-direction: column; align-items: stretch; }
+
+            .next-btn, .skip-btn { float: none; width: 100%; margin-left: 0; margin-top: 10px; box-sizing: border-box; }
+            .check-btn { float: none; width: 100%; margin-top: 10px; box-sizing: border-box; }
+
+            #performance-btn, #summary-button, #hint-button { width: 100%; margin-top: 10px; box-sizing: border-box; }
+            #performance-btn { margin-right: 0; order: 3; }
+            #summary-button { order: 2; }
+            #hint-button { order: 1; }
+            
+            .results-actions { flex-direction: column; gap: 10px; }
+            .results-actions .btn, .results-actions .send-report-btn, .results-actions .restart-btn, .results-actions .share-btn { width: 100%; margin: 5px 0; box-sizing: border-box; }
+
+            .audio-play-btn { width: 100%; }
+            #fill-in-input { width: 100%; margin-bottom: 10px; }
+            
+            #drop-zone { display: block; margin: 10px 0; min-width: 0; }
+            .drag-options-wrapper { margin-top: 15px; }
+            .drag-option { display: block; margin: 8px 0; }
+            
+            /* Ajustes do Modal para Celular */
+            .modal-content { width: 95%; max-height: 90vh; padding: 20px 15px; }
+            .modal-header { flex-direction: column; gap: 10px; }
+            .modal-header h2 { font-size: 1.4rem; }
+            .modal-close-btn { position: absolute; top: 10px; right: 15px; }
+            
+            /* Ajuste Painel Admin */
+            .admin-panel { padding: 10px; }
+            .admin-panel ol { padding-left: 20px; }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <h1>AVALIAÇÃO DO 4º BIMESTRE!!!</h1>
+
+        <div class="tab-buttons">
+            <button class="tablinks tab-inicio" onclick="showCard('intro-card', this)">Início</button>
+            <button class="tablinks tab-quiz-g" onclick="checkLoginAndShow('question-card', this)">Quiz - Grammar</button> <button class="tablinks tab-quiz-v" onclick="startVocabQuiz(this)">Quiz - Vocabulary</button> <button class="tablinks tab-roteiro" onclick="checkLoginAndShow('roteiro-content-tab', this)">Roteiro de Estudos</button> <button class="tablinks tab-apostila" onclick="checkLoginAndShow('apostila-content-tab', this)">Apostila Concluída</button> <button id="results-tab-btn" class="tablinks tab-resultados" onclick="checkLoginAndShowResults('results-card', this)">Resultados</button> </div>
+
+
+        <div id="intro-card" class="intro-card">
+            <h2>English Grammar and Vocabulary Quiz</h2> 
+            <p id="personalized-welcome" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; display: none; color: #dc3545;">Seja bem-vindo(a) e boa sorte!</p>
+            <p id="quiz-description">Por favor, insira seu código de acesso para iniciar o teste. Ele tem 40 questões. Você tem tentativas <span id="intro-attempts-left">ilimitadas</span> para fazer este teste.</p>
+            <input type="text" id="student-code" placeholder="Your Access Code!">
+            <div id="start-actions">
+                <button class="start-btn" onclick="quizApp.startQuiz(false)">Start Quiz</button>
+            </div>
+        </div>
+
+        <div id="question-card" class="question-card">
+<h2 style="text-align:center; color:#0056b3; margin-bottom:20px;">Quiz - Grammar</h2>
+            <div id="progress-bar-container" class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar">0%</div>
+            </div>
+            <div class="question-header">
+                <span class="question-counter"><span id="current-question-num">1</span> de 40</span>
+                <span class="attempts-counter" style="display: none;">Tentativas restantes: <span id="attempts-left">Ilimitadas</span></span>
+            </div>
+            
+            <div id="audio-container" class="audio-container"></div>
+            
+            <div class="question-text-wrapper">
+                <div id="question-text" class="question-text"></div>
+                <button id="translate-button" class="translate-btn" title="Traduzir Questão">🌐</button>
+            </div>
+            <div id="translation-display" class="translation-text"></div>
+            
+            <div id="audio-play-container"></div> 
+            
+            <div id="options-list" class="options-list"></div>
+            <div id="justification-container"></div>
+            <div id="hint-container" style="margin-top: 15px;">
+                <button id="hint-button" class="btn hint-btn">Dica</button>
+                <div id="hint-text" class="hint-text"></div>
+                <div id="summary-text" class="hint-text" style="border-left-color: #28a745;"></div>
+            </div>
+            <div class="question-actions">
+                 <button id="performance-btn" class="btn performance-btn">DESEMPENHO</button>
+                <button id="summary-button" class="start-btn" style="background-color: #28a745; display: none;">Resumo</button>
+                <button id="skip-button" class="btn skip-btn">Pular Questão</button>
+                <button id="next-button" class="btn next-btn">Próxima Questão</button>
+                <div id="performance-display" class="performance-display" style="display: none; width: 100%; flex-basis: 100%; margin-top: 10px;"></div>
+            </div>
+        </div>
+        
+        <div id="vocab-quiz-card" class="question-card">
+            <h2 style="color: #155724; text-align: center;">Quiz - Vocabulary</h2>
+            
+            <div id="vocab-progress-bar-container" class="progress-bar-container">
+                <div id="vocab-progress-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #155724, #28a745);">0%</div>
+            </div>
+            <div class="question-header">
+                <span class="question-counter"><span id="vocab-current-question-num">1</span> de 20</span>
+                <span class="attempts-counter" style="display: none;">Tentativas: <span id="vocab-attempts-left">Ilimitadas</span></span>
+            </div>
+            <div id="vocab-audio-play-container"></div>
+            <div id="vocab-audio-container" class="audio-container"></div>
+            <div class="question-text-wrapper">
+                <div id="vocab-question-text" class="question-text">
+                    As perguntas do quiz de vocabulário aparecerão aqui.
+                </div>
+                <button id="vocab-translate-button" class="translate-btn" title="Traduzir Questão">🌐</button>
+            </div>
+            <div id="vocab-translation-display" class="translation-text"></div>
+            <div id="vocab-options-list" class="options-list">
+                </div>
+            <div id="vocab-justification-container"></div>
+            <div id="vocab-hint-container" style="margin-top: 15px;">
+                <button id="vocab-hint-button" class="btn hint-btn">Dica</button>
+                <div id="vocab-hint-text" class="hint-text"></div>
+                <div id="vocab-summary-text" class="hint-text" style="border-left-color: #28a745;"></div>
+            </div>
+            <div class="question-actions">
+                 <button id="vocab-performance-btn" class="btn performance-btn">DESEMPENHO</button>
+                <button id="vocab-summary-button" class="start-btn" style="background-color: #28a745; display: none;">Resumo</button>
+                <button id="vocab-skip-button" class="btn skip-btn">Pular Questão</button>
+                <button id="vocab-next-button" class="btn next-btn">Próxima Questão</button>
+                <div id="vocab-performance-display" class="performance-display" style="display: none; width: 100%; flex-basis: 100%; margin-top: 10px;"></div>
+            </div>
+        </div>
+        <div id="results-card" class="results-card">
+            <h1>Relatório Final</h1>
+            <p><strong>Nome:</strong> <span id="report-student-name"></span></p>
+            <p><strong>Código de Acesso:</strong> <span id="report-student-code"></span></p>
+            <p><strong>Pontuação:</strong> <span id="score-display" class="score-display"></span></p>
+            <p><strong>Percentual de Acerto:</strong> <span id="percentage-display"></span></p>
+            <p><strong>Classificação:</strong> <span id="classification-display"></span></p>
+            <div class="results-actions">
+                <a id="send-report-link" class="send-report-btn" href="#" target="_blank">Enviar Relatório ao Professor</a>
+                <button class="restart-btn" onclick="quizApp.restartQuiz()">Reiniciar Teste</button>
+                <a id="share-whatsapp" class="share-btn" href="#" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"> Compartilhar
+                </a>
+                <button class="btn save-report-btn" onclick="quizApp.saveReport()">Salvar Relatório</button>
+                <button class="btn print-btn" onclick="quizApp.printReport()">Imprimir Relatório Detalhado</button>
+                <button class="btn skip-btn" style="float: none; display: inline-block;" onclick="quizApp.printPersonalReport()">Imprimir Resumo Pessoal</button>
+            </div>
+            <div id="full-report-container" class="full-report-list" style="display: none;"></div>
+            <div id="personal-report-container" class="full-report-list" style="display: none; border-top: 2px solid #ffc107; margin-top: 20px;"></div>
+        </div>
+
+        <div id="roteiro-content-tab" class="tabcontent" style="text-align: left; display: none;">
+            
+            <div id="admin-panel-roteiro" class="admin-panel" style="display: none;">
+                <h2>Painel do Professor (Roteiro)</h2>
+                <p>Olá, Professor! Como você está logado, esta é sua área de administração.</p>
+                <p><strong>Link do PDF (Roteiro de Estudos):</strong></p>
+                <ol style="line-height: 1.6; padding-left: 30px;">
+                    <li>Procure a linha de código (perto da tag <code>&lt;script&gt;</code>) que diz: <code>const PDF_LINK_ROTEIRO = '...';</code></li>
+                    <li>Cole o link do seu PDF (hospedado no Google Drive, etc.) dentro das aspas.</li>
+                </ol>
+                <p>O link atual é: <code id="current-pdf-link-roteiro" style="font-weight: bold; color: #dc3545;"></code></p>
+                <hr style="margin: 20px 0;">
+            </div>
+            
+            <div id="student-content-view-roteiro" class="student-content-view">
+                <h2 style="text-align: center;">Roteiro de Estudos</h2>
+                <p style="text-align: center;">Acesse o material de revisão em PDF usando os botões abaixo.</p>
+                <div id="content-buttons-roteiro">
+                    </div>
+            </div>
+        </div>
+        
+        <div id="apostila-content-tab" class="tabcontent" style="text-align: left; display: none;">
+            
+            <div id="admin-panel-apostila" class="admin-panel" style="display: none;">
+                <h2>Painel do Professor (Apostila)</h2>
+                <p><strong>Link do PDF (Apostila Concluída):</strong></p>
+                <ol style="line-height: 1.6; padding-left: 30px;">
+                    <li>Procure a linha de código (perto da tag <code>&lt;script&gt;</code>) que diz: <code>const PDF_LINK_APOSTILA = '...';</code></li>
+                    <li>Cole o link do seu PDF (hospedado no Google Drive, etc.) dentro das aspas.</li>
+                </ol>
+                <p>O link atual é: <code id="current-pdf-link-apostila" style="font-weight: bold; color: #dc3545;"></code></p>
+                <hr style="margin: 20px 0;">
+            </div>
+            
+            <div id="student-content-view-apostila" class="student-content-view">
+                <h2 style="text-align: center;">Apostila Concluída</h2>
+                <p style="text-align: center;">Acesse a apostila completa em PDF usando os botões abaixo.</p>
+                <div id="content-buttons-apostila">
+                    </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="modal-overlay" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Material de Estudo</h2>
+                <button id="night-mode-toggle" class="btn-night-mode">Modo Noturno 🌙</button>
+                <span id="modal-close-btn" class="modal-close-btn">&times;</span>
+            </div>
+            <div id="modal-body" class="modal-body">
+                </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        
+        // --------------------------------------------------------------------
+        // LINKS DOS PDFs - O PROFESSOR (JR123) DEVE COLAR OS LINKS AQUI
+        // --------------------------------------------------------------------
+        const PDF_LINK_ROTEIRO = 'https://drive.google.com/file/d/1plTZsutg388Bg84U1XUxZ7YY1vMwPC2U/preview';  
+        const PDF_LINK_APOSTILA = 'https://drive.google.com/file/d/1zHhSFrWcIXxo4JlqCgkBrGgC-MO_xYCc/preview';    
+        // --------------------------------------------------------------------
+
+
+        // --- FUNÇÃO DE NAVEGAÇÃO POR ABAS ---
+        function showCard(cardId, element) {
+            const validIds = ['intro-card', 'question-card', 'vocab-quiz-card', 'results-card', 'roteiro-content-tab', 'apostila-content-tab'];
+            
+            validIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+            });
+            const buttons = document.querySelectorAll('.tablinks');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            const card = document.getElementById(cardId);
+            if (card) {
+                if (['intro-card', 'question-card', 'vocab-quiz-card', 'results-card'].includes(cardId)) {
+                    card.style.display = 'flex';
+                    card.style.flexDirection = 'column';
+                } else {
+                    card.style.display = 'block';
+                }
+            }
+            if (element) {
+                element.classList.add('active');
+            } else {
+                const firstBtn = document.querySelector('.tablinks');
+                if (firstBtn) firstBtn.classList.add('active');
+            }
+        }
+        
+        // --- LÓGICA DO PDF DO ROTEIRO DE ESTUDOS ---
+        function setupAdminViewRoteiro(isAdmin) {
+            const adminPanel = document.getElementById('admin-panel-roteiro');
+            const studentView = document.getElementById('student-content-view-roteiro');
+            const contentButtons = document.getElementById('content-buttons-roteiro');
+            const currentPdfLinkEl = document.getElementById('current-pdf-link-roteiro');
+
+            if (isAdmin) {
+                adminPanel.style.display = 'block';
+                currentPdfLinkEl.textContent = PDF_LINK_ROTEIRO || "(Nenhum link definido)";
+            } else {
+                adminPanel.style.display = 'none';
+            }
+
+            studentView.style.display = 'block';
+            contentButtons.innerHTML = ''; 
+            
+            if (PDF_LINK_ROTEIRO && PDF_LINK_ROTEIRO !== 'COLE_O_LINK_DO_ROTEIRO_AQUI') {
+                const readBtn = document.createElement('button');
+                readBtn.className = 'btn save-report-btn'; 
+                readBtn.innerHTML = 'Ler Roteiro Online 📖';
+                readBtn.onclick = () => openReadModal(PDF_LINK_ROTEIRO, 'Roteiro de Estudos'); 
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn start-btn'; 
+                downloadBtn.innerHTML = 'Baixar Roteiro 💾';
+                downloadBtn.onclick = () => downloadContent(PDF_LINK_ROTEIRO); 
+                
+                contentButtons.appendChild(readBtn);
+                contentButtons.appendChild(downloadBtn);
+            } else {
+                contentButtons.innerHTML = '<p style="text-align: center; font-weight: bold; color: #dc3545;">Nenhum roteiro em PDF foi carregado pelo professor ainda.</p>';
+            }
+        }
+        
+        // --- LÓGICA DO PDF DA APOSTILA CONCLUÍDA ---
+        function setupAdminViewApostila(isAdmin) {
+            const adminPanel = document.getElementById('admin-panel-apostila');
+            const studentView = document.getElementById('student-content-view-apostila');
+            const contentButtons = document.getElementById('content-buttons-apostila');
+            const currentPdfLinkEl = document.getElementById('current-pdf-link-apostila');
+
+            if (isAdmin) {
+                adminPanel.style.display = 'block';
+                currentPdfLinkEl.textContent = PDF_LINK_APOSTILA || "(Nenhum link definido)";
+            } else {
+                adminPanel.style.display = 'none';
+            }
+
+            studentView.style.display = 'block';
+            contentButtons.innerHTML = ''; 
+            
+            if (PDF_LINK_APOSTILA && PDF_LINK_APOSTILA !== 'COLE_O_LINK_DA_APOSTILA_AQUI') {
+                const readBtn = document.createElement('button');
+                readBtn.className = 'btn save-report-btn'; 
+                readBtn.innerHTML = 'Ler Apostila Online 📖'; 
+                readBtn.onclick = () => openReadModal(PDF_LINK_APOSTILA, 'Apostila Concluída'); 
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.className = 'btn start-btn'; 
+                downloadBtn.innerHTML = 'Baixar Apostila 💾'; 
+                downloadBtn.onclick = () => downloadContent(PDF_LINK_APOSTILA); 
+                
+                contentButtons.appendChild(readBtn);
+                contentButtons.appendChild(downloadBtn);
+            } else {
+                contentButtons.innerHTML = '<p style="text-align: center; font-weight: bold; color: #dc3545;">Nenhuma apostila em PDF foi carregada pelo professor ainda.</p>';
+            }
+        }
+
+        // --------------------------------------------------------------------
+        // (PASSO 2) - FUNÇÕES DE VERIFICAÇÃO DE LOGIN DAS ABAS
+        // --------------------------------------------------------------------
+
+        /**
+         * Verifica se o usuário está logado antes de mostrar um card simples.
+         * Usado para Roteiro, Apostila e Quiz de Gramática.
+         */
+        function checkLoginAndShow(cardId, element) {
+            if (!quizApp.validatedStudentCode) {
+                alert('Por favor, faça o login na aba "Início" primeiro!');
+                showCard('intro-card', document.querySelector('.tab-inicio'));
+                return;
+            }
+            // Se estiver logado, apenas mostra o card
+            showCard(cardId, element);
+        }
+
+        /**
+         * Verifica o login e, se logado, tenta mostrar o último relatório.
+         * Usado para a aba "Resultados".
+         */
+        function checkLoginAndShowResults(cardId, element) {
+            if (!quizApp.validatedStudentCode) {
+                alert('Por favor, faça o login na aba "Início" primeiro!');
+                showCard('intro-card', document.querySelector('.tab-inicio'));
+                return;
+            }
+
+            // Se logado, verifica se há relatórios para mostrar
+            const code = quizApp.validatedStudentCode;
+            const grammarReportJSON = localStorage.getItem(`quizReport_${code}`);
+            const vocabReportJSON = localStorage.getItem(`vocabQuizReport_${code}`);
+
+            if (grammarReportJSON) {
+                quizApp.retrieveReport(code); // Isto já mostra o card de resultados
+            } else if (vocabReportJSON) {
+                vocabQuizApp.retrieveReport(code); // Isto já mostra o card de resultados
+            } else {
+                // Se não houver relatórios, avisa e volta ao início
+                alert("Você ainda não completou nenhum quiz para ver os resultados. Termine um quiz primeiro!");
+                showCard('intro-card', document.querySelector('.tab-inicio'));
+            }
+        }
+        
+        // (FIM DO PASSO 2)
+        
+        // --------------------------------------------------------------------
+        // NOVO BLOCO DE QUESTÕES E LÓGICA DO QUIZ DE VOCABULÁRIO
+        // --------------------------------------------------------------------
+
+        const vocabQuestions = [
+            // --- 5 Questões de Múltipla Escolha (MCQ) ---
+            { 
+      type: 'mcq', 
+      question: '1. Qual gênero cinematográfico é tipicamente preenchido com atividades físicas e acrobacias?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: A____ Films.", 
+      hint_2: "DICA 2: Pense em filmes como Missão Impossível.", 
+      options: [ 
+        { "text": "Comedy Films", "isCorrect": false, "rationale": "Incorreto. Comedy é para humor." }, 
+        { "text": "Action Films", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Horror Films", "isCorrect": false, "rationale": "Incorreto. Horror é para terror." }, 
+        { "text": "Western Films", "isCorrect": false, "rationale": "Incorreto. Western é Velho Oeste." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '2. Qual a definição de "Blockbuster"?', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: É um filme de grande sucesso.", 
+      hint_2: "DICA 2: M____ S______.", 
+      options: [ 
+        { "text": "Um filme de baixo orçamento.", "isCorrect": false, "rationale": "Incorreto. 'Low budget film'." }, 
+        { "text": "Um filme com trama de ficção científica.", "isCorrect": false, "rationale": "Incorreto. 'Sci-Fi'." }, 
+        { "text": "Um filme de grande sucesso comercial.", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Um filme de terror.", "isCorrect": false, "rationale": "Incorreto. 'Horror film'." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '3. Qual gênero tem o objetivo de assustar a audiência?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: H____ Films.", 
+      hint_2: "DICA 2: Envolve monstros e cenas de medo.", 
+      options: [ 
+        { "text": "Adventure Films", "isCorrect": false, "rationale": "Incorreto. Adventure é para aventura." }, 
+        { "text": "Sci-Fi Films", "isCorrect": false, "rationale": "Incorreto. Sci-Fi é ficção científica." }, 
+        { "text": "Horror Films", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Comedy Films", "isCorrect": false, "rationale": "Incorreto. Comedy é para humor." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '4. Qual a tradução de "Light-hearted plots" (mencionado para Comédia)?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: São tramas leves, despretensiosas.", 
+      hint_2: "DICA 2: T_____ L____.", 
+      options: [ 
+        { "text": "Tramas tensas", "isCorrect": false, "rationale": "Incorreto. Tramas tensas são 'tense plots'." }, 
+        { "text": "Tramas leves", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Tramas longas", "isCorrect": false, "rationale": "Incorreto. Tramas longas são 'long plots'." }, 
+        { "text": "Tramas violentas", "isCorrect": false, "rationale": "Incorreto. Tramas violentas são 'violent plots'." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '5. O que são os "Academy Awards"?', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: É a premiação mais famosa do cinema.", 
+      hint_2: "DICA 2: O O____.", 
+      options: [ 
+        { "text": "Prêmios de cinema britânico (BAFTA).", "isCorrect": false, "rationale": "Incorreto. BAFTA é Britânico." }, 
+        { "text": "O Globo de Ouro (Golden Globe).", "isCorrect": false, "rationale": "Incorreto. Golden Globe é outra premiação." }, 
+        { "text": "O Oscar.", "isCorrect": true, "rationale": "Correto. É o nome oficial do Oscar." }, 
+        { "text": "O Festival de Cannes.", "isCorrect": false, "rationale": "Incorreto." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '6. Qual gênero é tipicamente associado ao Velho Oeste Americano?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: W_____ Films.", 
+      hint_2: "DICA 2: Envolvem cowboys e fazendas.", 
+      options: [ 
+        { "text": "Sci-Fi", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Musical", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Western", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Thriller", "isCorrect": false, "rationale": "Incorreto." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '7. Qual a tradução de "Stunts" (mencionado em Action Films)?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: São manobras perigosas.", 
+      hint_2: "DICA 2: A________.", 
+      options: [ 
+        { "text": "Diálogos", "isCorrect": false, "rationale": "Incorreto. Diálogos são 'dialogues'." }, 
+        { "text": "Acrobacias/Dublês", "isCorrect": true, "rationale": "Correto. 'Stunts' são acrobacias ou o trabalho do dublê." }, 
+        { "text": "Figurinos", "isCorrect": false, "rationale": "Incorreto. Figurinos são 'costumes'." }, 
+        { "text": "Trilha Sonora", "isCorrect": false, "rationale": "Incorreto. Trilha Sonora é 'soundtrack'." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '8. Filmes sobre o futuro, espaço e tecnologia são classificados como:', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: S__-F__ Films.", 
+      hint_2: "DICA 2: Ficção Científica.", 
+      options: [ 
+        { "text": "Fantasy", "isCorrect": false, "rationale": "Incorreto. Fantasy é fantasia, não focado em ciência/tecnologia." }, 
+        { "text": "Documentary", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Sci-Fi", "isCorrect": true, "rationale": "Correto. 'Science Fiction'." }, 
+        { "text": "Mystery", "isCorrect": false, "rationale": "Incorreto." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '9. Qual gênero lida com histórias de perseguições e descobertas em ambientes exóticos?', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: A_______ Films.", 
+      hint_2: "DICA 2: Ex: Indiana Jones.", 
+      options: [ 
+        { "text": "Romance", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Adventure", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Drama", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Comedy", "isCorrect": false, "rationale": "Incorreto." } 
+      ] 
+    },
+    { 
+      type: 'mcq', 
+      question: '10. Qual a tradução de "Director" no contexto de cinema?', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: É o responsável pela direção do filme.", 
+      hint_2: "DICA 2: D______.", 
+      options: [ 
+        { "text": "Ator", "isCorrect": false, "rationale": "Incorreto. Ator é 'Actor'." }, 
+        { "text": "Roteirista", "isCorrect": false, "rationale": "Incorreto. Roteirista é 'Screenwriter'." }, 
+        { "text": "Diretor", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Produtor", "isCorrect": false, "rationale": "Incorreto. Produtor é 'Producer'." } 
+      ] 
+    },
+    
+    // --- 5 Questões de Preenchimento de Lacunas (Fill-in) - Vocabulário ---
+    { 
+      type: 'fill-in', 
+      question: '11. (Gênero) Filmes que causam risadas são classificados como ______ Films.', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: C_____.", 
+      hint_2: "DICA 2: Humor.", 
+      answer: ["COMEDY"], 
+      rationale: "Correto. Comedy Films." 
+    },
+    { 
+      type: 'fill-in', 
+      question: '12. (Termo) A pessoa que escreve o roteiro é o ______.', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: S__________.", 
+      hint_2: "DICA 2: Escritor de tela.", 
+      answer: ["SCREENWRITER"], 
+      rationale: "Correto. Screenwriter." 
+    },
+    { 
+      type: 'fill-in', 
+      question: '13. (Termo) Um filme que continua a história de um anterior é uma ______.', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: S______.", 
+      hint_2: "DICA 2: Continuação.", 
+      answer: ["SEQUEL"], 
+      rationale: "Correto. Sequel (sequência)." 
+    },
+    { 
+      type: 'fill-in', 
+      question: '14. (Termo) A ______ Art é como o cinema é conhecido.', 
+      topic: "Cinema Terms", 
+      hint: "DICA 1: S_____.", 
+      hint_2: "DICA 2: O número 7.", 
+      answer: ["SEVENTH"], 
+      rationale: "Correto. The Seventh Art (A Sétima Arte)." 
+    },
+    { 
+      type: 'fill-in', 
+      question: '15. (Gênero) Um filme de faroeste é chamado de ______ Film.', 
+      topic: "Movie Genres", 
+      hint: "DICA 1: W______.", 
+      hint_2: "DICA 2: Velho Oeste.", 
+      answer: ["WESTERN"], 
+      rationale: "Correto. Western Film." 
+    },
+
+    // --- 5 Questões de Áudio (Audio_MCQ) - Vocabulário (Frases 1 a 5) ---
+    { 
+      type: 'audio_mcq', 
+      audioSrc: 'https://files.catbox.moe/6j9u88.mp3', 
+      question: '16. Ouça a frase. Qual a principal característica do gênero mencionado? (Frase: Action films are generally filled with physical activity and stunts.)',
+      hint: "DICA 1: A_______ F____.",
+      hint_2: "DICA 2: Ações físicas.",
+      topic: "Movie Genres", 
+      options: [ 
+        { "text": "Diálogos filosóficos", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Atividade física e acrobacias", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Músicas e danças", "isCorrect": false, "rationale": "Incorreto. Músicas são de Musical." }, 
+        { "text": "Cenas de terror", "isCorrect": false, "rationale": "Incorreto. Cenas de terror são de Horror." } 
+      ] 
+    },
+    { 
+      type: 'audio_mcq', 
+      audioSrc: 'https://files.catbox.moe/wufi50.mp3', 
+      question: '17. Ouça a frase. O que é um "blockbuster"? (Frase: A blockbuster is a movie of major success.)',
+      hint: "DICA 1: B_________.",
+      hint_2: "DICA 2: Filme de sucesso.",
+      topic: "Cinema Terms", 
+      options: [ 
+        { "text": "Um filme que fracassou", "isCorrect": false, "rationale": "Incorreto. Fracasso é 'flop'." }, 
+        { "text": "Um filme de grande sucesso", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Um filme de arte (art film)", "isCorrect": false, "rationale": "Incorreto. Art film é de nicho." }, 
+        { "text": "Um filme muito longo", "isCorrect": false, "rationale": "Incorreto." } 
+      ] 
+    },
+    { 
+      type: 'audio_mcq', 
+      audioSrc: 'https://files.catbox.moe/9172sv.mp3', 
+      question: '18. Ouça a frase. Qual o objetivo principal do gênero "Horror"? (Frase: Horror movies are designed to frighten.)',
+      hint: "DICA 1: H_____ M_____.",
+      hint_2: "DICA 2: A___.",
+      topic: "Movie Genres", 
+      options: [ 
+        { "text": "Fazer rir", "isCorrect": false, "rationale": "Incorreto. Fazer rir é 'make laugh'." }, 
+        { "text": "Dar medo", "isCorrect": true, "rationale": "Correto. Frighten significa assustar." }, 
+        { "text": "Fazer chorar", "isCorrect": false, "rationale": "Incorreto. Fazer chorar é 'make cry'." }, 
+        { "text": "Ensinar", "isCorrect": false, "rationale": "Incorreto. Ensinar é 'teach'." } 
+      ] 
+    },
+    { 
+      type: 'audio_mcq', 
+      audioSrc: 'https://files.catbox.moe/60uwme.mp3', 
+      question: '19. Ouça a frase. A frase está falando sobre qual premiação? (Frase: The Academy Awards (Oscar) celebrate the best films.)',
+      hint: "DICA 1: A_________ A____.",
+      hint_2: "DICA 2: O O____.",
+      topic: "Cinema Terms", 
+      options: [ 
+        { "text": "Golden Globe", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Palme d'Or", "isCorrect": false, "rationale": "Incorreto." }, 
+        { "text": "Emmy Awards", "isCorrect": false, "rationale": "Incorreto. Emmy é para TV." }, 
+        { "text": "Oscar", "isCorrect": true, "rationale": "Correto." } 
+      ] 
+    },
+    { 
+      type: 'audio_mcq', 
+      audioSrc: 'https://files.catbox.moe/w8fqyb.mp3', 
+      question: '20. Ouça a frase. Qual tipo de enredo (plot) caracteriza as comédias? (Frase: Comedy films are light-hearted plots.)',
+      hint: "DICA 1: L____-h______.",
+      hint_2: "DICA 2: Leve, de bom coração.",
+      topic: "Movie Genres", 
+      options: [ 
+        { "text": "Enredos sérios", "isCorrect": false, "rationale": "Incorreto. Enredos sérios são 'serious plots'." }, 
+        { "text": "Enredos complexos", "isCorrect": false, "rationale": "Incorreto. Enredos complexos são 'complex plots'." }, 
+        { "text": "Enredos leves/descontraídos", "isCorrect": true, "rationale": "Correto." }, 
+        { "text": "Enredos violentos", "isCorrect": false, "rationale": "Incorreto. Enredos violentos são 'violent plots'." } 
+      ] 
+    }
+];
+
+const vocabSummaries = {
+    "Movie Genres": "Gêneros: Action (atividade física/stunts), Horror (frighten), Comedy (light-hearted plots), Adventure (descobertas), Western (Velho Oeste), Sci-Fi (tecnologia/futuro).",
+    "Cinema Terms": "Termos: Blockbuster (grande sucesso comercial), Academy Awards/Oscar (premiação), Director (diretor), Screenwriter (roteirista), Sequel (sequência), The Seventh Art (cinema)."
+};
+
+        function startVocabQuiz(element) {
+            if (!quizApp.validatedStudentCode) {
+                alert('Por favor, faça o login na aba "Início" primeiro!');
+                showCard('intro-card', document.querySelector('.tab-inicio'));
+                return;
+            }
+            
+            // Passa a informação do aluno para o quiz de vocabulário
+            vocabQuizApp.validatedStudentName = quizApp.validatedStudentName;
+            vocabQuizApp.validatedStudentCode = quizApp.validatedStudentCode;
+            
+            // Mostra o card e inicia o quiz de vocabulário
+            showCard('vocab-quiz-card', element);
+            vocabQuizApp.startQuiz(false); // 'false' para sempre reiniciar
+        }
+
+        // --- LÓGICA PRINCIPAL DO QUIZ DE GRAMÁTICA ---
+        const quizApp = {
+            APP_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwtDAlCCBcc3cN3pHX5YTkCZBsYTH--UJbeaczv64av_vIkybVIaEs-nTLKM2ssHND2/exec',
+            currentQuestionIndex: 0,
+            score: 0,
+            userAnswers: {},
+            validatedStudentName: '',
+            validatedStudentCode: '',
+            totalAttempts: "Ilimitadas",
+            skippedQuestions: [],
+            currentSkippedIndex: 0,
+            shuffledQuestions: [],
+            hintLevel: 0, 
+            
+            elements: {
+                studentCodeInput: document.getElementById('student-code'),
+                introCard: document.getElementById('intro-card'),
+                quizCard: document.getElementById('question-card'),
+                resultsCard: document.getElementById('results-card'),
+                questionText: document.getElementById('question-text'),
+                optionsList: document.getElementById('options-list'),
+                justificationContainer: document.getElementById('justification-container'),
+                nextButton: document.getElementById('next-button'),
+                skipButton: document.getElementById('skip-button'),
+                hintButton: document.getElementById('hint-button'),
+                hintText: document.getElementById('hint-text'),
+                attemptsLeftSpan: document.getElementById('attempts-left'),
+                currentQuestionNumSpan: document.getElementById('current-question-num'),
+                scoreDisplay: document.getElementById('score-display'),
+                percentageDisplay: document.getElementById('percentage-display'),
+                classificationDisplay: document.getElementById('classification-display'),
+                reportStudentName: document.getElementById('report-student-name'),
+                reportStudentCode: document.getElementById('report-student-code'),
+                sendReportLink: document.getElementById('send-report-link'),
+                introAttemptsLeftSpan: document.getElementById('intro-attempts-left'),
+                fullReportContainer: document.getElementById('full-report-container'),
+                shareWhatsappLink: document.getElementById('share-whatsapp'),
+                personalizedWelcome: document.getElementById('personalized-welcome'),
+                startActionsDiv: document.getElementById('start-actions'),
+                quizDescription: document.getElementById('quiz-description'),
+                summaryButton: document.getElementById('summary-button'),
+                summaryText: document.getElementById('summary-text'),
+                performanceButton: document.getElementById('performance-btn'),
+                performanceDisplay: document.getElementById('performance-display'),
+                progressBar: document.getElementById('progress-bar'),
+                translateButton: document.getElementById('translate-button'),
+                translationDisplay: document.getElementById('translation-display'),
+                personalReportContainer: document.getElementById('personal-report-container'),
+                audioContainer: document.getElementById('audio-container'),
+                audioPlayContainer: document.getElementById('audio-play-container') 
+            },
+
+            studentData: {
+"203AM": "ARTHUR FERREIRA GALO DE MORAES",
+"491ES": "ERICK DOMINGOS DOS SANTOS",
+"582GF": "GUILHERME DE JESUS FONSECA",
+"176HF": "HUGO GERMANO DE PAULA FEITOSA",
+"839IO": "IHAGO HENRIQUE DA SILVA OLIVEIRA",
+"624IN": "ISABELLA MARQUES DO NASCIMENTO",
+"358JS": "JULIA DA SILVA SOUZA",
+"912LR": "LUCAS ROCHA RUFINO",
+"405LG": "LUIZ MATEUS COELHO GAVA",
+"731MF": "MARIA ALICE FERNANDES FERREIRA",
+"298MS": "MARIA EDUARDA DA SILVA SOUZA",
+"564MS": "MARIA GABRIELA PEREIRA DA SILVA",
+"817MO": "MELLYSSA ALCANTARA DE OLIVEIRA",
+"342MM": "MURILO GONÇALVES MACHADO",
+"679PS": "PABLO HENRIQUE PEREIRA DA SILVA",
+"153RS": "RENAN SOARES DOS SANTOS",
+"926TC": "THIAGO OLIVEIRA COELHO",
+"581VR": "VINICIUS SOUZA RAMALHO",
+"473YS": "YASMIN RODRIGUES DOS SANTOS", 
+"JR123": "JÚNIOR"
+            },
+            
+            summaries: { 
+                "Question Tags": "São mini-perguntas no final de frases. A tag usa o auxiliar/modal oposto ao da frase principal. Frase afirmativa = Tag negativa (ex: You like it, don't you?). Frase negativa = Tag afirmativa (ex: It isn't good, is it?). Exceções: I am -> aren't I; Let's -> shall we; Imperativo -> will you.",
+                "Relative Pronouns": "WHO (pessoas - sujeito/objeto); WHICH (coisas/animais); WHOSE (posse - de quem); THAT (pode substituir WHO/WHICH em frases restritivas).",
+                "Modal Verbs": "CAN (habilidade/possibilidade - poder/conseguir); MUST (obrigação forte/dedução - dever/ter que). Question tags com Modais usam o próprio Modal (ex: You must go, mustn't you?).",
+                "Question Tag Special Cases": "Regras para verbos sem auxiliar (Simple Past usa DID/DIDN'T; Simple Present usa DO/DON'T, DOES/DOESN'T).",
+            },
+
+            questions: [
+                // --- 10 Questões de Múltipla Escolha (MCQ) - Plural Regular e Irregular ---
+                { 
+                  type: 'mcq', 
+                  question: '1. Qual a Question Tag correta para: "You went to the cinema, ______?"', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: A frase está no Simple Past (passado simples).", 
+                  hint_2: "DICA 2: Use o auxiliar DID.", 
+                  options: [ 
+                    { "text": "aren't you", "isCorrect": false, "rationale": "Incorreto. 'Aren't you' é para presente contínuo/I am." }, 
+                    { "text": "didn't you", "isCorrect": true, "rationale": "Correto. Simple Past afirmativo usa 'didn't'." }, 
+                    { "text": "don't you", "isCorrect": false, "rationale": "Incorreto. 'Don't you' é para Simple Present." }, 
+                    { "text": "did you", "isCorrect": false, "rationale": "Incorreto. A tag deve ser negativa." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '2. Qual Pronome Relativo é usado para indicar posse (de quem) na frase: "The actress, ______ movie won the Oscar, is famous."', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: O pronome liga 'actress' a 'movie' (posse).", 
+                  hint_2: "DICA 2: W_____.", 
+                  options: [ 
+                    { "text": "who", "isCorrect": false, "rationale": "Incorreto. 'Who' é para sujeito/objeto, não posse." }, 
+                    { "text": "which", "isCorrect": false, "rationale": "Incorreto. 'Which' é para coisas." }, 
+                    { "text": "whose", "isCorrect": true, "rationale": "Correto. 'Whose' indica posse." }, 
+                    { "text": "that", "isCorrect": false, "rationale": "Incorreto. 'That' não é ideal para posse." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '3. Qual a Question Tag correta para: "She doesn\'t like horror films, ______?"', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: A frase é negativa (doesn't).", 
+                  hint_2: "DICA 2: A tag deve ser afirmativa.", 
+                  options: [ 
+                    { "text": "doesn't she", "isCorrect": false, "rationale": "Incorreto. A tag não pode ser negativa." }, 
+                    { "text": "did she", "isCorrect": false, "rationale": "Incorreto. O auxiliar é 'does', não 'did'." }, 
+                    { "text": "does she", "isCorrect": true, "rationale": "Correto. Simple Present negativo usa 'does'." }, 
+                    { "text": "is she", "isCorrect": false, "rationale": "Incorreto. O auxiliar é 'do/does', não 'to be'." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '4. Qual Pronome Relativo é usado para substituir a frase sublinhada: "The movie **The BFG** is interesting."', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: 'Movie' é uma coisa.", 
+                  hint_2: "DICA 2: W____.", 
+                  options: [ 
+                    { "text": "who", "isCorrect": false, "rationale": "Incorreto. 'Who' é para pessoas." }, 
+                    { "text": "which", "isCorrect": true, "rationale": "Correto. 'Which' é usado para coisas." }, 
+                    { "text": "whose", "isCorrect": false, "rationale": "Incorreto. 'Whose' é para posse." }, 
+                    { "text": "where", "isCorrect": false, "rationale": "Incorreto. 'Where' é para lugar." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '5. Qual a Question Tag correta para a exceção: "I am going to the movies, ______?"', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Exceção do 'I am' para a tag.", 
+                  hint_2: "DICA 2: A____ I?", 
+                  options: [ 
+                    { "text": "am not I", "isCorrect": false, "rationale": "Incorreto. Embora lógico, 'am not I' é evitado." }, 
+                    { "text": "aren't I", "isCorrect": true, "rationale": "Correto. 'Aren't I' é a forma mais aceita." }, 
+                    { "text": "don't I", "isCorrect": false, "rationale": "Incorreto." }, 
+                    { "text": "am I", "isCorrect": false, "rationale": "Incorreto. A tag deve ser negativa." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '6. Qual Modal Verb indica **obrigação forte** ou **necessidade** na frase: "You ______ study for the final exam."', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: É o verbo 'dever' com sentido de forte necessidade.", 
+                  hint_2: "DICA 2: M____.", 
+                  options: [ 
+                    { "text": "can", "isCorrect": false, "rationale": "Incorreto. 'Can' indica habilidade/possibilidade." }, 
+                    { "text": "could", "isCorrect": false, "rationale": "Incorreto. 'Could' é o passado de 'can'." }, 
+                    { "text": "must", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "may", "isCorrect": false, "rationale": "Incorreto. 'May' indica permissão/possibilidade." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '7. Qual a Question Tag correta para: "He **must** sign the contract, ______?"', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O auxiliar da frase é o Modal 'must'.", 
+                  hint_2: "DICA 2: Repita o Modal na forma oposta.", 
+                  options: [ 
+                    { "text": "doesn't he", "isCorrect": false, "rationale": "Incorreto. Deve-se usar o próprio Modal." }, 
+                    { "text": "hasn't he", "isCorrect": false, "rationale": "Incorreto. Deve-se usar o próprio Modal." }, 
+                    { "text": "mustn't he", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "must he", "isCorrect": false, "rationale": "Incorreto. A tag deve ser negativa." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '8. Qual Pronome Relativo é usado para ligar o sujeito "The director" (pessoa) à ação: "The director ______ filmed the scene is famous."', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: 'Director' é uma pessoa.", 
+                  hint_2: "DICA 2: W____.", 
+                  options: [ 
+                    { "text": "which", "isCorrect": false, "rationale": "Incorreto. 'Which' é para coisas." }, 
+                    { "text": "who", "isCorrect": true, "rationale": "Correto. 'Who' é usado para pessoas." }, 
+                    { "text": "whose", "isCorrect": false, "rationale": "Incorreto. 'Whose' é para posse." }, 
+                    { "text": "that", "isCorrect": true, "rationale": "Correto. 'That' pode substituir 'who' em frases restritivas." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '9. Qual a Question Tag correta para a exceção do Imperativo: "Close the door, ______?"', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Imperativo sempre usa a mesma tag.", 
+                  hint_2: "DICA 2: W___ Y___?", 
+                  options: [ 
+                    { "text": "do you", "isCorrect": false, "rationale": "Incorreto." }, 
+                    { "text": "will you", "isCorrect": true, "rationale": "Correto. Usado para comandos." }, 
+                    { "text": "don't you", "isCorrect": false, "rationale": "Incorreto." }, 
+                    { "text": "won't you", "isCorrect": false, "rationale": "Incorreto. Embora 'won't you' também seja usado, 'will you' é a forma mais comum/segura." } 
+                  ] 
+                },
+                { 
+                  type: 'mcq', 
+                  question: '10. Qual Modal Verb indica **habilidade** ou **capacidade** (poder)?', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: C____.", 
+                  hint_2: "DICA 2: Se refere a conseguir fazer algo.", 
+                  options: [ 
+                    { "text": "must", "isCorrect": false, "rationale": "Incorreto. 'Must' é obrigação." }, 
+                    { "text": "can", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "may", "isCorrect": false, "rationale": "Incorreto. 'May' é possibilidade/permissão." }, 
+                    { "text": "should", "isCorrect": false, "rationale": "Incorreto. 'Should' é conselho." } 
+                  ] 
+                },
+                
+                // --- 5 Questões de Áudio (Audio_MCQ) - Gramática (Frases 6 a 10) ---
+                { 
+                  type: 'audio_mcq', 
+                  audioSrc: 'https://files.catbox.moe/rlfuvo.mp3', 
+                  question: '11. Ouça a frase. Qual Question Tag completa a frase? (Frase: She must sign the contract, mustn\'t she?)',
+                  hint: "DICA 1: O Modal é 'must'.",
+                  hint_2: "DICA 2: Repita o Modal na forma oposta.",
+                  topic: "Question Tags/Modal Verbs", 
+                  options: [ 
+                    { "text": "doesn't she", "isCorrect": false, "rationale": "Incorreto. Deve-se usar o Modal 'must'." }, 
+                    { "text": "mustn't she", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "can't she", "isCorrect": false, "rationale": "Incorreto." }, 
+                    { "text": "must she", "isCorrect": false, "rationale": "Incorreto. A tag deve ser negativa." } 
+                  ] 
+                },
+                { 
+                  type: 'audio_mcq', 
+                  audioSrc: 'https://files.catbox.moe/glmcji.mp3', 
+                  question: '12. Ouça a frase. Qual Pronome Relativo foi usado para "movie"? (Frase: The movie, which we watched, was amazing.)',
+                  hint: "DICA 1: O filme é uma coisa.",
+                  hint_2: "DICA 2: W____.",
+                  topic: "Relative Pronouns", 
+                  options: [ 
+                    { "text": "Who", "isCorrect": false, "rationale": "Incorreto. Who é para pessoas." }, 
+                    { "text": "Whose", "isCorrect": false, "rationale": "Incorreto. Whose é posse." }, 
+                    { "text": "Which", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "That", "isCorrect": false, "rationale": "Incorreto. Embora 'that' possa ser usado, o mais comum/clássico para não-pessoas em contextos não-restritivos é 'which'." } 
+                  ] 
+                },
+                { 
+                  type: 'audio_mcq', 
+                  audioSrc: 'https://files.catbox.moe/qmz2iv.mp3', 
+                  question: '13. Ouça a frase. Qual Question Tag completa a frase? (Frase: You can speak English very well, can\'t you?)',
+                  hint: "DICA 1: O Modal é 'can'.",
+                  hint_2: "DICA 2: Repita o Modal na forma oposta.",
+                  topic: "Question Tags/Modal Verbs", 
+                  options: [ 
+                    { "text": "don't you", "isCorrect": false, "rationale": "Incorreto. Deve-se usar o Modal 'can'." }, 
+                    { "text": "couldn't you", "isCorrect": false, "rationale": "Incorreto. O Modal é 'can'." }, 
+                    { "text": "can't you", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "you can", "isCorrect": false, "rationale": "Incorreto." } 
+                  ] 
+                },
+                { 
+                  type: 'audio_mcq', 
+                  audioSrc: 'https://files.catbox.moe/3g42bm.mp3', 
+                  question: '14. Ouça a frase. Qual a função do pronome "whose"? (Frase: The man whose car was stolen called the police.)',
+                  hint: "DICA 1: O pronome liga 'man' a 'car'.",
+                  hint_2: "DICA 2: Indica P_____.",
+                  topic: "Relative Pronouns", 
+                  options: [ 
+                    { "text": "Substituir o objeto", "isCorrect": false, "rationale": "Incorreto. Seria 'whom' ou 'who'." }, 
+                    { "text": "Substituir o lugar", "isCorrect": false, "rationale": "Incorreto. Seria 'where'." }, 
+                    { "text": "Indicar posse", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "Indicar a ação", "isCorrect": false, "rationale": "Incorreto." } 
+                  ] 
+                },
+                { 
+                  type: 'audio_mcq', 
+                  audioSrc: 'https://files.catbox.moe/r7nrub.mp3', 
+                  question: '15. Ouça a frase. Qual auxiliar completa a Question Tag para o Simple Past? (Frase: Mary studied, didn\'t she?)',
+                  hint: "DICA 1: A frase principal está no Simple Past afirmativo.",
+                  hint_2: "DICA 2: D___.",
+                  topic: "Question Tags", 
+                  options: [ 
+                    { "text": "does", "isCorrect": false, "rationale": "Incorreto. 'Does' é para Simple Present." }, 
+                    { "text": "did", "isCorrect": false, "rationale": "Incorreto. 'Did' é afirmativo; a tag deve ser negativa." }, 
+                    { "text": "didn't", "isCorrect": true, "rationale": "Correto." }, 
+                    { "text": "isn't", "isCorrect": false, "rationale": "Incorreto. O verbo é 'to study', não 'to be'." } 
+                  ] 
+                },
+                
+                // --- 10 Questões de Preenchimento de Lacunas (Fill-in) - Question Tags (Auxiliares) ---
+                { 
+                  type: 'fill-in', 
+                  question: '16. (Tag) She is a famous actress, ______ she?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O verbo é 'is'.", 
+                  hint_2: "DICA 2: Tag negativa, use a forma contraída.", 
+                  answer: ["ISN'T"], 
+                  rationale: "Correto. 'Isn't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '17. (Tag) They don\'t like Western films, ______ they?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: A frase é negativa ('don\'t').", 
+                  hint_2: "DICA 2: Tag afirmativa, use o auxiliar 'do'.", 
+                  answer: ["DO"], 
+                  rationale: "Correto. 'Do'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '18. (Tag) He has traveled to Hollywood, ______ he?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O auxiliar (ou verbo principal) é 'has'.", 
+                  hint_2: "DICA 2: Tag negativa, use a forma contraída.", 
+                  answer: ["HASN'T"], 
+                  rationale: "Correto. 'Hasn't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '19. (Tag) We will watch the sequel, ______ we?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O auxiliar é 'will'.", 
+                  hint_2: "DICA 2: Tag negativa, use a forma contraída de 'will not'.", 
+                  answer: ["WON'T"], 
+                  rationale: "Correto. 'Won't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '20. (Tag) The special effects were amazing, ______ they?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O verbo é 'were'.", 
+                  hint_2: "DICA 2: Tag negativa, use a forma contraída.", 
+                  answer: ["WEREN'T"], 
+                  rationale: "Correto. 'Weren't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '21. (Tag) You saw the director, ______ you?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O verbo é 'saw' (Simple Past).", 
+                  hint_2: "DICA 2: Tag negativa, use o auxiliar Simple Past.", 
+                  answer: ["DIDN'T"], 
+                  rationale: "Correto. 'Didn't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '22. (Tag) The Oscar nominee can sing, ______ he?', 
+                  topic: "Question Tags/Modal Verbs", 
+                  hint: "DICA 1: O auxiliar é o Modal 'can'.", 
+                  hint_2: "DICA 2: Tag negativa, use a forma contraída.", 
+                  answer: ["CAN'T"], 
+                  rationale: "Correto. 'Can't'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '23. (Tag) Let\'s go to the premiere, ______ we?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Exceção do 'Let\'s'.", 
+                  hint_2: "DICA 2: S____ W___.", 
+                  answer: ["SHALL"], 
+                  rationale: "Correto. 'Shall' (Shall we?)." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '24. (Tag) The sound wasn\'t clear, ______ it?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: A frase é negativa ('wasn\'t').", 
+                  hint_2: "DICA 2: Tag afirmativa.", 
+                  answer: ["WAS"], 
+                  rationale: "Correto. 'Was'." 
+                },
+                { 
+                  type: 'fill-in', 
+                  question: '25. (Tag) He works in the movie industry, ______ he?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O verbo é 'works' (Simple Present).", 
+                  hint_2: "DICA 2: Tag negativa, use o auxiliar Simple Present.", 
+                  answer: ["DOESN'T"], 
+                  rationale: "Correto. 'Doesn\'t'." 
+                },
+                
+                // --- 5 Questões de Verdadeiro/Falso (T/F) - Relative Pronouns e Modal Verbs ---
+                { 
+                  type: 'tf', 
+                  question: '26. O Pronome Relativo "WHO" só pode ser usado para pessoas, e não para coisas.', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: Quem (pessoas) vs. Que/Qual (coisas).", 
+                  options: [ 
+                    { "text": "Verdadeiro", "isCorrect": true, "rationale": "Correto. 'Who' é exclusivamente para pessoas." }, 
+                    { "text": "Falso", "isCorrect": false, "rationale": "Incorreto." } 
+                  ],
+                  answer: true 
+                },
+                { 
+                  type: 'tf', 
+                  question: '27. O Modal Verb "CAN" é usado para expressar obrigação forte (dever).', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: 'Can' é habilidade. 'Must' é obrigação.", 
+                  options: [ 
+                    { "text": "Verdadeiro", "isCorrect": false, "rationale": "Falso. 'Can' é habilidade/possibilidade; 'Must' é obrigação." }, 
+                    { "text": "Falso", "isCorrect": true, "rationale": "Correto." } 
+                  ],
+                  answer: false 
+                },
+                { 
+                  type: 'tf', 
+                  question: '28. O Pronome Relativo "WHICH" pode ser usado para substituir o substantivo "actor" (ator).', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: 'Actor' é uma pessoa.", 
+                  options: [ 
+                    { "text": "Verdadeiro", "isCorrect": false, "rationale": "Falso. 'Which' é para coisas; 'Who' é para pessoas." }, 
+                    { "text": "Falso", "isCorrect": true, "rationale": "Correto." } 
+                  ],
+                  answer: false 
+                },
+                { 
+                  type: 'tf', 
+                  question: '29. A Question Tag para uma frase afirmativa deve ser sempre negativa.', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Segue a regra de inversão de polaridade.", 
+                  options: [ 
+                    { "text": "Verdadeiro", "isCorrect": true, "rationale": "Correto. A regra geral é afirmativa + negativa tag." }, 
+                    { "text": "Falso", "isCorrect": false, "rationale": "Incorreto." } 
+                  ],
+                  answer: true 
+                },
+                { 
+                  type: 'tf', 
+                  question: '30. A Question Tag para "Let\'s watch a movie" é "don\'t we?".', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Exceção do 'Let\'s'.", 
+                  options: [ 
+                    { "text": "Verdadeiro", "isCorrect": false, "rationale": "Falso. A tag correta para 'Let\'s' é 'shall we?'" }, 
+                    { "text": "Falso", "isCorrect": true, "rationale": "Correto." } 
+                  ],
+                  answer: false 
+                },
+                
+                // --- 10 Questões de Arrastar e Soltar (Drag-drop) - Mixed ---
+                { 
+                  type: 'drag-drop', 
+                  question: '31. (Tag) You have finished the film, ______?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: O auxiliar é 'have'.", 
+                  options: ["HAVEN'T YOU", "DO YOU", "AREN'T YOU"], 
+                  answer: "HAVEN'T YOU", 
+                  rationale: "Correto. 'Haven\'t you'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '32. (Modal) She ______ speak French fluently. (Habilidade)', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: Modal de habilidade.", 
+                  options: ["CAN", "MUST", "SHOULD"], 
+                  answer: "CAN", 
+                  rationale: "Correto. 'Can'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '33. (Relative) The plot, ______ was complex, made the movie confusing.', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: 'Plot' é uma coisa.", 
+                  options: ["WHO", "WHICH", "WHOSE"], 
+                  answer: "WHICH", 
+                  rationale: "Correto. 'Which'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '34. (Tag) Come to the premiere, ______?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Imperativo.", 
+                  options: ["WILL YOU", "DO YOU", "AREN'T YOU"], 
+                  answer: "WILL YOU", 
+                  rationale: "Correto. 'Will you'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '35. (Relative) The children, ______ parents are actors, are famous.', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: Posse ('parents' pertencem aos 'children').", 
+                  options: ["WHOSE", "WHO", "WHICH"], 
+                  answer: "WHOSE", 
+                  rationale: "Correto. 'Whose'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '36. (Modal) You ______ not enter the theater after the film starts. (Obrigação/Regra)', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: Obrigação forte/proibição (negativo).", 
+                  options: ["MUST", "CAN", "SHOULD"], 
+                  answer: "MUST", 
+                  rationale: "Correto. 'Must' (must not)." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '37. (Tag) She didn\'t travel to Hollywood, ______ she?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Frase negativa ('didn\'t').", 
+                  options: ["DIDN'T", "DID", "DOES"], 
+                  answer: "DID", 
+                  rationale: "Correto. 'Did'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '38. (Relative) The man ______ directed the film is a genius.', 
+                  topic: "Relative Pronouns", 
+                  hint: "DICA 1: 'Man' é pessoa (sujeito).", 
+                  options: ["WHO", "WHICH", "WHOSE"], 
+                  answer: "WHO", 
+                  rationale: "Correto. 'Who'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '39. (Tag) I am not a fan of sequels, ______ I?', 
+                  topic: "Question Tags", 
+                  hint: "DICA 1: Frase negativa ('am not').", 
+                  options: ["AREN'T", "AM", "AM I"], 
+                  answer: "AM I", 
+                  rationale: "Correto. 'Am I'." 
+                },
+                { 
+                  type: 'drag-drop', 
+                  question: '40. (Modal) I ______ leave now to catch the final scene. (Necessidade/Dedução)', 
+                  topic: "Modal Verbs", 
+                  hint: "DICA 1: Obrigação/necessidade.", 
+                  options: ["CAN", "SHOULD", "MUST"], 
+                  answer: "MUST", 
+                  rationale: "Correto. 'Must'." 
+                }
+            ],
+
+
+            shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            },
+
+            balanceCorrectAnswers() {
+                const mcqQuestions = this.questions.filter(q => q.type === 'mcq' && q.options && q.options.length === 4);
+                if (mcqQuestions.length === 0) return;
+                
+                const numPositions = 4;
+                let desiredPositions = [];
+                for (let i = 0; i < mcqQuestions.length; i++) {
+                    desiredPositions.push(i % numPositions);
+                }
+                this.shuffleArray(desiredPositions);
+                
+                let mcqCounter = 0;
+                this.questions.forEach((q) => {
+                    if (q.type === 'mcq' && q.options && q.options.length === 4) {
+                        this.shuffleArray(q.options);
+                        const correctOption = q.options.find(opt => opt.isCorrect);
+                        if (!correctOption) return;
+                        const targetIndex = desiredPositions[mcqCounter];
+                        if (q.options.indexOf(correctOption) !== targetIndex) {
+                            const currentIndex = q.options.indexOf(correctOption);
+                            [q.options[currentIndex], q.options[targetIndex]] = [q.options[targetIndex], q.options[currentIndex]];
+                        }
+                        mcqCounter++;
+                    }
+                });
+            },
+            
+            updateProgressBar() {
+                const totalQuestions = this.questions.length;
+                const answeredCount = (this.currentQuestionIndex - this.skippedQuestions.length) + this.currentSkippedIndex;
+                const percentage = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+                this.elements.progressBar.style.width = percentage + '%';
+                this.elements.progressBar.textContent = percentage + '%';
+            },
+
+            startQuiz(continueFromSavedState) {
+                const studentCode = this.elements.studentCodeInput.value.trim().toUpperCase();
+                const correctName = this.studentData[studentCode];
+                if (!correctName) {
+                    alert("Código de acesso inválido.");
+                    return;
+                }
+                this.validatedStudentCode = studentCode;
+                this.validatedStudentName = correctName;
+                
+                if (this.validatedStudentCode === 'JR123') {
+                    setupAdminViewRoteiro(true);
+                    setupAdminViewApostila(true);
+                } else {
+                    setupAdminViewRoteiro(false);
+                    setupAdminViewApostila(false);
+                }
+                
+                if (continueFromSavedState) { 
+                    this.loadQuizState(this.validatedStudentCode); 
+                } 
+                else {
+                    this.currentQuestionIndex = 0;
+                    this.score = 0;
+                    this.userAnswers = {};
+                    this.skippedQuestions = [];
+                    this.currentSkippedIndex = 0;
+		            this.balanceCorrectAnswers();
+                    localStorage.removeItem(`quizState_${this.validatedStudentCode}`); 
+                    this.shuffledQuestions = this.shuffleArray([...this.questions]);
+                }
+                
+                showCard('question-card', document.querySelector("button[onclick*='question-card']"));
+                this.displayQuestion();
+            },
+
+            displayQuestion() {
+                this.updateProgressBar();
+                this.elements.performanceDisplay.style.display = 'none';
+                this.elements.justificationContainer.innerHTML = '';
+                this.elements.hintText.style.display = 'none';
+                this.elements.summaryText.style.display = 'none';
+                this.elements.summaryButton.style.display = 'none';
+                this.elements.nextButton.style.display = 'none';
+
+                this.elements.translationDisplay.style.display = 'none'; 
+                this.elements.translateButton.style.display = 'inline-block'; 
+                this.elements.translateButton.disabled = false;
+                this.elements.translateButton.textContent = '🌐'; 
+                
+                this.elements.audioContainer.innerHTML = ''; 
+                this.elements.audioPlayContainer.innerHTML = ''; 
+                this.elements.questionText.style.display = 'flex'; 
+
+                this.hintLevel = 0; 
+                this.elements.hintButton.textContent = 'Dica'; 
+                this.elements.hintButton.style.background = ''; // Reseta o botão para roxo
+                this.elements.hintButton.disabled = false; 
+                this.elements.hintButton.onclick = () => this.showHint(); 
+                
+                let questionToDisplay;
+                let currentQuestionNumber;
+                let totalAnswered = (this.currentQuestionIndex - this.skippedQuestions.length) + this.currentSkippedIndex;
+
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0 && this.currentSkippedIndex < this.skippedQuestions.length) {
+                    const skippedIndex = this.skippedQuestions[this.currentSkippedIndex];
+                    questionToDisplay = this.questions[skippedIndex]; 
+                    currentQuestionNumber = `(Pulada ${this.currentSkippedIndex + 1}/${this.skippedQuestions.length})`
+                    this.elements.skipButton.style.display = 'none';
+                } else if (this.currentQuestionIndex < this.shuffledQuestions.length) {
+                    questionToDisplay = this.shuffledQuestions[this.currentQuestionIndex];
+                    currentQuestionNumber = totalAnswered + 1;
+                    this.elements.skipButton.style.display = 'inline-block';
+                } else {
+                    this.showResults();
+                    return;
+                }
+                
+                this.elements.currentQuestionNumSpan.textContent = currentQuestionNumber;
+                
+                this.elements.optionsList.innerHTML = '';
+
+                switch (questionToDisplay.type) {
+                    case 'fill-in': this.renderFillIn(questionToDisplay); break;
+                    case 'drag-drop': this.renderDragDrop(questionToDisplay); break;
+                    case 'tf': this.renderMCQ(questionToDisplay); break;
+                    case 'audio_mcq': this.renderAudioMCQ(questionToDisplay); break; 
+                    case 'mcq': default: this.renderMCQ(questionToDisplay); break;
+                }
+            },
+
+            renderAudioMCQ(question) {
+                this.elements.audioContainer.innerHTML = ''; 
+                const audioEl = document.createElement('audio');
+                audioEl.src = question.audioSrc;
+                audioEl.preload = 'auto'; 
+                this.elements.audioContainer.appendChild(audioEl);
+
+                this.elements.audioPlayContainer.innerHTML = ''; 
+                const playBtn = document.createElement('button');
+                playBtn.className = 'btn audio-play-btn';
+                playBtn.textContent = 'Ouvir Questão 🎧';
+                playBtn.onclick = () => audioEl.play();
+                this.elements.audioPlayContainer.appendChild(playBtn);
+                
+                this.elements.translateButton.style.display = 'none';
+
+                this.renderMCQ(question);
+            },
+
+            renderMCQ(question) {
+                this.elements.questionText.innerHTML = ''; 
+                this.elements.questionText.textContent = question.question;
+                
+                // Se a questão não for de áudio, mostre o botão de traduzir
+                if (question.type !== 'audio_mcq') {
+                    this.elements.translateButton.style.display = 'inline-block';
+                } else {
+                    this.elements.translateButton.style.display = 'none';
+                }
+
+                question.options.forEach(option => {
+                    const li = document.createElement('li');
+                    li.className = 'option-item';
+                    li.textContent = option.text;
+                    li.onclick = () => this.selectOption(li, option);
+                    this.elements.optionsList.appendChild(li);
+                });
+            },
+
+            renderFillIn(question) {
+                this.elements.questionText.innerHTML = ''; 
+                this.elements.questionText.textContent = question.question;
+                this.elements.translateButton.style.display = 'inline-block'; // Mostrar tradutor
+                
+                const input = document.createElement('input');
+                input.id = 'fill-in-input';
+                input.placeholder = 'Digite sua resposta...';
+                const checkButton = document.createElement('button');
+                checkButton.textContent = 'Verificar';
+                checkButton.className = 'btn check-btn';
+                checkButton.onclick = () => {
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const isCorrect = question.answer.map(ans => ans.toLowerCase()).includes(userAnswer);
+                    this.handleAnswer(isCorrect, question.rationale, input.value.trim(), question.answer[0]);
+                    input.disabled = true;
+                    checkButton.style.display = 'none';
+                    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                };
+                this.elements.optionsList.appendChild(input);
+                this.elements.optionsList.appendChild(checkButton);
+            },
+
+            renderDragDrop(question) {
+                const dropZone = document.createElement('span');
+                dropZone.id = 'drop-zone';
+                dropZone.textContent = 'Arraste aqui';
+                const questionTextHTML = question.question.replace('______', dropZone.outerHTML);
+                this.elements.questionText.innerHTML = questionTextHTML; 
+                this.elements.translateButton.style.display = 'inline-block'; // Mostrar tradutor
+                
+                const actualDropZone = this.elements.questionText.querySelector('#drop-zone');
+                const dragOptionsWrapper = document.createElement('div');
+                dragOptionsWrapper.className = 'drag-options-wrapper';
+                this.shuffleArray(question.options).forEach(opt => {
+                    const optionEl = document.createElement('span');
+                    optionEl.textContent = opt;
+                    optionEl.className = 'drag-option';
+                    optionEl.draggable = true;
+                    optionEl.dataset.value = opt;
+                    optionEl.ondragstart = (e) => { e.dataTransfer.setData('text/plain', e.target.dataset.value); e.target.classList.add('dragging'); };
+                    optionEl.ondragend = (e) => e.target.classList.remove('dragging');
+                    dragOptionsWrapper.appendChild(optionEl);
+                });
+                this.elements.optionsList.appendChild(dragOptionsWrapper);
+                actualDropZone.ondragover = (e) => { e.preventDefault(); actualDropZone.classList.add('over'); };
+                actualDropZone.ondragleave = () => actualDropZone.classList.remove('over');
+                actualDropZone.ondrop = (e) => {
+                    e.preventDefault();
+                    actualDropZone.classList.remove('over');
+                    const droppedValue = e.dataTransfer.getData('text/plain');
+                    const isCorrect = (droppedValue.toLowerCase() === question.answer.toLowerCase());
+                    this.handleAnswer(isCorrect, question.rationale, droppedValue, question.answer);
+                    actualDropZone.textContent = droppedValue;
+                    actualDropZone.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    this.elements.optionsList.querySelectorAll('.drag-option').forEach(el => { el.draggable = false; el.style.cursor = 'not-allowed'; el.style.opacity = '0.6'; });
+                };
+            },
+
+            selectOption(selectedElement, selectedOption) {
+                this.elements.optionsList.querySelectorAll('.option-item').forEach(option => option.style.pointerEvents = 'none');
+                const isCorrect = selectedOption.isCorrect;
+                
+                let currentQuestion;
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0) {
+                    currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                }
+                
+                selectedElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+                this.handleAnswer(isCorrect, selectedOption.rationale, selectedOption.text, currentQuestion.options.find(o => o.isCorrect).text);
+
+                if (!isCorrect) {
+                    const correctText = currentQuestion.options.find(opt => opt.isCorrect).text;
+                    const correctElement = Array.from(this.elements.optionsList.querySelectorAll('.option-item')).find(el => el.textContent === correctText);
+                    if (correctElement) correctElement.classList.add('correct');
+                }
+            },
+
+            handleAnswer(isCorrect, rationale, userAnswer, correctAnswer) {
+                if (isCorrect) {
+                    this.score++;
+                    this.elements.summaryButton.style.display = 'none';
+                } else {
+                    this.elements.summaryButton.style.display = 'inline-block';
+                }
+                const justificationElement = document.createElement('div');
+                justificationElement.className = 'justification';
+                justificationElement.innerHTML = rationale; 
+                justificationElement.style.borderLeftColor = isCorrect ? '#28a745' : '#dc3545';
+                this.elements.justificationContainer.appendChild(justificationElement);
+                
+                let originalQuestionIndex;
+                let currentQuestion;
+                 if (this.currentQuestionIndex >= this.shuffledQuestions.length  && this.skippedQuestions.length > 0) {
+                    originalQuestionIndex = this.skippedQuestions[this.currentSkippedIndex];
+                    currentQuestion = this.questions[originalQuestionIndex];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                    originalQuestionIndex = this.questions.findIndex(q => q.question === currentQuestion.question);
+                }
+                
+                this.userAnswers[originalQuestionIndex] = {
+                    question: currentQuestion.question, 
+                    userAnswer: userAnswer,
+                    isCorrect: isCorrect,
+                    correctAnswer: correctAnswer,
+                    rationale: rationale,
+                    type: currentQuestion.type || 'mcq',
+                    topic: currentQuestion.topic || 'Geral' 
+                };
+                
+                this.elements.nextButton.style.display = 'block';
+                this.elements.skipButton.style.display = 'none';
+                this.saveQuizState();
+            },
+
+            showPerformance() {
+                const display = this.elements.performanceDisplay;
+                if (display.style.display === 'block') {
+                    display.style.display = 'none';
+                } else {
+                    const answeredCount = Object.keys(this.userAnswers).length;
+                    const incorrectCount = answeredCount - this.score;
+                    display.innerHTML = `<strong style="color: #333;">Até agora:</strong> <span style="color: #28a745;">${this.score} acertos</span> <strong style="color: #333;">e</strong> <span style="color: #dc3545;">${incorrectCount} erros</span><strong style="color: #333;">!</strong>`;
+                    display.style.display = 'block';
+                    this.elements.hintText.style.display = 'none';
+                    this.elements.summaryText.style.display = 'none';
+                }
+            },
+            
+            showHint() {
+                const display = this.elements.hintText;
+                const button = this.elements.hintButton; 
+                let currentQuestion;
+                
+                // Pega a questão atual (considerando puladas)
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0) {
+                    currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                }
+
+                this.elements.performanceDisplay.style.display = 'none';
+                this.elements.summaryText.style.display = 'none';
+
+                let hint1 = currentQuestion.hint || "Sem dica disponível.";
+                let hint2 = currentQuestion.hint_2 || ""; 
+
+                // Lógica Corrigida: Verifica se existe Hint 2
+                if (hint2) {
+                    // MODO COM DUAS DICAS
+                    if (this.hintLevel === 0) { 
+                        // MOSTRAR DICA 1
+                        display.innerHTML = hint1; 
+                        display.style.display = 'block';
+                        button.textContent = 'DICA 2'; 
+                        this.hintLevel = 1; 
+                    } else if (this.hintLevel === 1) { 
+                        // MOSTRAR DICA 2 (Junto com a 1)
+                        display.innerHTML = hint1 + '<br><br>' + hint2;
+                        display.style.display = 'block';
+                        button.textContent = 'Ocultar Dicas'; 
+                        button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
+                        this.hintLevel = 2; 
+                    } else { 
+                        // OCULTAR TUDO
+                        display.style.display = 'none';
+                        button.textContent = 'Dica';
+                        button.style.background = ''; 
+                        this.hintLevel = 0; 
+                    }
+                } else { 
+                    // MODO SIMPLES (SÓ UMA DICA)
+                    if (display.style.display === 'block') {
+                        display.style.display = 'none';
+                    } else {
+                        if (currentQuestion && currentQuestion.hint) {
+                            display.innerHTML = currentQuestion.hint;
+                            display.style.display = 'block';
+                        }
+                    }
+                }
+            },
+
+            showSummary() {
+                const display = this.elements.summaryText;
+                if (display.style.display === 'block') {
+                    display.style.display = 'none';
+                } else {
+                    let currentQuestion;
+                    if (this.currentQuestionIndex >= this.shuffledQuestions.length  && this.skippedQuestions.length > 0) {
+                        currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                    } else {
+                        currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                    }
+                    const questionTopic = currentQuestion.topic;
+                    if (questionTopic && this.summaries[questionTopic]) {
+                        display.textContent = this.summaries[questionTopic];
+                        display.style.display = 'block';
+                        this.elements.performanceDisplay.style.display = 'none';
+                        this.elements.hintText.style.display = 'none';
+                    }
+                }
+            },
+
+            translateQuestion() {
+                const button = this.elements.translateButton;
+                const display = this.elements.translationDisplay;
+                
+                let currentQuestion;
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length  && this.skippedQuestions.length > 0) {
+                    currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                }
+
+                if (display.style.display === 'block') {
+                    display.style.display = 'none';
+                    button.textContent = '🌐';
+                    return;
+                }
+                
+                let textToTranslate;
+                if (currentQuestion.type === 'drag-drop') {
+                    textToTranslate = currentQuestion.question; 
+                } else {
+                    textToTranslate = this.elements.questionText.textContent;
+                }
+
+                display.textContent = 'Traduzindo...';
+                display.style.display = 'block';
+                button.disabled = true;
+
+                const langPair = 'en|pt'; 
+                const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${langPair}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.responseData && data.responseData.translatedText) {
+                            display.textContent = data.responseData.translatedText;
+                        } else {
+                            display.textContent = 'Erro ao traduzir. Tente novamente.';
+                        }
+                        button.disabled = false;
+                        button.textContent = '🙈'; 
+                    })
+                    .catch(error => {
+                        console.error('Translation error:', error);
+                        display.textContent = 'Não foi possível conectar ao serviço de tradução.';
+                        button.disabled = false;
+                        button.textContent = '🌐';
+                    });
+            },
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.shuffledQuestions.length) {
+                    this.currentQuestionIndex++;
+                } else {
+                    this.currentSkippedIndex++;
+                }
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.currentSkippedIndex >= this.skippedQuestions.length) {
+                    this.showResults();
+                } else {
+                    this.displayQuestion();
+                }
+            },
+
+            skipQuestion() {
+                if (this.currentQuestionIndex < this.shuffledQuestions.length) {
+                    let currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                    const originalIndex = this.questions.findIndex(q => q.question === currentQuestion.question);
+                    if (!this.skippedQuestions.includes(originalIndex)) {
+                        this.skippedQuestions.push(originalIndex);
+                    }
+                }
+                this.currentQuestionIndex++;
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length === 0) {
+                    this.showResults();
+                } else {
+                    this.displayQuestion();
+                }
+            },
+
+            getClassification(percentage) {
+                if (percentage >= 86) return "Excelente!!!"; if (percentage >= 71) return "Muito Bom!!"; if (percentage >= 51) return "Bom!"; if (percentage >= 0) return "Insatisfatório!"; return "";
+            },
+            launchConfetti() { confetti({ particleCount: 600, spread: 70, origin: { y: 0.6 } }); },
+
+            showResults() {
+                const percentage = Math.round((this.score / this.questions.length) * 100);
+                const classificationText = this.getClassification(percentage);
+
+                const reportData = {
+                    isCompleted: true, 
+                    studentName: this.validatedStudentName,
+                    studentCode: this.validatedStudentCode,
+                    score: this.score,
+                    totalQuestions: this.questions.length,
+                    percentage: percentage,
+                    classification: classificationText,
+                    userAnswers: this.userAnswers,
+                    originalQuestions: this.questions 
+                };
+
+                this.saveCompletedReport(reportData); 
+                this.saveFinalReport(reportData);     
+
+                this.displayReport(reportData);
+
+                const dataForGoogle = { 
+                    nome: this.validatedStudentName, 
+                    codigo: this.validatedStudentCode, 
+                    pontuacao: `(GRAMMAR) ${this.score} de ${this.questions.length}`, // Adicionado (GRAMMAR)
+                    percentual: `${percentage}%`, 
+                    classificacao: classificationText 
+                };
+                
+                fetch(this.APP_SCRIPT_URL, { method: 'POST', body: JSON.stringify(dataForGoogle), headers: { 'Content-Type': 'application/json' }, mode: 'no-cors' })
+                    .then(() => { 
+                        this.elements.sendReportLink.textContent = 'Relatório Enviado!'; 
+                        this.elements.sendReportLink.style.background = '#ccc'; 
+                        this.elements.sendReportLink.onclick = (e) => e.preventDefault(); 
+                    })
+                    .catch(error => console.error('Erro:', error));
+            },
+
+            saveCompletedReport(reportData) {
+                if (!reportData.studentCode) return;
+                try {
+                    localStorage.setItem(`quizState_${reportData.studentCode}`, JSON.stringify(reportData));
+                } catch (e) {
+                    console.error("Não foi possível salvar o estado do quiz:", e);
+                }
+            },
+
+            saveFinalReport(reportData) {
+                if (!reportData.studentCode) return;
+                try {
+                    localStorage.setItem(`quizReport_${reportData.studentCode}`, JSON.stringify(reportData));
+                } catch (e) {
+                    console.error("Não foi possível salvar o relatório final permanente:", e);
+                }
+            },
+
+            displayReport(data) {
+                // (PASSO 4) - CORRIGIDO PARA USAR O ID
+                showCard('results-card', document.getElementById('results-tab-btn'));
+
+                this.validatedStudentName = data.studentName;
+                this.validatedStudentCode = data.studentCode;
+                this.score = data.score;
+                this.userAnswers = data.userAnswers;
+                this.questions = data.originalQuestions; 
+
+                this.elements.reportStudentName.textContent = data.studentName;
+                this.elements.reportStudentCode.textContent = data.studentCode;
+                this.elements.scoreDisplay.textContent = `${data.score} de ${data.totalQuestions}`;
+                this.elements.percentageDisplay.textContent = `${data.percentage}%`;
+                this.elements.classificationDisplay.textContent = data.classification;
+                
+                if (data.classification === "Excelente!!!") this.launchConfetti();
+                
+                this.elements.fullReportContainer.innerHTML = this.generateFullReportHtml();
+                this.elements.personalReportContainer.innerHTML = this.generatePersonalReportHtml();
+                
+                const shareMessage = this.generateShareMessage(data.percentage, data.classification);
+                this.elements.shareWhatsappLink.href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+                
+                // Configura o botão de relatório para o quiz de gramática
+                this.elements.sendReportLink.textContent = 'Enviar Relatório (Grammar)'; 
+                this.elements.sendReportLink.style.background = '';
+            },
+
+            retrieveReport(code) {
+                const finalReportJSON = localStorage.getItem(`quizReport_${code}`);
+                if (!finalReportJSON) {
+                    alert('Erro: Relatório não encontrado.');
+                    return;
+                }
+                
+                try {
+                    const state = JSON.parse(finalReportJSON);
+                    if (state.isCompleted) {
+                        this.displayReport(state); 
+                        
+                        this.elements.sendReportLink.textContent = 'Relatório Já Enviado';
+                        this.elements.sendReportLink.style.background = '#ccc';
+                        this.elements.sendReportLink.onclick = (e) => e.preventDefault();
+                    } else {
+                        alert('O relatório salvo é inválido.');
+                    }
+                } catch (e) {
+                    alert('Erro ao carregar relatório.');
+                    localStorage.removeItem(`quizReport_${code}`); 
+                }
+            },
+
+            getCorrectAnswerForQuestion(question) {
+                if (question.type === 'fill-in') {
+                    return question.answer[0];
+                }
+                if (question.type === 'drag-drop') {
+                    return question.answer;
+                }
+                if (question.type === 'mcq' || question.type === 'tf' || question.type === 'audio_mcq') { 
+                    const correctOption = question.options.find(o => o.isCorrect);
+                    return correctOption ? correctOption.text : 'N/A';
+                }
+                return 'N/A';
+            },
+
+            generateFullReportHtml() {
+                let reportHtml = '<h3>Relatório Detalhado</h3>';
+                this.questions.forEach((question, index) => {
+                    const answerData = this.userAnswers[index];
+                    let questionText = question.question; 
+                    questionText = questionText.replace(/______/g, '...'); 
+                    
+                    if (question.type === 'audio_mcq') {
+                        // Usa a DICA 1 como texto da frase, se disponível
+                        const hintText = question.hint ? question.hint.replace("<strong>DICA 1:</strong> A frase é: ", "").replace("<strong>DICA 1:</strong>", "").trim() : 'N/A';
+                        questionText = `${questionText} (Frase de Áudio: '${hintText}')`;
+                    }
+
+                    if (answerData) {
+                        const itemClass = answerData.isCorrect ? 'correct' : 'incorrect';
+                        reportHtml += `
+                            <div class="report-question-item">
+                                <p><strong>Questão ${index + 1}:</strong> ${questionText}</p>
+                                <p><strong>Sua Resposta:</strong> <span class="option-item-report ${itemClass}">${answerData.userAnswer}</span></p>
+                                ${!answerData.isCorrect ? `<p><strong>Resposta Correta:</strong> <span class="option-item-report correct">${answerData.correctAnswer}</span></p>` : ''}
+                                <p><em>Justificativa: ${answerData.rationale}</em></p>
+                            </div>
+                        `;
+                    } else {
+                        const correctAnswer = this.getCorrectAnswerForQuestion(question);
+                        const rationale = question.rationale || (question.options ? (question.options.find(o => o.isCorrect) || {}).rationale : '');
+                        reportHtml += `
+                            <div class="report-question-item">
+                                <p><strong>Questão ${index + 1}:</strong> ${questionText}</p>
+                                <p><strong>Sua Resposta:</strong> <span class="option-item-report incorrect">Não respondida</span></p>
+                                <p><strong>Resposta Correta:</strong> <span class="option-item-report correct">${correctAnswer}</span></p>
+                                <p><em>Justificativa: ${rationale}</em></p>
+                            </div>
+                        `;
+                    }
+                });
+                return reportHtml;
+            },
+            
+            analyzePerformanceByTopic() {
+                const topicErrors = {};
+                const topicTotals = {};
+
+                this.questions.forEach((question, index) => {
+                    const topic = question.topic;
+                    if (!topic) return; 
+                    if (!topicTotals[topic]) topicTotals[topic] = 0;
+                    topicTotals[topic]++;
+
+                    const answerData = this.userAnswers[index];
+                    if (!answerData || !answerData.isCorrect) {
+                        if (!topicErrors[topic]) topicErrors[topic] = 0;
+                        topicErrors[topic]++;
+                    }
+                });
+                
+                return { topicErrors, topicTotals };
+            },
+            
+            generatePersonalReportHtml() {
+                const analysis = this.analyzePerformanceByTopic();
+                let html = '<h3>Relatório Pessoal de Estudos</h3>';
+                
+                const topicsToReview = [];
+                for (const topic in analysis.topicErrors) {
+                    const errors = analysis.topicErrors[topic];
+                    if (errors > 0) {
+                        const total = analysis.topicTotals[topic];
+                        const errorRate = (errors / total) * 100;
+                        topicsToReview.push({ topic: topic, errors: errors, total: total, rate: errorRate });
+                    }
+                }
+
+                topicsToReview.sort((a, b) => b.errors - a.errors);
+
+                if (topicsToReview.length === 0) {
+                    html += '<p style="font-weight: bold; color: #28a745;">Parabéns! Você não errou nenhuma questão. Não há nada para revisar.</p>';
+                } else {
+                     html += `<p>Aqui está seu guia de estudos focado nos tópicos que você precisa revisar, começando pelos mais difíceis:</p><br>`;
+                    topicsToReview.forEach(item => {
+                        const summaryText = this.summaries[item.topic] || "Não há resumo disponível para este tópico.";
+                        html += `
+                            <div class="personal-summary-item">
+                                <h4>Tópico: ${item.topic}</h4>
+                                <p><strong>Seu desempenho:</strong> <span style="color: #dc3545;">${item.errors} de ${item.total} erradas</span> (${item.rate.toFixed(0)}% de erro)</p>
+                                <p><strong>Resumo para Revisão:</strong><br>${summaryText}</p>
+                            </div>
+                        `;
+                    });
+                }
+
+                return html;
+            },
+            
+            printPersonalReport() {
+                this.elements.fullReportContainer.style.display = 'none';
+                this.elements.personalReportContainer.style.display = 'block';
+                window.print();
+            },
+            
+            printReport() { 
+                this.elements.personalReportContainer.style.display = 'none';
+                this.elements.fullReportContainer.style.display = 'block';
+                window.print();
+            },
+            
+            generateShareMessage(percentage, classificationText) {
+                return `Acabei de fazer o quiz "ADVERBIAL CLAUSES"! Meu resultado: ${percentage}% (${classificationText}).`;
+            },
+            
+            saveQuizState() {
+                if (!this.validatedStudentCode) return;
+                const state = {
+                    isCompleted: false, 
+                    currentQuestionIndex: this.currentQuestionIndex,
+                    score: this.score,
+                    userAnswers: this.userAnswers,
+                    skippedQuestions: this.skippedQuestions,
+                    currentSkippedIndex: this.currentSkippedIndex,
+                    shuffledQuestions: this.shuffledQuestions
+                };
+                try {
+                    localStorage.setItem(`quizState_${this.validatedStudentCode}`, JSON.stringify(state));
+                } catch (e) {
+                    console.error("Não foi possível salvar o estado do quiz:", e);
+                }
+            },
+
+            loadQuizState(studentCode) {
+                try {
+                    const savedState = localStorage.getItem(`quizState_${studentCode}`);
+                    if (savedState) {
+                        const state = JSON.parse(savedState);
+                        if (!state.isCompleted) {
+                            this.currentQuestionIndex = state.currentQuestionIndex;
+                            this.score = state.score;
+                            this.userAnswers = state.userAnswers;
+                            this.skippedQuestions = state.skippedQuestions;
+                            this.currentSkippedIndex = state.currentSkippedIndex;
+                            this.shuffledQuestions = state.shuffledQuestions; 
+                            return true;
+                        }
+                    }
+                } catch (e) {
+                    console.error("Não foi possível carregar o estado do quiz:", e);
+                    localStorage.removeItem(`quizState_${studentCode}`); 
+                }
+                return false; 
+            },
+
+            updateAttemptsDisplay(code) {
+                const savedStateJSON = localStorage.getItem(`quizState_${code}`); 
+                const finalReportJSON = localStorage.getItem(`quizReport_${code}`); 
+                const correctName = this.studentData[code];
+                
+                if (correctName) {
+                    this.elements.personalizedWelcome.textContent = `Seja bem-vindo(a), ${correctName}! Boa sorte!`;
+                    this.elements.personalizedWelcome.style.display = 'block';
+                }
+
+                let state = null;
+                let finalReport = null;
+                try { if (savedStateJSON) state = JSON.parse(savedStateJSON); } catch (e) { localStorage.removeItem(`quizState_${code}`); }
+                try { if (finalReportJSON) finalReport = JSON.parse(finalReportJSON); } catch (e) { localStorage.removeItem(`quizReport_${code}`); }
+
+                let buttonsHtml = '';
+
+                if (state && !state.isCompleted) {
+                    buttonsHtml = `
+                        <p style="font-weight: bold; color: #007bff;">Encontramos um progresso salvo para você.</p>
+                        <button class="btn continue-btn" onclick="quizApp.startQuiz(true)">Continuar Quiz</button>
+                        <button class="btn restart-btn" style="margin-left: 10px;" onclick="quizApp.startQuiz(false)">Reiniciar (Perder Progresso)</button>
+                    `;
+                } else if (state && state.isCompleted) {
+                    buttonsHtml = `
+                        <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
+                        <button class="btn restart-btn" onclick="quizApp.startQuiz(false)">Reiniciar Quiz</button>
+                    `;
+                } else {
+                    buttonsHtml = `
+                        <button class="start-btn" onclick="quizApp.startQuiz(false)">Start Quiz</button>
+                    `;
+                }
+
+                if (finalReport) {
+                    if (state && state.isCompleted) {
+                        buttonsHtml = `
+                            <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
+                            <button class="btn restart-btn" onclick="quizApp.startQuiz(false)">Reiniciar Quiz</button>
+                            <button class="btn continue-btn" style="margin-left: 10px;" onclick="quizApp.retrieveReport('${code}')">Resgatar Relatório</button>
+                        `;
+                    } else {
+                        buttonsHtml += `
+                            <button class="btn continue-btn" style="margin-left: 10px;" onclick="quizApp.retrieveReport('${code}')">Resgatar Último Relatório</button>
+                        `;
+                    }
+                }
+                
+                this.elements.startActionsDiv.innerHTML = buttonsHtml;
+            },
+            
+            restartQuiz() { 
+                showCard('intro-card', document.querySelector("button[onclick*='intro-card']"));
+                setupAdminViewRoteiro(false);
+                setupAdminViewApostila(false);
+            },
+            
+            saveReport() {
+                const studentName = this.validatedStudentName;
+                const studentCode = this.validatedStudentCode;
+                const score = this.elements.scoreDisplay.textContent;
+                const percentage = this.elements.percentageDisplay.textContent;
+                const classification = this.elements.classificationDisplay.textContent;
+                
+                const detailedReportHtml = this.generateFullReportHtml();
+                const personalReportHtml = this.generatePersonalReportHtml();
+
+
+                const fullHtmlContent = `
+                    <!DOCTYPE html>
+                    <html lang="pt-BR">
+                    <head>
+                        <meta charset="UTF-BOM">
+                        <title>Relatório - ${studentName}</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+                            h1, h3 { color: #007bff; }
+                            h4 { color: #856404; }
+                            p { margin: 5px 0; }
+                            .report-question-item { background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; page-break-inside: avoid; }
+                            .option-item-report.correct { background-color: #d4edda; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+                            .option-item-report.incorrect { background-color: #f8d7da; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+                            .personal-summary-item { background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 15px; margin-bottom: 15px; page-break-inside: avoid; }
+                            #print-personal-btn { display: none; } 
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Relatório Final - ADVERBIAL CLAUSES</h1>
+                        <p><strong>Nome:</strong> ${studentName}</p>
+                        <p><strong>Código de Acesso:</strong> ${studentCode}</p>
+                        <p><strong>Pontuação:</strong> ${score}</p>
+                        <p><strong>Percentual de Acerto:</strong> ${percentage}</p>
+                        <p><strong>Classificação:</strong> ${classification}</p>
+                        <hr>
+                        <div id="personal-report-container">
+                            ${personalReportHtml}
+                        </div>
+                        <hr>
+                        <div id="full-report-container">
+                            ${detailedReportHtml}
+                        </div>
+                    </body>
+                    </html>
+                `;
+
+                const blob = new Blob([fullHtmlContent], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `Relatorio_${studentName.replace(' ', '_')}_${studentCode}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(a.href);
+            },
+
+            init() {
+                setupAdminViewRoteiro(false);
+                setupAdminViewApostila(false);
+                
+                this.elements.studentCodeInput.addEventListener('input', (e) => {
+                    const code = e.target.value.trim().toUpperCase();
+                    if (this.studentData[code]) { 
+                        this.updateAttemptsDisplay(code); 
+                    } 
+                    else { 
+                        this.elements.startActionsDiv.innerHTML = '<button class=\"start-btn\" onclick=\"quizApp.startQuiz(false)\">Start Quiz</button>'; 
+                        this.elements.personalizedWelcome.style.display = 'none';
+                    }
+                });
+                
+                this.elements.translateButton.onclick = () => this.translateQuestion();
+                this.elements.performanceButton.onclick = () => this.showPerformance();
+                this.elements.hintButton.onclick = () => this.showHint();
+                this.elements.summaryButton.onclick = () => this.showSummary();
+                this.elements.nextButton.onclick = () => this.nextQuestion();
+                this.elements.skipButton.onclick = () => this.skipQuestion();
+            }
+        };
+
+
+        // --------------------------------------------------------------------
+        // LÓGICA DO QUIZ DE VOCABULÁRIO (vocabQuizApp) - NOVO BLOCO
+        // --------------------------------------------------------------------
+        const vocabQuizApp = {
+            APP_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwtDAlCCBcc3cN3pHX5YTkCZBsYTH--UJbeaczv64av_vIkybVIaEs-nTLKM2ssHND2/exec',
+            currentQuestionIndex: 0,
+            score: 0,
+            userAnswers: {},
+            validatedStudentName: '',
+            validatedStudentCode: '',
+            totalAttempts: "Ilimitadas",
+            skippedQuestions: [],
+            currentSkippedIndex: 0,
+            shuffledQuestions: [],
+            hintLevel: 0, 
+            
+            // Elementos com IDs 'vocab-'
+            elements: {
+                quizCard: document.getElementById('vocab-quiz-card'),
+                questionText: document.getElementById('vocab-question-text'),
+                optionsList: document.getElementById('vocab-options-list'),
+                justificationContainer: document.getElementById('vocab-justification-container'),
+                nextButton: document.getElementById('vocab-next-button'),
+                skipButton: document.getElementById('vocab-skip-button'),
+                hintButton: document.getElementById('vocab-hint-button'),
+                hintText: document.getElementById('vocab-hint-text'),
+                attemptsLeftSpan: document.getElementById('vocab-attempts-left'),
+                currentQuestionNumSpan: document.getElementById('vocab-current-question-num'),
+                summaryButton: document.getElementById('vocab-summary-button'),
+                summaryText: document.getElementById('vocab-summary-text'),
+                performanceButton: document.getElementById('vocab-performance-btn'),
+                performanceDisplay: document.getElementById('vocab-performance-display'),
+                progressBar: document.getElementById('vocab-progress-bar'),
+                translateButton: document.getElementById('vocab-translate-button'),
+                translationDisplay: document.getElementById('vocab-translation-display'),
+                audioContainer: document.getElementById('vocab-audio-container'),
+                audioPlayContainer: document.getElementById('vocab-audio-play-container'),
+                
+                // Elementos do resultado (são compartilhados)
+                resultsCard: document.getElementById('results-card'),
+                scoreDisplay: document.getElementById('score-display'),
+                percentageDisplay: document.getElementById('percentage-display'),
+                classificationDisplay: document.getElementById('classification-display'),
+                reportStudentName: document.getElementById('report-student-name'),
+                reportStudentCode: document.getElementById('report-student-code'),
+                sendReportLink: document.getElementById('send-report-link'),
+                fullReportContainer: document.getElementById('full-report-container'),
+                shareWhatsappLink: document.getElementById('share-whatsapp'),
+                personalReportContainer: document.getElementById('personal-report-container')
+            },
+
+            studentData: quizApp.studentData, // Reutiliza os dados dos alunos
+            
+            summaries: vocabSummaries, // Usa os resumos de vocabulário
+            
+            questions: vocabQuestions, // Usa as questões de vocabulário
+
+            shuffleArray: quizApp.shuffleArray, // Reutiliza
+
+            balanceCorrectAnswers() {
+                const mcqQuestions = this.questions.filter(q => q.type === 'mcq' && q.options && q.options.length === 4);
+                if (mcqQuestions.length === 0) return;
+                
+                const numPositions = 4;
+                let desiredPositions = [];
+                for (let i = 0; i < mcqQuestions.length; i++) {
+                    desiredPositions.push(i % numPositions);
+                }
+                this.shuffleArray(desiredPositions);
+                
+                let mcqCounter = 0;
+                this.questions.forEach((q) => {
+                    if (q.type === 'mcq' && q.options && q.options.length === 4) {
+                        this.shuffleArray(q.options);
+                        const correctOption = q.options.find(opt => opt.isCorrect);
+                        if (!correctOption) return;
+                        const targetIndex = desiredPositions[mcqCounter];
+                        if (q.options.indexOf(correctOption) !== targetIndex) {
+                            const currentIndex = q.options.indexOf(correctOption);
+                            [q.options[currentIndex], q.options[targetIndex]] = [q.options[targetIndex], q.options[currentIndex]];
+                        }
+                        mcqCounter++;
+                    }
+                });
+            },
+            
+            updateProgressBar() {
+                const totalQuestions = this.questions.length;
+                const answeredCount = (this.currentQuestionIndex - this.skippedQuestions.length) + this.currentSkippedIndex;
+                const percentage = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+                this.elements.progressBar.style.width = percentage + '%';
+                this.elements.progressBar.textContent = percentage + '%';
+            },
+
+            startQuiz(continueFromSavedState) {
+                // Não valida o código, apenas recebe
+                if (!this.validatedStudentCode) {
+                    alert("Erro! Tente fazer login novamente.");
+                    showCard('intro-card', document.querySelector('.tab-inicio'));
+                    return;
+                }
+                
+                if (continueFromSavedState) { 
+                    this.loadQuizState(this.validatedStudentCode); 
+                } 
+                else {
+                    this.currentQuestionIndex = 0;
+                    this.score = 0;
+                    this.userAnswers = {};
+                    this.skippedQuestions = [];
+                    this.currentSkippedIndex = 0;
+                    this.balanceCorrectAnswers();
+                    localStorage.removeItem(`vocabQuizState_${this.validatedStudentCode}`); 
+                    this.shuffledQuestions = this.shuffleArray([...this.questions]);
+                }
+                
+                this.displayQuestion();
+            },
+
+            displayQuestion() {
+                this.updateProgressBar();
+                this.elements.performanceDisplay.style.display = 'none';
+                this.elements.justificationContainer.innerHTML = '';
+                this.elements.hintText.style.display = 'none';
+                this.elements.summaryText.style.display = 'none';
+                this.elements.summaryButton.style.display = 'none';
+                this.elements.nextButton.style.display = 'none';
+
+                this.elements.translationDisplay.style.display = 'none'; 
+                this.elements.translateButton.style.display = 'inline-block'; 
+                this.elements.translateButton.disabled = false;
+                this.elements.translateButton.textContent = '🌐'; 
+                
+                this.elements.audioContainer.innerHTML = ''; 
+                this.elements.audioPlayContainer.innerHTML = ''; 
+                this.elements.questionText.style.display = 'flex'; 
+
+                this.hintLevel = 0; 
+                this.elements.hintButton.textContent = 'Dica'; 
+                this.elements.hintButton.style.background = ''; 
+                this.elements.hintButton.disabled = false; 
+                this.elements.hintButton.onclick = () => this.showHint(); 
+                
+                let questionToDisplay;
+                let currentQuestionNumber;
+                let totalAnswered = (this.currentQuestionIndex - this.skippedQuestions.length) + this.currentSkippedIndex;
+
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0 && this.currentSkippedIndex < this.skippedQuestions.length) {
+                    const skippedIndex = this.skippedQuestions[this.currentSkippedIndex];
+                    questionToDisplay = this.questions[skippedIndex]; 
+                    currentQuestionNumber = `(Pulada ${this.currentSkippedIndex + 1}/${this.skippedQuestions.length})`
+                    this.elements.skipButton.style.display = 'none';
+                } else if (this.currentQuestionIndex < this.shuffledQuestions.length) {
+                    questionToDisplay = this.shuffledQuestions[this.currentQuestionIndex];
+                    currentQuestionNumber = totalAnswered + 1;
+                    this.elements.skipButton.style.display = 'inline-block';
+                } else {
+                    this.showResults();
+                    return;
+                }
+                
+                this.elements.currentQuestionNumSpan.textContent = currentQuestionNumber;
+                
+                this.elements.optionsList.innerHTML = '';
+
+                switch (questionToDisplay.type) {
+                    case 'fill-in': this.renderFillIn(questionToDisplay); break;
+                    case 'drag-drop': this.renderDragDrop(questionToDisplay); break;
+                    case 'tf': this.renderMCQ(questionToDisplay); break;
+                    case 'audio_mcq': this.renderAudioMCQ(questionToDisplay); break; 
+                    case 'mcq': default: this.renderMCQ(questionToDisplay); break;
+                }
+            },
+
+            renderAudioMCQ(question) {
+                this.elements.audioContainer.innerHTML = ''; 
+                const audioEl = document.createElement('audio');
+                audioEl.src = question.audioSrc;
+                audioEl.preload = 'auto'; 
+                this.elements.audioContainer.appendChild(audioEl);
+
+                this.elements.audioPlayContainer.innerHTML = ''; 
+                const playBtn = document.createElement('button');
+                playBtn.className = 'btn audio-play-btn';
+                playBtn.textContent = 'Ouvir Questão 🎧';
+                playBtn.onclick = () => audioEl.play();
+                this.elements.audioPlayContainer.appendChild(playBtn);
+                
+                this.elements.translateButton.style.display = 'none';
+
+                this.renderMCQ(question);
+            },
+
+            renderMCQ(question) {
+                this.elements.questionText.innerHTML = ''; 
+                this.elements.questionText.textContent = question.question;
+                
+                if (question.type !== 'audio_mcq') {
+                    this.elements.translateButton.style.display = 'inline-block';
+                } else {
+                    this.elements.translateButton.style.display = 'none';
+                }
+
+                question.options.forEach(option => {
+                    const li = document.createElement('li');
+                    li.className = 'option-item';
+                    li.textContent = option.text;
+                    li.onclick = () => this.selectOption(li, option);
+                    this.elements.optionsList.appendChild(li);
+                });
+            },
+
+            renderFillIn(question) {
+                this.elements.questionText.innerHTML = ''; 
+                this.elements.questionText.textContent = question.question;
+                this.elements.translateButton.style.display = 'inline-block'; 
+                
+                const input = document.createElement('input');
+                input.id = 'fill-in-input'; 
+                input.placeholder = 'Digite sua resposta...';
+                const checkButton = document.createElement('button');
+                checkButton.textContent = 'Verificar';
+                checkButton.className = 'btn check-btn';
+                checkButton.onclick = () => {
+                    const userAnswer = input.value.trim().toLowerCase();
+                    const isCorrect = question.answer.map(ans => ans.toLowerCase()).includes(userAnswer);
+                    this.handleAnswer(isCorrect, question.rationale, input.value.trim(), question.answer[0]);
+                    input.disabled = true;
+                    checkButton.style.display = 'none';
+                    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                };
+                this.elements.optionsList.appendChild(input);
+                this.elements.optionsList.appendChild(checkButton);
+            },
+
+            renderDragDrop(question) {
+                const dropZone = document.createElement('span');
+                dropZone.id = 'drop-zone';
+                dropZone.textContent = 'Arraste aqui';
+                const questionTextHTML = question.question.replace('______', dropZone.outerHTML);
+                this.elements.questionText.innerHTML = questionTextHTML; 
+                this.elements.translateButton.style.display = 'inline-block'; 
+                
+                const actualDropZone = this.elements.questionText.querySelector('#drop-zone');
+                const dragOptionsWrapper = document.createElement('div');
+                dragOptionsWrapper.className = 'drag-options-wrapper';
+                this.shuffleArray(question.options).forEach(opt => {
+                    const optionEl = document.createElement('span');
+                    optionEl.textContent = opt;
+                    optionEl.className = 'drag-option';
+                    optionEl.draggable = true;
+                    optionEl.dataset.value = opt;
+                    optionEl.ondragstart = (e) => { e.dataTransfer.setData('text/plain', e.target.dataset.value); e.target.classList.add('dragging'); };
+                    optionEl.ondragend = (e) => e.target.classList.remove('dragging');
+                    dragOptionsWrapper.appendChild(optionEl);
+                });
+                this.elements.optionsList.appendChild(dragOptionsWrapper);
+                actualDropZone.ondragover = (e) => { e.preventDefault(); actualDropZone.classList.add('over'); };
+                actualDropZone.ondragleave = () => actualDropZone.classList.remove('over');
+                actualDropZone.ondrop = (e) => {
+                    e.preventDefault();
+                    actualDropZone.classList.remove('over');
+                    const droppedValue = e.dataTransfer.getData('text/plain');
+                    const isCorrect = (droppedValue.toLowerCase() === question.answer.toLowerCase());
+                    this.handleAnswer(isCorrect, question.rationale, droppedValue, question.answer);
+                    actualDropZone.textContent = droppedValue;
+                    actualDropZone.classList.add(isCorrect ? 'correct' : 'incorrect');
+                    this.elements.optionsList.querySelectorAll('.drag-option').forEach(el => { el.draggable = false; el.style.cursor = 'not-allowed'; el.style.opacity = '0.6'; });
+                };
+            },
+
+            selectOption(selectedElement, selectedOption) {
+                this.elements.optionsList.querySelectorAll('.option-item').forEach(option => option.style.pointerEvents = 'none');
+                const isCorrect = selectedOption.isCorrect;
+                
+                let currentQuestion;
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0) {
+                    currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                }
+                
+                selectedElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+                this.handleAnswer(isCorrect, selectedOption.rationale, selectedOption.text, currentQuestion.options.find(o => o.isCorrect).text);
+
+                if (!isCorrect) {
+                    const correctText = currentQuestion.options.find(opt => opt.isCorrect).text;
+                    const correctElement = Array.from(this.elements.optionsList.querySelectorAll('.option-item')).find(el => el.textContent === correctText);
+                    if (correctElement) correctElement.classList.add('correct');
+                }
+            },
+
+            handleAnswer(isCorrect, rationale, userAnswer, correctAnswer) {
+                if (isCorrect) {
+                    this.score++;
+                    this.elements.summaryButton.style.display = 'none';
+                } else {
+                    this.elements.summaryButton.style.display = 'inline-block';
+                }
+                const justificationElement = document.createElement('div');
+                justificationElement.className = 'justification';
+                justificationElement.innerHTML = rationale; 
+                justificationElement.style.borderLeftColor = isCorrect ? '#28a745' : '#dc3545';
+                this.elements.justificationContainer.appendChild(justificationElement);
+                
+                let originalQuestionIndex;
+                let currentQuestion;
+                 if (this.currentQuestionIndex >= this.shuffledQuestions.length  && this.skippedQuestions.length > 0) {
+                    originalQuestionIndex = this.skippedQuestions[this.currentSkippedIndex];
+                    currentQuestion = this.questions[originalQuestionIndex];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                    originalQuestionIndex = this.questions.findIndex(q => q.question === currentQuestion.question);
+                }
+                
+                this.userAnswers[originalQuestionIndex] = {
+                    question: currentQuestion.question, 
+                    userAnswer: userAnswer,
+                    isCorrect: isCorrect,
+                    correctAnswer: correctAnswer,
+                    rationale: rationale,
+                    type: currentQuestion.type || 'mcq',
+                    topic: currentQuestion.topic || 'Geral' 
+                };
+                
+                this.elements.nextButton.style.display = 'block';
+                this.elements.skipButton.style.display = 'none';
+                this.saveQuizState();
+            },
+
+            showPerformance() {
+                const display = this.elements.performanceDisplay;
+                if (display.style.display === 'block') {
+                    display.style.display = 'none';
+                } else {
+                    const answeredCount = Object.keys(this.userAnswers).length;
+                    const incorrectCount = answeredCount - this.score;
+                    display.innerHTML = `<strong style="color: #333;">Até agora:</strong> <span style="color: #28a745;">${this.score} acertos</span> <strong style="color: #333;">e</strong> <span style="color: #dc3545;">${incorrectCount} erros</span><strong style="color: #333;">!</strong>`;
+                    display.style.display = 'block';
+                    this.elements.hintText.style.display = 'none';
+                    this.elements.summaryText.style.display = 'none';
+                }
+            },
+            
+            // --------------------------------------------------------------------
+            // CORREÇÃO: Função de Dica dedicada ao Quiz de Vocabulário
+            // --------------------------------------------------------------------
+// TROQUEI AQUI!!!
+            showHint() {
+                const display = this.elements.hintText;
+                const button = this.elements.hintButton; 
+                let currentQuestion;
+                
+                // Pega a questão atual (considerando puladas)
+                if (this.currentQuestionIndex >= this.shuffledQuestions.length && this.skippedQuestions.length > 0) {
+                    currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                } else {
+                    currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                }
+
+                this.elements.performanceDisplay.style.display = 'none';
+                this.elements.summaryText.style.display = 'none';
+
+                let hint1 = currentQuestion.hint || "Sem dica disponível.";
+                let hint2 = currentQuestion.hint_2 || ""; 
+
+                // Lógica Corrigida: Verifica se existe Hint 2
+                if (hint2) {
+                    // MODO COM DUAS DICAS
+                    if (this.hintLevel === 0) { 
+                        // MOSTRAR DICA 1
+                        display.innerHTML = hint1; 
+                        display.style.display = 'block';
+                        button.textContent = 'DICA 2'; 
+                        this.hintLevel = 1; 
+                    } else if (this.hintLevel === 1) { 
+                        // MOSTRAR DICA 2 (Junto com a 1)
+                        display.innerHTML = hint1 + '<br><br>' + hint2;
+                        display.style.display = 'block';
+                        button.textContent = 'Ocultar Dicas'; 
+                        button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
+                        this.hintLevel = 2; 
+                    } else { 
+                        // OCULTAR TUDO
+                        display.style.display = 'none';
+                        button.textContent = 'Dica';
+                        button.style.background = ''; 
+                        this.hintLevel = 0; 
+                    }
+                } else { 
+                    // MODO SIMPLES (SÓ UMA DICA)
+                    if (display.style.display === 'block') {
+                        display.style.display = 'none';
+                    } else {
+                        if (currentQuestion && currentQuestion.hint) {
+                            display.innerHTML = currentQuestion.hint;
+                            display.style.display = 'block';
+                        }
+                    }
+                }
+            },
+            // (FIM DA CORREÇÃO)
+
+            showSummary() {
+                const display = this.elements.summaryText;
+                if (display.style.display === 'block') {
+                    display.style.display = 'none';
+                } else {
+                    let currentQuestion;
+                    if (this.currentQuestionIndex >= this.shuffledQuestions.length  && this.skippedQuestions.length > 0) {
+                        currentQuestion = this.questions[this.skippedQuestions[this.currentSkippedIndex]];
+                    } else {
+                        currentQuestion = this.shuffledQuestions[this.currentQuestionIndex];
+                    }
+                    const questionTopic = currentQuestion.topic;
+                    if (questionTopic && this.summaries[questionTopic]) {
+                        display.textContent = this.summaries[questionTopic];
+                        display.style.display = 'block';
+                        this.elements.performanceDisplay.style.display = 'none';
+                        this.elements.hintText.style.display = 'none';
+                    }
+                }
+            },
+            
+            translateQuestion: quizApp.translateQuestion, // Reutiliza
+            nextQuestion: quizApp.nextQuestion, // Reutiliza
+            skipQuestion: quizApp.skipQuestion, // Reutiliza
+            getClassification: quizApp.getClassification, // Reutiliza
+            launchConfetti: quizApp.launchConfetti, // Reutiliza
+            
+            showResults() {
+                const percentage = Math.round((this.score / this.questions.length) * 100);
+                const classificationText = this.getClassification(percentage);
+
+                const reportData = {
+                    isCompleted: true, 
+                    studentName: this.validatedStudentName,
+                    studentCode: this.validatedStudentCode,
+                    score: this.score,
+                    totalQuestions: this.questions.length,
+                    percentage: percentage,
+                    classification: classificationText,
+                    userAnswers: this.userAnswers,
+                    originalQuestions: this.questions,
+                    quizTitle: "VOCABULARY QUIZ" // <-- Título novo
+                };
+
+                this.saveCompletedReport(reportData); 
+                this.saveFinalReport(reportData);     
+                this.displayReport(reportData);
+
+                const dataForGoogle = { 
+                    nome: this.validatedStudentName, 
+                    codigo: this.validatedStudentCode, 
+                    pontuacao: `(VOCAB) ${this.score} de ${this.questions.length}`, // Adicionado (VOCAB)
+                    percentual: `${percentage}%`, 
+                    classificacao: classificationText 
+                };
+                
+                fetch(this.APP_SCRIPT_URL, { method: 'POST', body: JSON.stringify(dataForGoogle), headers: { 'Content-Type': 'application/json' }, mode: 'no-cors' })
+                    .catch(error => console.error('Erro no Vocab Quiz:', error));
+            },
+
+            saveCompletedReport(reportData) {
+                if (!reportData.studentCode) return;
+                try {
+                    localStorage.setItem(`vocabQuizState_${reportData.studentCode}`, JSON.stringify(reportData));
+                } catch (e) {
+                    console.error("Não foi possível salvar o estado do quiz:", e);
+                }
+            },
+
+            saveFinalReport(reportData) {
+                if (!reportData.studentCode) return;
+                try {
+                    localStorage.setItem(`vocabQuizReport_${reportData.studentCode}`, JSON.stringify(reportData));
+                } catch (e) {
+                    console.error("Não foi possível salvar o relatório final permanente:", e);
+                }
+            },
+
+            displayReport(data) {
+                // (PASSO 4) - CORRIGIDO PARA USAR O ID
+                showCard('results-card', document.getElementById('results-tab-btn'));
+
+                this.validatedStudentName = data.studentName;
+                this.validatedStudentCode = data.studentCode;
+                this.score = data.score;
+                this.userAnswers = data.userAnswers;
+                this.questions = data.originalQuestions; 
+
+                this.elements.reportStudentName.textContent = data.studentName;
+                this.elements.reportStudentCode.textContent = data.studentCode;
+                this.elements.scoreDisplay.textContent = `${data.score} de ${data.totalQuestions}`;
+                this.elements.percentageDisplay.textContent = `${data.percentage}%`;
+                this.elements.classificationDisplay.textContent = data.classification;
+                
+                if (data.classification === "Excelente!!!") this.launchConfetti();
+                
+                this.elements.fullReportContainer.innerHTML = quizApp.generateFullReportHtml.call(this); // Usa a função do quizApp, mas com os dados do vocabQuizApp
+                this.elements.personalReportContainer.innerHTML = quizApp.generatePersonalReportHtml.call(this); // Usa a função do quizApp, mas com os dados do vocabQuizApp
+                
+                const shareMessage = this.generateShareMessage(data.percentage, data.classification);
+                this.elements.shareWhatsappLink.href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+                
+                // Configura o botão de relatório para o quiz de vocabulário
+                this.elements.sendReportLink.textContent = 'Relatório Enviado (Vocab)'; 
+                this.elements.sendReportLink.style.background = 'linear-gradient(45deg, #155724, #28a745)';
+                this.elements.sendReportLink.onclick = (e) => {
+                     e.preventDefault();
+                     alert('Envio automático já realizado. Clique em "Reiniciar Teste" para voltar.');
+                };
+            },
+
+            retrieveReport(code) {
+                const finalReportJSON = localStorage.getItem(`vocabQuizReport_${code}`);
+                if (!finalReportJSON) {
+                    alert('Erro: Relatório de vocabulário não encontrado.');
+                    return;
+                }
+                
+                try {
+                    const state = JSON.parse(finalReportJSON);
+                    if (state.isCompleted) {
+                        this.displayReport(state); 
+                        
+                        this.elements.sendReportLink.textContent = 'Relatório Já Enviado';
+                        this.elements.sendReportLink.style.background = '#ccc';
+                        this.elements.sendReportLink.onclick = (e) => e.preventDefault();
+                    } else {
+                        alert('O relatório salvo é inválido.');
+                    }
+                } catch (e) {
+                    alert('Erro ao carregar relatório.');
+                    localStorage.removeItem(`vocabQuizReport_${code}`); 
+                }
+            },
+
+            getCorrectAnswerForQuestion: quizApp.getCorrectAnswerForQuestion, // Reutiliza
+            generateFullReportHtml: quizApp.generateFullReportHtml, // Reutiliza
+            analyzePerformanceByTopic: quizApp.analyzePerformanceByTopic, // Reutiliza
+            generatePersonalReportHtml: quizApp.generatePersonalReportHtml, // Reutiliza
+            printPersonalReport: quizApp.printPersonalReport, // Reutiliza
+            printReport: quizApp.printReport, // Reutiliza
+            
+            generateShareMessage(percentage, classificationText) {
+                return `Acabei de fazer o "QUIZ DE VOCABULÁRIO"! Meu resultado: ${percentage}% (${classificationText}).`;
+            },
+            
+            saveQuizState() {
+                if (!this.validatedStudentCode) return;
+                const state = {
+                    isCompleted: false, 
+                    currentQuestionIndex: this.currentQuestionIndex,
+                    score: this.score,
+                    userAnswers: this.userAnswers,
+                    skippedQuestions: this.skippedQuestions,
+                    currentSkippedIndex: this.currentSkippedIndex,
+                    shuffledQuestions: this.shuffledQuestions
+                };
+                try {
+                    localStorage.setItem(`vocabQuizState_${this.validatedStudentCode}`, JSON.stringify(state));
+                } catch (e) {
+                    console.error("Não foi possível salvar o estado do quiz:", e);
+                }
+            },
+
+            loadQuizState(studentCode) {
+                try {
+                    const savedState = localStorage.getItem(`vocabQuizState_${studentCode}`);
+                    if (savedState) {
+                        const state = JSON.parse(savedState);
+                        if (!state.isCompleted) {
+                            this.currentQuestionIndex = state.currentQuestionIndex;
+                            this.score = state.score;
+                            this.userAnswers = state.userAnswers;
+                            this.skippedQuestions = state.skippedQuestions;
+                            this.currentSkippedIndex = state.currentSkippedIndex;
+                            this.shuffledQuestions = state.shuffledQuestions; 
+                            return true;
+                        }
+                    }
+                } catch (e) {
+                    console.error("Não foi possível carregar o estado do quiz:", e);
+                    localStorage.removeItem(`vocabQuizState_${studentCode}`); 
+                }
+                return false; 
+            },
+            
+            restartQuiz: quizApp.restartQuiz, // Reutiliza (ambos voltam para o Início)
+            
+            saveReport: quizApp.saveReport, // Reutiliza
+            
+            init() {
+                this.elements.translateButton.onclick = () => this.translateQuestion();
+                this.elements.performanceButton.onclick = () => this.showPerformance();
+                this.elements.hintButton.onclick = () => this.showHint();
+                this.elements.summaryButton.onclick = () => this.showSummary();
+                this.elements.nextButton.onclick = () => this.nextQuestion();
+                this.elements.skipButton.onclick = () => this.skipQuestion();
+            }
+        };
+
+
+        // --- FUNÇÕES DO MODAL DE CONTEÚDO (PDF) ---
+        
+        function openReadModal(pdfLink, title) {
+            const modalBody = document.getElementById('modal-body');
+            const modalTitle = document.getElementById('modal-title');
+            modalBody.innerHTML = ''; 
+            modalTitle.textContent = title || 'Material de Estudo';
+            
+            if (pdfLink && pdfLink !== 'COLE_O_LINK_DA_APOSTILA_AQUI' && pdfLink !== 'COLE_O_LINK_DO_ROTEIRO_AQUI') {
+                const iframe = document.createElement('iframe');
+                iframe.src = pdfLink;
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                modalBody.appendChild(iframe);
+            } else {
+                modalBody.innerHTML = '<p style="padding: 20px; text-align: center;">Erro: Link do PDF não encontrado ou não configurado.</p>';
+            }
+            
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeReadModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+            document.getElementById('modal-body').innerHTML = ''; // Limpa o iframe
+            document.getElementById('modal-content').classList.remove('night-mode');
+            document.getElementById('night-mode-toggle').textContent = 'Modo Noturno 🌙';
+        }
+
+        function toggleNightMode() {
+            const modalContent = document.getElementById('modal-content');
+            modalContent.classList.toggle('night-mode');
+            
+            const btn = document.getElementById('night-mode-toggle');
+            if (modalContent.classList.contains('night-mode')) {
+                btn.textContent = 'Modo Claro ☀️';
+            } else {
+                btn.textContent = 'Modo Noturno 🌙';
+            }
+        }
+        
+        function downloadContent(pdfLink) {
+             if (pdfLink && pdfLink !== 'COLE_O_LINK_DA_APOSTILA_AQUI' && pdfLink !== 'COLE_O_LINK_DO_ROTEIRO_AQUI') {
+                let downloadLink = pdfLink.replace("/preview", "/view"); 
+                
+                if (pdfLink.includes('archive.org')) {
+                    downloadLink = pdfLink;
+                } else if (pdfLink.includes('drive.google.com')) {
+                     downloadLink = pdfLink.replace("/preview", "/view?usp=sharing"); 
+                }
+                
+                const a = document.createElement('a');
+                a.href = downloadLink; 
+                a.target = '_blank'; 
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                alert('Nenhum material em PDF disponível para download.');
+            }
+        }
+
+        
+        // --- INICIALIZAÇÃO ---
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const intro = document.getElementById("intro-card");
+            if (intro) {
+                intro.style.display = "flex";
+                intro.style.flexDirection = "column";
+            }
+        });
+
+        window.onload = function() {
+            quizApp.init(); 
+            vocabQuizApp.init(); // ATIVANDO O NOVO QUIZ DE VOCABULÁRIO
+            
+            document.getElementById('modal-close-btn').onclick = closeReadModal;
+            document.getElementById('night-mode-toggle').onclick = toggleNightMode;
+            
+            const modalOverlay = document.getElementById('modal-overlay');
+            modalOverlay.onclick = function(event) {
+                if (event.target == modalOverlay) {
+                    closeReadModal();
+                }
+            };
+
+            const firstBtn = document.querySelector('.tablinks');
+            if (firstBtn) {
+                showCard('intro-card', firstBtn);
+            } else {
+                showCard('intro-card', null); 
+            }
+        };
+    </script>
+</body>
+</html>
