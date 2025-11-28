@@ -345,7 +345,7 @@
                 <div id="progress-bar" class="progress-bar">0%</div>
             </div>
             <div class="question-header">
-                <span class="question-counter"><span id="current-question-num">1</span> de 20</span>
+                <span class="question-counter"><span id="current-question-num">1</span> de 30</span>
                 <span class="attempts-counter" style="display: none;">Tentativas restantes: <span id="attempts-left">Ilimitadas</span></span>
             </div>
             
@@ -382,7 +382,7 @@
                 <div id="vocab-progress-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #155724, #28a745);">0%</div>
             </div>
             <div class="question-header">
-                <span class="question-counter"><span id="vocab-current-question-num">1</span> de 20</span>
+                <span class="question-counter"><span id="vocab-current-question-num">1</span> de 30</span>
                 <span class="attempts-counter" style="display: none;">Tentativas: <span id="vocab-attempts-left">Ilimitadas</span></span>
             </div>
             <div id="vocab-audio-play-container"></div>
@@ -467,7 +467,7 @@
     <script>
         
         // --- DADOS E LINKS DO PROTÓTIPO CRIANÇA (3º ANO) ---
-        const PDF_LINK_ROTEIRO = 'https://drive.google.com/file/d/1_sFiH1MxRmFWLTOZL9DdMhZ9DebDQ1AI/view?usp=drive_link'; 
+        const PDF_LINK_ROTEIRO = 'https://drive.google.com/file/d/1TGErr0lPJcYQmIfmtdRsVj5GPWORKI_0/view?usp=drive_link'; 
         const PDF_LINK_APOSTILA = ''; 
         const VIDEO_LINK = 'https://drive.google.com/file/d/1J4b2zLpQBMvsa79_Ns8ZEbUytN4-1lC9/view?usp=drive_link'; 
         
@@ -493,72 +493,55 @@
 
 
 const TOPIC_SUMMARIES = {
-    "Body & Face": "Partes do Corpo: 'Head' (Cabeça), 'Eye' (Olho), 'Nose' (Nariz), 'Mouth' (Boca), 'Hand' (Mão), 'Foot/Feet' (Pé/Pés).",
-    "Senses": "Os 5 Sentidos: 'Sight' (Visão/Olhos), 'Hearing' (Audição/Orelhas), 'Smell' (Olfato/Nariz), 'Touch' (Tato/Mãos), 'Taste' (Paladar/Boca).",
-    "Colors & Adjectives": "Descrições: 'Red' (Vermelho), 'Blue' (Azul). 'Big' (Grande) vs 'Small' (Pequeno); 'Tall' (Alto) vs 'Short' (Baixo).",
-    "Fairy Tales": "Contos: 'Snow White' (Branca de Neve), 'Three Little Pigs' (Três Porquinhos), 'Goldilocks' (Cachinhos Dourados).",
-    "Family & Likes": "Revisão: 'Mom', 'Dad'. 'I like' (Eu gosto), 'I don't like' (Eu não gosto)."
+    "Family": "Família: Mom (Mãe), Dad (Pai), Sister (Irmã), Brother (Irmão).",
+    "Food": "Comida: Chicken (Frango), Steak (Bife), Ham (Presunto), Cheese (Queijo), Bread (Pão), Coffee (Café), Milk (Leite).",
+    "Sports": "Esportes: Swimming (Natação), Cycling (Ciclismo), Dancing (Dança), Soccer (Futebol), Volleyball (Vôlei).",
+    "Likes": "Gostos: I like (Eu gosto), I don't like (Eu não gosto), I love (Eu amo), Do you like...? (Você gosta...?)."
 };
 
+// TODAS AS 30 QUESTÕES REUNIDAS AQUI (3º ANO)
 const GRAMMAR_QUESTIONS = [
-    // --- MÚLTIPLA ESCOLHA ---
-    { type: 'mcq', question: "This is my ___ (Cabeça).", topic: "Body & Face", hint: "DICA 1: Parte superior.", hint_2: "DICA 2: He...", options: [ { text: "Head", isCorrect: true, rationale: "Correto! Head é Cabeça." }, { text: "Hand", isCorrect: false, rationale: "Incorreto. Hand é Mão." }, { text: "Foot", isCorrect: false, rationale: "Incorreto." }, { text: "Knee", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "We use our Eyes for ___ (Visão).", topic: "Senses", hint: "DICA 1: Ver.", hint_2: "DICA 2: Si...", options: [ { text: "Sight", isCorrect: true, rationale: "Correto! Sight é Visão." }, { text: "Smell", isCorrect: false, rationale: "Incorreto." }, { text: "Touch", isCorrect: false, rationale: "Incorreto." }, { text: "Taste", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "The giant is very ___ (Grande).", topic: "Colors & Adjectives", hint: "DICA 1: Tamanho.", hint_2: "DICA 2: B...", options: [ { text: "Big", isCorrect: true, rationale: "Correto! Big é Grande." }, { text: "Small", isCorrect: false, rationale: "Incorreto." }, { text: "Little", isCorrect: false, rationale: "Incorreto." }, { text: "Short", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "I ___ like spiders. (Eu não gosto)", topic: "Family & Likes", hint: "DICA 1: Negativa.", hint_2: "DICA 2: Don...", options: [ { text: "Don't", isCorrect: true, rationale: "Correto!" }, { text: "Not", isCorrect: false, rationale: "Incorreto." }, { text: "No", isCorrect: false, rationale: "Incorreto." }, { text: "Doesn't", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "Snow White and the Seven ___.", topic: "Fairy Tales", hint: "DICA 1: Pequenos homens.", hint_2: "DICA 2: Dwa...", options: [ { text: "Dwarfs", isCorrect: true, rationale: "Correto! Anões." }, { text: "Pigs", isCorrect: false, rationale: "Incorreto." }, { text: "Giants", isCorrect: false, rationale: "Incorreto." }, { text: "Bears", isCorrect: false, rationale: "Incorreto." } ] },
+    // --- FAMILY MEMBERS (6 Questões) ---
+    { type: 'mcq', question: "Quem é 'MOM'?", topic: "Family", hint: "DICA 1: Ela cuida de você.", hint_2: "DICA 2: M...", options: [ { text: "Mãe", isCorrect: true, rationale: "Correto! Mom é Mãe." }, { text: "Pai", isCorrect: false, rationale: "Incorreto. Pai é Dad." }, { text: "Irmã", isCorrect: false, rationale: "Incorreto." }, { text: "Avó", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Quem é 'DAD'?", topic: "Family", hint: "DICA 1: O pai.", hint_2: "DICA 2: P...", options: [ { text: "Pai", isCorrect: true, rationale: "Correto! Dad é Pai." }, { text: "Mãe", isCorrect: false, rationale: "Incorreto." }, { text: "Irmão", isCorrect: false, rationale: "Incorreto." }, { text: "Tio", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'drag-drop', question: "Irmã em inglês: ______.", topic: "Family", hint: "DICA 1: Começa com S.", hint_2: "DICA 2: Sis...", options: ["Sister", "Brother", "Baby"], answer: "Sister", rationale: "Correto. Sister é Irmã." },
+    { type: 'drag-drop', question: "Irmão em inglês: ______.", topic: "Family", hint: "DICA 1: Começa com B.", hint_2: "DICA 2: Bro...", options: ["Brother", "Sister", "Dad"], answer: "Brother", rationale: "Correto. Brother é Irmão." },
+    { type: 'tf', question: "'Mom' e 'Dad' são pais.", topic: "Family", hint: "DICA 1: Pai e Mãe.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'fill-in', question: "This is my ______ (Irmã).", topic: "Family", hint: "DICA 1: Menina.", hint_2: "DICA 2: Sis...", answer: ["sister"], rationale: "Correto. Sister." },
 
-    // --- VERDADEIRO OU FALSO ---
-    { type: 'tf', question: "'Foot' no plural é 'Foots'.", topic: "Body & Face", hint: "DICA 1: Plural irregular.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. O plural de Foot é Feet." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "'Yellow' significa Amarelo.", topic: "Colors & Adjectives", hint: "DICA 1: Cor do sol.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Hand' significa Cabeça.", topic: "Body & Face", hint: "DICA 1: Tem dedos.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Hand é Mão." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "Usamos o Nariz (Nose) para o Olfato (Smell).", topic: "Senses", hint: "DICA 1: Cheirar.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Young' significa Velho.", topic: "Colors & Adjectives", hint: "DICA 1: Jovem.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Young é Jovem. Velho é Old." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    // --- FOOD (8 Questões) ---
+    { type: 'tf', question: "'Chicken' em português é Ovo.", topic: "Food", hint: "DICA 1: É uma ave.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Chicken é Frango. Ovo é Egg. (Questão da Prova)" }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    { type: 'tf', question: "'Steak' em português é Presunto.", topic: "Food", hint: "DICA 1: Carne de vaca.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Steak é Bife. Presunto é Ham. (Questão da Prova)" }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    { type: 'mcq', question: "O que é 'HAM'?", topic: "Food", hint: "DICA 1: Põe no sanduíche.", hint_2: "DICA 2: Pre...", options: [ { text: "Presunto", isCorrect: true, rationale: "Correto!" }, { text: "Queijo", isCorrect: false, rationale: "Incorreto (Cheese)." }, { text: "Pão", isCorrect: false, rationale: "Incorreto." }, { text: "Ovo", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'CHEESE'.", topic: "Food", hint: "DICA 1: Ratos gostam.", hint_2: "DICA 2: Que...", options: [ { text: "Queijo", isCorrect: true, rationale: "Correto!" }, { text: "Leite", isCorrect: false, rationale: "Incorreto." }, { text: "Café", isCorrect: false, rationale: "Incorreto." }, { text: "Bolo", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Bebida escura: 'COFFEE'.", topic: "Food", hint: "DICA 1: Café da manhã.", hint_2: "DICA 2: Ca...", options: [ { text: "Café", isCorrect: true, rationale: "Correto!" }, { text: "Leite", isCorrect: false, rationale: "Incorreto." }, { text: "Suco", isCorrect: false, rationale: "Incorreto." }, { text: "Água", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I eat ______ (Pão) everyday.", topic: "Food", hint: "DICA 1: Padaria.", hint_2: "DICA 2: Bre...", answer: ["bread"], rationale: "Correto. Bread." },
+    { type: 'fill-in', question: "I drink ______ (Leite).", topic: "Food", hint: "DICA 1: Vaca.", hint_2: "DICA 2: Mi...", answer: ["milk"], rationale: "Correto. Milk." },
+    { type: 'tf', question: "'Chicken' significa Frango.", topic: "Food", hint: "DICA 1: Ave.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
 
-    // --- ARRASTAR E SOLTAR (GRAMÁTICA) ---
-    { type: 'drag-drop', question: "Parte do corpo (Braço): ______.", topic: "Body & Face", hint: "DICA 1: Membro superior.", hint_2: "DICA 2: Ar...", options: ["Arm", "Leg", "Head"], answer: "Arm", rationale: "Correto. Arm é Braço." },
-    { type: 'drag-drop', question: "Sentido do Paladar: ______.", topic: "Senses", hint: "DICA 1: Boca.", hint_2: "DICA 2: Tas...", options: ["Taste", "Touch", "Sight"], answer: "Taste", rationale: "Correto. Taste." },
-    { type: 'drag-drop', question: "Cor do céu: ______.", topic: "Colors & Adjectives", hint: "DICA 1: Azul.", hint_2: "DICA 2: Bl...", options: ["Blue", "Red", "Green"], answer: "Blue", rationale: "Correto. Blue." },
-    { type: 'drag-drop', question: "João e o Pé de Feijão: Jack and the ______.", topic: "Fairy Tales", hint: "DICA 1: Planta.", hint_2: "DICA 2: Bean...", options: ["Beanstalk", "Tree", "Rose"], answer: "Beanstalk", rationale: "Correto." },
-    { type: 'drag-drop', question: "Isto é meu Nariz: This is my ______.", topic: "Body & Face", hint: "DICA 1: Rosto.", hint_2: "DICA 2: No...", options: ["Nose", "Mouth", "Ear"], answer: "Nose", rationale: "Correto." },
+    // --- SPORTS & ACTIVITIES (8 Questões) ---
+    { type: 'tf', question: "'Dancing' é Dança em inglês.", topic: "Sports", hint: "DICA 1: Dançar.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto! (Questão da Prova)" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'mcq', question: "O que é 'SWIMMING'?", topic: "Sports", hint: "DICA 1: Água.", hint_2: "DICA 2: Na...", options: [ { text: "Natação", isCorrect: true, rationale: "Correto!" }, { text: "Corrida", isCorrect: false, rationale: "Incorreto." }, { text: "Dança", isCorrect: false, rationale: "Incorreto." }, { text: "Futebol", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'CYCLING'.", topic: "Sports", hint: "DICA 1: Bicicleta.", hint_2: "DICA 2: Cic...", options: [ { text: "Ciclismo", isCorrect: true, rationale: "Correto!" }, { text: "Correr", isCorrect: false, rationale: "Incorreto." }, { text: "Pular", isCorrect: false, rationale: "Incorreto." }, { text: "Nadar", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Sport with a net and hands: ___.", topic: "Sports", hint: "DICA 1: Vôlei.", hint_2: "DICA 2: Vol...", options: [ { text: "Volleyball", isCorrect: true, rationale: "Correto!" }, { text: "Soccer", isCorrect: false, rationale: "Incorreto." }, { text: "Karate", isCorrect: false, rationale: "Incorreto." }, { text: "Cycling", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I like ______ (Futebol).", topic: "Sports", hint: "DICA 1: Neymar.", hint_2: "DICA 2: Soc...", answer: ["soccer"], rationale: "Correto. Soccer." },
+    { type: 'drag-drop', question: "Esporte de luta: ______.", topic: "Sports", hint: "DICA 1: Faixa preta.", hint_2: "DICA 2: Ka...", options: ["Karate", "Tennis", "Dancing"], answer: "Karate", rationale: "Correto. Karate." },
+    { type: 'mcq', question: "What is 'COMPUTER GAMES'?", topic: "Sports", hint: "DICA 1: Jogar no PC.", hint_2: "DICA 2: Jo...", options: [ { text: "Jogos de Computador", isCorrect: true, rationale: "Correto!" }, { text: "Jogos de Tabuleiro", isCorrect: false, rationale: "Incorreto." }, { text: "Esportes", isCorrect: false, rationale: "Incorreto." }, { text: "Livros", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Esporte com raquete: ___.", topic: "Sports", hint: "DICA 1: Guga.", hint_2: "DICA 2: Ten...", options: [ { text: "Tennis", isCorrect: true, rationale: "Correto!" }, { text: "Swimming", isCorrect: false, rationale: "Incorreto." }, { text: "Soccer", isCorrect: false, rationale: "Incorreto." }, { text: "Karate", isCorrect: false, rationale: "Incorreto." } ] },
 
-    // --- PREENCHER ---
-    { type: 'fill-in', question: "I have two ______ (Pés).", topic: "Body & Face", hint: "DICA 1: Plural de Foot.", hint_2: "DICA 2: Fe...", answer: ["feet"], rationale: "Correto. Feet." },
-    { type: 'fill-in', question: "My eyes are ______ (Verdes).", topic: "Colors & Adjectives", hint: "DICA 1: Cor da grama.", hint_2: "DICA 2: Gr...", answer: ["green"], rationale: "Correto. Green." },
-    { type: 'fill-in', question: "I ______ (Gosto) apples.", topic: "Family & Likes", hint: "DICA 1: Preferência.", hint_2: "DICA 2: Li...", answer: ["like"], rationale: "Correto. Like." },
-    { type: 'fill-in', question: "This is my ______ (Boca).", topic: "Body & Face", hint: "DICA 1: Comer.", hint_2: "DICA 2: Mou...", answer: ["mouth"], rationale: "Correto. Mouth." },
-    { type: 'fill-in', question: "The dwarf is ______ (Pequeno).", topic: "Colors & Adjectives", hint: "DICA 1: Tamanho.", hint_2: "DICA 2: Sm...", answer: ["small"], rationale: "Correto. Small." }
+    // --- LIKES & GRAMMAR (8 Questões) ---
+    { type: 'mcq', question: "COMPLETE: Do you like pizza? Yes, I ___.", topic: "Likes", hint: "DICA 1: Sim, eu...", hint_2: "DICA 2: D...", options: [ { text: "Do", isCorrect: true, rationale: "Correto! Yes, I do." }, { text: "Don't", isCorrect: false, rationale: "Incorreto (Não)." }, { text: "Does", isCorrect: false, rationale: "Incorreto." }, { text: "Am", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "COMPLETE: No, I ___.", topic: "Likes", hint: "DICA 1: Não.", hint_2: "DICA 2: Do...", options: [ { text: "Don't", isCorrect: true, rationale: "Correto! No, I don't." }, { text: "Do", isCorrect: false, rationale: "Incorreto." }, { text: "Not", isCorrect: false, rationale: "Incorreto." }, { text: "No", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'tf', question: "'Friday' é Sexta-feira.", topic: "Grammar", hint: "DICA 1: Dia da semana.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto! (Questão da Prova)" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'fill-in', question: "I ______ (Gosto) of chocolate.", topic: "Likes", hint: "DICA 1: Curto.", hint_2: "DICA 2: Li...", answer: ["like"], rationale: "Correto. Like." },
+    { type: 'fill-in', question: "I ______ (Amo) my mom.", topic: "Likes", hint: "DICA 1: Coração.", hint_2: "DICA 2: Lo...", answer: ["love"], rationale: "Correto. Love." },
+    { type: 'drag-drop', question: "Eu não gosto: I ______ like.", topic: "Likes", hint: "DICA 1: Negativa.", hint_2: "DICA 2: Don...", options: ["Don't", "Not", "No"], answer: "Don't", rationale: "Correto. I don't like." },
+    { type: 'mcq', question: "Traduza: 'DO YOU LIKE?'", topic: "Likes", hint: "DICA 1: Pergunta.", hint_2: "DICA 2: Vo...", options: [ { text: "Você gosta?", isCorrect: true, rationale: "Correto!" }, { text: "Eu gosto", isCorrect: false, rationale: "Incorreto." }, { text: "Você é", isCorrect: false, rationale: "Incorreto." }, { text: "Nós vamos", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I like cycling ______ (mas) I don't like tennis.", topic: "Grammar", hint: "DICA 1: Oposição.", hint_2: "DICA 2: Bu...", answer: ["but"], rationale: "Correto. But (mas)." }
 ];
 
-
-
-
-
-const VOCAB_QUESTIONS = [
-    // --- MÚLTIPLA ESCOLHA (10 Questões) ---
-    { type: 'mcq', question: "O que é 'Shoulder'?", topic: "Body & Face", hint: "DICA 1: Fica perto do pescoço.", hint_2: "DICA 2: Ombro.", options: [ { text: "Ombro", isCorrect: true, rationale: "Correto!" }, { text: "Joelho", isCorrect: false, rationale: "Incorreto." }, { text: "Pé", isCorrect: false, rationale: "Incorreto." }, { text: "Mão", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "O que significa 'Hearing'?", topic: "Senses", hint: "DICA 1: Ouvir.", hint_2: "DICA 2: Aud...", options: [ { text: "Audição", isCorrect: true, rationale: "Correto!" }, { text: "Visão", isCorrect: false, rationale: "Incorreto." }, { text: "Tato", isCorrect: false, rationale: "Incorreto." }, { text: "Olfato", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "Qual a cor 'Red'?", topic: "Colors & Adjectives", hint: "DICA 1: Maçã.", hint_2: "DICA 2: Ver...", options: [ { text: "Vermelho", isCorrect: true, rationale: "Correto!" }, { text: "Azul", isCorrect: false, rationale: "Incorreto." }, { text: "Verde", isCorrect: false, rationale: "Incorreto." }, { text: "Amarelo", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "Quem é 'Mom'?", topic: "Family & Likes", hint: "DICA 1: Feminino.", hint_2: "DICA 2: Mãe.", options: [ { text: "Mãe", isCorrect: true, rationale: "Correto!" }, { text: "Pai", isCorrect: false, rationale: "Incorreto." }, { text: "Irmã", isCorrect: false, rationale: "Incorreto." }, { text: "Irmão", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "O que significa 'Beautiful'?", topic: "Colors & Adjectives", hint: "DICA 1: Elogio.", hint_2: "DICA 2: Bonito.", options: [ { text: "Bonito(a)", isCorrect: true, rationale: "Correto!" }, { text: "Feio(a)", isCorrect: false, rationale: "Incorreto." }, { text: "Velho(a)", isCorrect: false, rationale: "Incorreto." }, { text: "Novo(a)", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "Traduza 'Knee':", topic: "Body & Face", hint: "DICA 1: Perna.", hint_2: "DICA 2: Joelho.", options: [ { text: "Joelho", isCorrect: true, rationale: "Correto!" }, { text: "Cotovelo", isCorrect: false, rationale: "Incorreto." }, { text: "Ombro", isCorrect: false, rationale: "Incorreto." }, { text: "Dedo", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "Quem são os 'Three Little Pigs'?", topic: "Fairy Tales", hint: "DICA 1: Animais.", hint_2: "DICA 2: Porcos.", options: [ { text: "Três Porquinhos", isCorrect: true, rationale: "Correto!" }, { text: "Sete Anões", isCorrect: false, rationale: "Incorreto." }, { text: "Três Ursos", isCorrect: false, rationale: "Incorreto." }, { text: "Dois Gatos", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "O que usamos para o Tato (Touch)?", topic: "Senses", hint: "DICA 1: Parte do corpo.", hint_2: "DICA 2: Mãos.", options: [ { text: "Mãos (Hands)", isCorrect: true, rationale: "Correto!" }, { text: "Olhos (Eyes)", isCorrect: false, rationale: "Incorreto." }, { text: "Boca (Mouth)", isCorrect: false, rationale: "Incorreto." }, { text: "Nariz (Nose)", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "'Big' é o oposto de:", topic: "Colors & Adjectives", hint: "DICA 1: Pequeno.", hint_2: "DICA 2: Sm...", options: [ { text: "Small", isCorrect: true, rationale: "Correto!" }, { text: "Tall", isCorrect: false, rationale: "Incorreto." }, { text: "Old", isCorrect: false, rationale: "Incorreto." }, { text: "Young", isCorrect: false, rationale: "Incorreto." } ] },
-    { type: 'mcq', question: "O que é 'Hair'?", topic: "Body & Face", hint: "DICA 1: Cabeça.", hint_2: "DICA 2: Ca...", options: [ { text: "Cabelo", isCorrect: true, rationale: "Correto!" }, { text: "Cabeça", isCorrect: false, rationale: "Incorreto." }, { text: "Rosto", isCorrect: false, rationale: "Incorreto." }, { text: "Orelha", isCorrect: false, rationale: "Incorreto." } ] },
-
-    // --- VERDADEIRO OU FALSO (10 Questões) ---
-    { type: 'tf', question: "'Finger' é Dedo da mão.", topic: "Body & Face", hint: "DICA 1: Mão.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Toe' é Dedo da mão.", topic: "Body & Face", hint: "DICA 1: Pé.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Toe é Dedo do pé." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "'Pink' significa Rosa.", topic: "Colors & Adjectives", hint: "DICA 1: Cor.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Old' significa Novo.", topic: "Colors & Adjectives", hint: "DICA 1: Idade.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Old é Velho." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "'Ear' é Orelha.", topic: "Body & Face", hint: "DICA 1: Audição.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Chicken' significa Ovo.", topic: "Food", hint: "DICA 1: Animal.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Chicken é Frango." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "'Steak' significa Presunto.", topic: "Food", hint: "DICA 1: Carne.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Steak é Bife." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-    { type: 'tf', question: "'Friday' é Sexta-feira.", topic: "Family & Likes", hint: "DICA 1: Dia da semana.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Rice' é Arroz.", topic: "Food", hint: "DICA 1: Comida.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-    { type: 'tf', question: "'Dancing' é Dança.", topic: "Family & Likes", hint: "DICA 1: Movimento.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true }
-];
+// MANTENHA VAZIO
+const VOCAB_QUESTIONS = [];
    
         
 
@@ -834,7 +817,7 @@ const quizBase = {
         this.elements.hintButton.disabled = false;
         
         // --- NUMERAÇÃO ---
-        // 1. Contador Sequencial (Ex: 1 de 20) no topo
+        // 1. Contador Sequencial (Ex: 1 de 30) no topo
         const currentProgressNum = Object.keys(this.userAnswers).length + 1;
         if (this.elements.currentQuestionNumSpan) {
             this.elements.currentQuestionNumSpan.textContent = currentProgressNum;
