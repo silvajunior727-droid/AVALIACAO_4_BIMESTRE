@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Estudos - 5º Ano</title>
     <style>
-        /* CSS COMPLETO E OTIMIZADO (BASEADO NA VERSÃO ESTÁVEL DO 4º ANO) */
+        /* CSS COMPLETO DO PROTÓTIPO */
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e8f1f8 100%); 
@@ -170,94 +170,94 @@
         
         /* --- SUPER DRAG AND DROP (RESPONSIVO) --- */
 
-        /* --- JANELA DE ARRASTAR (PEQUENA E ALINHADA) --- */
-        #drop-zone { 
-            display: inline-block;
-            padding: 2px 10px;       
-            margin: 0 5px;
-            min-width: 60px;         
-            height: auto;
-            border: 2px dashed #007bff; 
-            border-radius: 6px;
-            background-color: #f0f8ff; 
-            color: #007bff;
-            font-weight: bold;
-            text-align: center; 
-            vertical-align: middle;  
-            font-size: 0.95rem;
-            line-height: normal;
-            transition: all 0.3s ease;
-        }
+/* --- JANELA DE ARRASTAR (PEQUENA E ALINHADA) --- */
+#drop-zone { 
+    display: inline-block;
+    padding: 2px 10px;       /* Mais fino e delicado */
+    margin: 0 5px;
+    min-width: 60px;         /* Largura mínima menor */
+    height: auto;
+    border: 2px dashed #007bff; 
+    border-radius: 6px;
+    background-color: #f0f8ff; 
+    color: #007bff;
+    font-weight: bold;
+    text-align: center; 
+    vertical-align: middle;  /* Alinha perfeitamente com o texto */
+    font-size: 0.95rem;
+    line-height: normal;
+    transition: all 0.3s ease;
+}
 
-        #drop-zone.over { 
-            background-color: #cce5ff; 
-            transform: scale(1.05);
-            border-color: #0056b3;
-        }
+#drop-zone.over { 
+    background-color: #cce5ff; 
+    transform: scale(1.05);
+    border-color: #0056b3;
+}
 
-        #drop-zone.correct { 
-            border-style: solid; border-color: #28a745; background-color: #d4edda; color: #155724; 
-        }
+#drop-zone.correct { 
+    border-style: solid; border-color: #28a745; background-color: #d4edda; color: #155724; 
+}
 
-        #drop-zone.incorrect { 
-            border-style: solid; border-color: #dc3545; background-color: #f8d7da; color: #721c24; 
-        }
+#drop-zone.incorrect { 
+    border-style: solid; border-color: #dc3545; background-color: #f8d7da; color: #721c24; 
+}
 
-        /* Container das opções */
-        .drag-options-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 15px;
-            border: 1px solid #e9ecef;
-        }
+/* Container das opções */
+.drag-options-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+}
 
-        /* Os botões arrastáveis */
-        .drag-option {
-            background: linear-gradient(145deg, #ffffff, #f0f0f0);
-            border: 1px solid #d1d9e6;
-            border-bottom: 4px solid #b1b9c6; /* Efeito 3D */
-            color: #444;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: grab;
-            user-select: none;
-            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            touch-action: manipulation; 
-        }
+/* Os botões arrastáveis */
+.drag-option {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 1px solid #d1d9e6;
+    border-bottom: 4px solid #b1b9c6; /* Efeito 3D */
+    color: #444;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    touch-action: manipulation; /* Melhora resposta no celular */
+}
 
-        .drag-option:active, .drag-option.is-dragging {
-            cursor: grabbing;
-            transform: translateY(3px); 
-            border-bottom-width: 1px;
-            box-shadow: none;
-        }
+.drag-option:active, .drag-option.is-dragging {
+    cursor: grabbing;
+    transform: translateY(3px); /* Efeito de apertar botão */
+    border-bottom-width: 1px;
+    box-shadow: none;
+}
 
-        .drag-option:hover {
-            transform: translateY(-2px);
-            border-color: #007bff;
-            color: #007bff;
-        }
+.drag-option:hover {
+    transform: translateY(-2px);
+    border-color: #007bff;
+    color: #007bff;
+}
 
-        /* Quando a opção é desabilitada após responder */
-        .drag-option.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-            filter: grayscale(100%);
-        }
+/* Quando a opção é desabilitada após responder */
+.drag-option.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
 
-        @keyframes pulse-green {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(40, 167, 69, 0.5); }
-            100% { transform: scale(1); }
-        }
+@keyframes pulse-green {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(40, 167, 69, 0.5); }
+    100% { transform: scale(1); }
+}
         
         .personal-summary-item { background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 15px; margin-bottom: 15px; }
         .personal-summary-item h4 { margin-top: 0; color: #856404; }
@@ -330,7 +330,7 @@
             </button>
         </div>
         <div id="intro-card" class="intro-card">
-            <h2>English Grammar and Vocabulary Quiz - 5º Ano</h2> 
+            <h2>English Grammar and Vocabulary Quiz</h2> 
             <p id="personalized-welcome" style="font-size: 1.2rem; font-weight: bold; margin-top: 10px; display: none; color: #dc3545;">Seja bem-vindo(a) e boa sorte!</p>
             <p id="quiz-description">Por favor, insira seu código de acesso para iniciar o teste. Você tem tentativas <span id="intro-attempts-left">ilimitadas</span> para fazer este teste.</p>
             <input type="text" id="student-code" placeholder="Your Access Code!">
@@ -340,12 +340,12 @@
         </div>
 
         <div id="question-card" class="question-card">
-            <h2 style="color: #0056b3; text-align: center;">Quiz - Grammar</h2>
+<h2 style="color: #0056b3; text-align: center;">Quiz - Grammar</h2>
             <div id="progress-bar-container" class="progress-bar-container">
                 <div id="progress-bar" class="progress-bar">0%</div>
             </div>
             <div class="question-header">
-                <span class="question-counter"><span id="current-question-num">1</span> de 20</span>
+                <span class="question-counter"><span id="current-question-num">1</span> de 40</span>
                 <span class="attempts-counter" style="display: none;">Tentativas restantes: <span id="attempts-left">Ilimitadas</span></span>
             </div>
             
@@ -382,7 +382,7 @@
                 <div id="vocab-progress-bar" class="progress-bar" style="width: 0%; background: linear-gradient(90deg, #155724, #28a745);">0%</div>
             </div>
             <div class="question-header">
-                <span class="question-counter"><span id="vocab-current-question-num">1</span> de 20</span>
+                <span class="question-counter"><span id="vocab-current-question-num">1</span> de 40</span>
                 <span class="attempts-counter" style="display: none;">Tentativas: <span id="vocab-attempts-left">Ilimitadas</span></span>
             </div>
             <div id="vocab-audio-play-container"></div>
@@ -466,94 +466,92 @@
 
     <script>
         
-        // --- DADOS E LINKS DO 5º ANO ---
-        const PDF_LINK_ROTEIRO = 'https://drive.google.com/file/d/1_sFiH1MxRmFWLTOZL9DdMhZ9DebDQ1AI/view?usp=drive_link'; 
+        // --- DADOS E LINKS DO PROTÓTIPO CRIANÇA (5º ANO) ---
+        const PDF_LINK_ROTEIRO = 'https://drive.google.com/file/d/1NeWk4r9paXcqrtWh43pGZVQDreZiCjJv/view?usp=drive_link'; 
         const PDF_LINK_APOSTILA = ''; 
-        const VIDEO_LINK = 'https://drive.google.com/file/d/1J4b2zLpQBMvsa79_Ns8ZEbUytN4-1lC9/view?usp=drive_link'; 
+        const VIDEO_LINK = 'https://drive.google.com/file/d/19nv_PV4Scxi2D-gW4N3OKFPQZIGqdzLd/view?usp=drive_link'; 
         
         const STUDENT_DATA = {
-            "119AS": "ANTHONY DOURADO DE SOUZA",
-            "240DG": "DEIVID GUIMARÃES",
-            "351LB": "LORENA DONNARUMMA BENTUBO LOPES",
-            "472MC": "MIGUEL DA SILVA COSTA",
-            "583SM": "SAMUEL OLIVEIRA MACHADO",
-            "604KM": "KAUÊ XAVIER DE MOURA",
-            "725LC": "LEONARDO CAVALCANTE DA SILVA",
-            "836LO": "LIZZY ROCHA DE OLIVEIRA",
-            "947LA": "LORENZO DEGAN DE ANDRADE",
-            "058LR": "LUAN RIBEIRO ROCHA",
-            "169MA": "MANUELA ARAUJO DA SILVA",
-            "280MD": "MIGUEL DOMINGUES",
-            "391PB": "PEDRO SANTAROSA BEZERRA",
-            "402NL": "NICOLLY FERNANDES DA SILVA LIMA",
-            "901JR": "JÚNIOR" // Mantido como solicitado
+    "121GF": "GEOVANNA FRANCO GAMA",
+    "232MM": "MANUELA CAVALCANTE DA MOTA",
+    "343MS": "MARIO AUGUSTO SILVA DOS SANTOS",
+    "454NR": "NATALLE ALMEIDA REIS",
+    "565NM": "NICOLY MARQUES DA SILVA MENDES",
+    "676PO": "PEDRO DOMINGUES DE MORAES OLIVEIRA",
+    "787YB": "YASMIN MOREIRA BARRETO",
+    "901JR": "JÚNIOR" // Mantido como solicitado
         };
         
-        const TOPIC_SUMMARIES = {
-            "Sports Equipment": "Esportes: 'Helmet' (Capacete), 'Goggles' (Óculos), 'Shin Pads' (Caneleiras), 'Cleats' (Chuteiras).",
-            "Movies": "Filmes: 'Comedy' (Comédia), 'Horror' (Terror), 'Science Fiction' (Ficção), 'Adventure' (Aventura).",
-            "Preferences": "Gostos: 'I love' (Amo), 'I like' (Gosto), 'I prefer' (Prefiro).",
-            "Frequency": "Frequência: 'Always' (Sempre - 100%), 'Sometimes' (Às vezes), 'Never' (Nunca - 0%).",
-            "Numbers": "Números: 'Twenty' (20), 'Thirty' (30), 'One Hundred' (100)."
-        };
+        
 
-        const GRAMMAR_QUESTIONS = [
-            // --- MÚLTIPLA ESCOLHA ---
-            { type: 'mcq', question: "You need ___ to play Hockey. (Capacete)", topic: "Sports Equipment", hint: "DICA 1: Protege a cabeça.", hint_2: "DICA 2: Hel...", options: [ { text: "A helmet", isCorrect: true, rationale: "Correto! Helmet é capacete." }, { text: "Goggles", isCorrect: false, rationale: "Incorreto." }, { text: "A bat", isCorrect: false, rationale: "Incorreto." }, { text: "A ball", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "I ___ Horror movies. (Prefiro)", topic: "Preferences", hint: "DICA 1: Gosto mais.", hint_2: "DICA 2: Pre...", options: [ { text: "Prefer", isCorrect: true, rationale: "Correto! Prefer é preferir." }, { text: "Hate", isCorrect: false, rationale: "Incorreto." }, { text: "Am", isCorrect: false, rationale: "Incorreto." }, { text: "Do", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "She ___ plays soccer. (Sempre)", topic: "Frequency", hint: "DICA 1: Todo dia.", hint_2: "DICA 2: Al...", options: [ { text: "Always", isCorrect: true, rationale: "Correto! Always é sempre." }, { text: "Never", isCorrect: false, rationale: "Incorreto." }, { text: "Sometimes", isCorrect: false, rationale: "Incorreto." }, { text: "Not", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "We use ___ to swim. (Óculos)", topic: "Sports Equipment", hint: "DICA 1: Protege os olhos.", hint_2: "DICA 2: Gog...", options: [ { text: "Goggles", isCorrect: true, rationale: "Correto! Goggles." }, { text: "Gloves", isCorrect: false, rationale: "Incorreto." }, { text: "Helmet", isCorrect: false, rationale: "Incorreto." }, { text: "Boots", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Number 50 is ___.", topic: "Numbers", hint: "DICA 1: Dezena.", hint_2: "DICA 2: Fif...", options: [ { text: "Fifty", isCorrect: true, rationale: "Correto! 50." }, { text: "Fifteen", isCorrect: false, rationale: "Incorreto. 15." }, { text: "Five", isCorrect: false, rationale: "Incorreto. 5." }, { text: "Hundred", isCorrect: false, rationale: "Incorreto." } ] },
 
-            // --- VERDADEIRO OU FALSO ---
-            { type: 'tf', question: "'Sometimes' significa Nunca.", topic: "Frequency", hint: "DICA 1: 50%.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Sometimes é Às vezes. Never é Nunca." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "You need 'Shin Pads' for Soccer.", topic: "Sports Equipment", hint: "DICA 1: Caneleiras.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Animation' é um gênero de filme.", topic: "Movies", hint: "DICA 1: Desenho.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'I love' é menos que 'I like'.", topic: "Preferences", hint: "DICA 1: Amar x Gostar.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Love é mais forte." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "One Hundred é 1000.", topic: "Numbers", hint: "DICA 1: Cem.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. One Hundred é 100." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+const TOPIC_SUMMARIES = {
+    "Sports": "Esportes: Soccer (Futebol), Swimming (Natação), Cycling (Ciclismo), Rowing (Remo), Diving (Mergulho), Boxing (Boxe).",
+    "Equipment": "Equipamentos: Bat (Bastão), Helmet (Capacete), Goggles (Óculos de natação), Shin pads (Caneleiras).",
+    "Movies": "Filmes: Comedy (Comédia), Horror (Terror), Sci-Fi (Ficção), Adventure (Aventura), Fantasy (Fantasia), Drama.",
+    "Preferences": "Preferências: I love (Eu amo), I prefer (Eu prefiro), What kind of...? (Que tipo de...?).",
+    "Frequency": "Frequência: Always (Sempre 100%), Usually (Geralmente), Sometimes (Às vezes), Never (Nunca 0%)."
+};
 
-            // --- ARRASTAR E SOLTAR (GRAMÁTICA) ---
-            { type: 'drag-drop', question: "Eu nunca vou lá: I ______ go there.", topic: "Frequency", hint: "DICA 1: 0%.", hint_2: "DICA 2: Ne...", options: ["Never", "Always", "Sometimes"], answer: "Never", rationale: "Correto. Never." },
-            { type: 'drag-drop', question: "Você precisa de chuteiras: You need ______.", topic: "Sports Equipment", hint: "DICA 1: Pés.", hint_2: "DICA 2: Cl...", options: ["Cleats", "Gloves", "Helmet"], answer: "Cleats", rationale: "Correto. Cleats." },
-            { type: 'drag-drop', question: "Gosto de Comédia: I like ______.", topic: "Movies", hint: "DICA 1: Engraçado.", hint_2: "DICA 2: Com...", options: ["Comedy", "Drama", "Horror"], answer: "Comedy", rationale: "Correto. Comedy." },
-            { type: 'drag-drop', question: "Eu prefiro natação: I ______ Swimming.", topic: "Preferences", hint: "DICA 1: Escolha.", hint_2: "DICA 2: Pre...", options: ["Prefer", "Like", "Hate"], answer: "Prefer", rationale: "Correto. Prefer." },
-            { type: 'drag-drop', question: "Número 30: ______.", topic: "Numbers", hint: "DICA 1: Três.", hint_2: "DICA 2: Thi...", options: ["Thirty", "Thirteen", "Three"], answer: "Thirty", rationale: "Correto. Thirty." },
+// TODAS AS 40 QUESTÕES AQUI PARA EVITAR ERROS DE CARREGAMENTO
+const GRAMMAR_QUESTIONS = [
+    // --- BLOCO 1: SPORTS & EQUIPMENT (10 Questões) ---
+    { type: 'mcq', question: "To play SOCCER, you need: ___.", topic: "Sports", hint: "DICA 1: Protege a perna.", hint_2: "DICA 2: Shin...", options: [ { text: "Shin pads", isCorrect: true, rationale: "Correto! Shin pads são Caneleiras." }, { text: "Bat", isCorrect: false, rationale: "Incorreto. Bat é para Beisebol." }, { text: "Goggles", isCorrect: false, rationale: "Incorreto." }, { text: "Helmet", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "To play BASEBALL, you need a: ___.", topic: "Sports", hint: "DICA 1: Bater na bola.", hint_2: "DICA 2: Ba...", options: [ { text: "Bat", isCorrect: true, rationale: "Correto! Bat é o Bastão." }, { text: "Net", isCorrect: false, rationale: "Incorreto." }, { text: "Shin pads", isCorrect: false, rationale: "Incorreto." }, { text: "Cap", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "To SWIM, you need: ___.", topic: "Sports", hint: "DICA 1: Protege os olhos.", hint_2: "DICA 2: Gog...", options: [ { text: "Goggles", isCorrect: true, rationale: "Correto! Goggles são Óculos de natação." }, { text: "Helmet", isCorrect: false, rationale: "Incorreto." }, { text: "Bat", isCorrect: false, rationale: "Incorreto." }, { text: "Ball", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "To play HOCKEY, you need a: ___.", topic: "Sports", hint: "DICA 1: Cabeça.", hint_2: "DICA 2: Hel...", options: [ { text: "Helmet", isCorrect: true, rationale: "Correto! Helmet é Capacete." }, { text: "Goggles", isCorrect: false, rationale: "Incorreto." }, { text: "Bat", isCorrect: false, rationale: "Incorreto." }, { text: "Swimsuit", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'tf', question: "'Helmet' em português é Joelheira.", topic: "Equipment", hint: "DICA 1: Cabeça.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Helmet é Capacete. (Questão da Prova)" }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    { type: 'fill-in', question: "You need a ______ (Bastão) to play baseball.", topic: "Equipment", hint: "DICA 1: Madeira ou metal.", hint_2: "DICA 2: Ba...", answer: ["bat"], rationale: "Correto. Bat." },
+    { type: 'drag-drop', question: "Esporte aquático: ______.", topic: "Sports", hint: "DICA 1: Piscina.", hint_2: "DICA 2: Swi...", options: ["Swimming", "Running", "Boxing"], answer: "Swimming", rationale: "Correto. Swimming." },
+    { type: 'mcq', question: "O que é 'SHIN PAD'?", topic: "Equipment", hint: "DICA 1: Futebol.", hint_2: "DICA 2: Cane...", options: [ { text: "Caneleira", isCorrect: true, rationale: "Correto!" }, { text: "Joelheira", isCorrect: false, rationale: "Incorreto." }, { text: "Luva", isCorrect: false, rationale: "Incorreto." }, { text: "Bola", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'tf', question: "'Field Hockey' é Hóquei em Campo.", topic: "Sports", hint: "DICA 1: Tradução direta.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto! (Questão da Prova)" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'mcq', question: "Qual destes NÃO é um equipamento?", topic: "Equipment", hint: "DICA 1: É uma ação.", hint_2: "DICA 2: Pla...", options: [ { text: "Play", isCorrect: true, rationale: "Correto! Play (jogar) é verbo." }, { text: "Helmet", isCorrect: false, rationale: "Incorreto." }, { text: "Goggles", isCorrect: false, rationale: "Incorreto." }, { text: "Bat", isCorrect: false, rationale: "Incorreto." } ] },
 
-            // --- PREENCHER ---
-            { type: 'fill-in', question: "What kind of movies do you ______? (Prefere)", topic: "Preferences", hint: "DICA 1: Escolher.", hint_2: "DICA 2: Pre...", answer: ["prefer"], rationale: "Correto. Prefer." },
-            { type: 'fill-in', question: "You need a ______ (Bastão) for baseball.", topic: "Sports Equipment", hint: "DICA 1: Bater.", hint_2: "DICA 2: Ba...", answer: ["bat"], rationale: "Correto. Bat." },
-            { type: 'fill-in', question: "I ______ (Sempre) study.", topic: "Frequency", hint: "DICA 1: Todo dia.", hint_2: "DICA 2: Al...", answer: ["always"], rationale: "Correto. Always." },
-            { type: 'fill-in', question: "One ______ (Cem).", topic: "Numbers", hint: "DICA 1: Centena.", hint_2: "DICA 2: Hun...", answer: ["hundred"], rationale: "Correto. Hundred." },
-            { type: 'fill-in', question: "Science ______ (Ficção).", topic: "Movies", hint: "DICA 1: Espaço/Futuro.", hint_2: "DICA 2: Fic...", answer: ["fiction"], rationale: "Correto. Fiction." }
-        ];
+    // --- BLOCO 2: TYPES OF SPORTS & ACTIVITIES (8 Questões) ---
+    { type: 'mcq', question: "Qual destes é um TEAM SPORT (Coletivo)?", topic: "Sports", hint: "DICA 1: 11 jogadores.", hint_2: "DICA 2: Soc...", options: [ { text: "Soccer", isCorrect: true, rationale: "Correto! Futebol é coletivo." }, { text: "Swimming", isCorrect: false, rationale: "Incorreto." }, { text: "Running", isCorrect: false, rationale: "Incorreto." }, { text: "Cycling", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "O que é 'ROWING'?", topic: "Sports", hint: "DICA 1: Barco.", hint_2: "DICA 2: Re...", options: [ { text: "Remo", isCorrect: true, rationale: "Correto!" }, { text: "Mergulho", isCorrect: false, rationale: "Incorreto." }, { text: "Natação", isCorrect: false, rationale: "Incorreto." }, { text: "Surfe", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'DIVING'.", topic: "Sports", hint: "DICA 1: Fundo do mar.", hint_2: "DICA 2: Mer...", options: [ { text: "Mergulho", isCorrect: true, rationale: "Correto!" }, { text: "Dirigir", isCorrect: false, rationale: "Incorreto." }, { text: "Dançar", isCorrect: false, rationale: "Incorreto." }, { text: "Pular", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "______ (Ciclismo) involves a bike.", topic: "Sports", hint: "DICA 1: Bicicleta.", hint_2: "DICA 2: Cyc...", answer: ["cycling"], rationale: "Correto. Cycling." },
+    { type: 'drag-drop', question: "Esporte de luta: ______.", topic: "Sports", hint: "DICA 1: Luvas.", hint_2: "DICA 2: Box...", options: ["Boxing", "Running", "Fishing"], answer: "Boxing", rationale: "Correto. Boxing." },
+    { type: 'mcq', question: "Swimming, Surfing and Diving are:", topic: "Sports", hint: "DICA 1: Água.", hint_2: "DICA 2: Wa...", options: [ { text: "Water Sports", isCorrect: true, rationale: "Correto!" }, { text: "Dry Sports", isCorrect: false, rationale: "Incorreto." }, { text: "Air Sports", isCorrect: false, rationale: "Incorreto." }, { text: "Ball Sports", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'tf', question: "'Running' significa Correndo/Corrida.", topic: "Sports", hint: "DICA 1: Correr.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'mcq', question: "Qual esporte usa um cavalo?", topic: "Sports", hint: "DICA 1: P...", hint_2: "DICA 2: Po...", options: [ { text: "Polo", isCorrect: true, rationale: "Correto!" }, { text: "Soccer", isCorrect: false, rationale: "Incorreto." }, { text: "Tennis", isCorrect: false, rationale: "Incorreto." }, { text: "Volleyball", isCorrect: false, rationale: "Incorreto." } ] },
 
-        const VOCAB_QUESTIONS = [
-            // --- MÚLTIPLA ESCOLHA (10 Questões) ---
-            { type: 'mcq', question: "O que é 'Helmet'?", topic: "Sports Equipment", hint: "DICA 1: Cabeça.", hint_2: "DICA 2: Cap...", options: [ { text: "Capacete", isCorrect: true, rationale: "Correto!" }, { text: "Joelheira", isCorrect: false, rationale: "Incorreto." }, { text: "Luva", isCorrect: false, rationale: "Incorreto." }, { text: "Touca", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "O que é 'Shin Pads'?", topic: "Sports Equipment", hint: "DICA 1: Perna.", hint_2: "DICA 2: Cane...", options: [ { text: "Caneleiras", isCorrect: true, rationale: "Correto!" }, { text: "Chuteiras", isCorrect: false, rationale: "Incorreto." }, { text: "Meias", isCorrect: false, rationale: "Incorreto." }, { text: "Calças", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Gênero de filme assustador:", topic: "Movies", hint: "DICA 1: Medo.", hint_2: "DICA 2: Hor...", options: [ { text: "Horror", isCorrect: true, rationale: "Correto!" }, { text: "Comedy", isCorrect: false, rationale: "Incorreto." }, { text: "Romance", isCorrect: false, rationale: "Incorreto." }, { text: "Drama", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Traduza 'Always':", topic: "Frequency", hint: "DICA 1: 100%.", hint_2: "DICA 2: Sem...", options: [ { text: "Sempre", isCorrect: true, rationale: "Correto!" }, { text: "Nunca", isCorrect: false, rationale: "Incorreto." }, { text: "Às vezes", isCorrect: false, rationale: "Incorreto." }, { text: "Raramente", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Número 27:", topic: "Numbers", hint: "DICA 1: Vinte e sete.", hint_2: "DICA 2: Twe...", options: [ { text: "Twenty-seven", isCorrect: true, rationale: "Correto!" }, { text: "Thirty-seven", isCorrect: false, rationale: "Incorreto." }, { text: "Seventeen", isCorrect: false, rationale: "Incorreto." }, { text: "Seventy", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "O que é 'Goalkeeper Gloves'?", topic: "Sports Equipment", hint: "DICA 1: Goleiro.", hint_2: "DICA 2: Luvas.", options: [ { text: "Luvas de Goleiro", isCorrect: true, rationale: "Correto!" }, { text: "Tênis de Corrida", isCorrect: false, rationale: "Incorreto." }, { text: "Roupa de Banho", isCorrect: false, rationale: "Incorreto." }, { text: "Bola de Futebol", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Esporte na água:", topic: "Sports Equipment", hint: "DICA 1: Nadar.", hint_2: "DICA 2: Swi...", options: [ { text: "Swimming", isCorrect: true, rationale: "Correto!" }, { text: "Running", isCorrect: false, rationale: "Incorreto." }, { text: "Cycling", isCorrect: false, rationale: "Incorreto." }, { text: "Horsing", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Filme engraçado:", topic: "Movies", hint: "DICA 1: Rir.", hint_2: "DICA 2: Com...", options: [ { text: "Comedy", isCorrect: true, rationale: "Correto!" }, { text: "Drama", isCorrect: false, rationale: "Incorreto." }, { text: "Horror", isCorrect: false, rationale: "Incorreto." }, { text: "Mystery", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Traduza 'Sometimes':", topic: "Frequency", hint: "DICA 1: 50%.", hint_2: "DICA 2: Às...", options: [ { text: "Às vezes", isCorrect: true, rationale: "Correto!" }, { text: "Sempre", isCorrect: false, rationale: "Incorreto." }, { text: "Nunca", isCorrect: false, rationale: "Incorreto." }, { text: "Todo dia", isCorrect: false, rationale: "Incorreto." } ] },
-            { type: 'mcq', question: "Número 100:", topic: "Numbers", hint: "DICA 1: Cem.", hint_2: "DICA 2: Hun...", options: [ { text: "One Hundred", isCorrect: true, rationale: "Correto!" }, { text: "One Thousand", isCorrect: false, rationale: "Incorreto." }, { text: "Fifty", isCorrect: false, rationale: "Incorreto." }, { text: "Ten", isCorrect: false, rationale: "Incorreto." } ] },
+    // --- BLOCO 3: MOVIE GENRES (10 Questões) ---
+    { type: 'mcq', question: "What is a 'HORROR' movie?", topic: "Movies", hint: "DICA 1: Medo.", hint_2: "DICA 2: Ter...", options: [ { text: "Terror", isCorrect: true, rationale: "Correto!" }, { text: "Comédia", isCorrect: false, rationale: "Incorreto." }, { text: "Ação", isCorrect: false, rationale: "Incorreto." }, { text: "Romance", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Movies about future and robots: ___.", topic: "Movies", hint: "DICA 1: Espaço.", hint_2: "DICA 2: Sci...", options: [ { text: "Science Fiction", isCorrect: true, rationale: "Correto!" }, { text: "Drama", isCorrect: false, rationale: "Incorreto." }, { text: "Western", isCorrect: false, rationale: "Incorreto." }, { text: "Comedy", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'ADVENTURE'.", topic: "Movies", hint: "DICA 1: Indiana Jones.", hint_2: "DICA 2: Ave...", options: [ { text: "Aventura", isCorrect: true, rationale: "Correto!" }, { text: "Ação", isCorrect: false, rationale: "Incorreto." }, { text: "Animação", isCorrect: false, rationale: "Incorreto." }, { text: "Amor", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Genre with magic and dragons: ___.", topic: "Movies", hint: "DICA 1: Harry Potter.", hint_2: "DICA 2: Fan...", options: [ { text: "Fantasy", isCorrect: true, rationale: "Correto!" }, { text: "History", isCorrect: false, rationale: "Incorreto." }, { text: "War", isCorrect: false, rationale: "Incorreto." }, { text: "Musical", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I prefer ______ (Comédias) because they are funny.", topic: "Movies", hint: "DICA 1: Rir.", hint_2: "DICA 2: Com...", answer: ["comedies", "comedy"], rationale: "Correto. Comedies." },
+    { type: 'fill-in', question: "Cartoons are also called ______ (Animação).", topic: "Movies", hint: "DICA 1: Desenho.", hint_2: "DICA 2: Ani...", answer: ["animation"], rationale: "Correto. Animation." },
+    { type: 'tf', question: "'Mystery' significa Mistério.", topic: "Movies", hint: "DICA 1: Sherlock Holmes.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
+    { type: 'tf', question: "'Romance' é filme de terror.", topic: "Movies", hint: "DICA 1: Love.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    { type: 'mcq', question: "Que gênero é 'DRAMA'?", topic: "Movies", hint: "DICA 1: Emocionante.", hint_2: "DICA 2: Dra...", options: [ { text: "Drama", isCorrect: true, rationale: "Correto!" }, { text: "Desenho", isCorrect: false, rationale: "Incorreto." }, { text: "Documentário", isCorrect: false, rationale: "Incorreto." }, { text: "Diversão", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'drag-drop', question: "Filme engraçado: ______.", topic: "Movies", hint: "DICA 1: Rir.", hint_2: "DICA 2: Com...", options: ["Comedy", "Horror", "Drama"], answer: "Comedy", rationale: "Correto. Comedy." },
 
-            // --- VERDADEIRO OU FALSO (10 Questões) ---
-            { type: 'tf', question: "'Cleats' significa Chuteiras.", topic: "Sports Equipment", hint: "DICA 1: Futebol.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Fantasy' é um gênero de filme.", topic: "Movies", hint: "DICA 1: Magia.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Never' significa Sempre.", topic: "Frequency", hint: "DICA 1: 0%.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Never é Nunca." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "Twenty-nine é 29.", topic: "Numbers", hint: "DICA 1: 20 + 9.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Bat' é Bola.", topic: "Sports Equipment", hint: "DICA 1: Beisebol.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Bat é Bastão. Bola é Ball." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "'Swimwear' é Roupa de Banho.", topic: "Sports Equipment", hint: "DICA 1: Nadar.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Mystery' significa Romance.", topic: "Movies", hint: "DICA 1: Detetive.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Mystery é Mistério." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "'Eighty' é 18.", topic: "Numbers", hint: "DICA 1: Oitenta.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Eighty é 80. 18 é Eighteen." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
-            { type: 'tf', question: "'Swimming Cap' é Touca.", topic: "Sports Equipment", hint: "DICA 1: Cabeça.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true },
-            { type: 'tf', question: "'Running' significa Correr.", topic: "Sports Equipment", hint: "DICA 1: Ação.", hint_2: "DICA 2: Verdadeiro.", options: [ { text: "Verdadeiro", isCorrect: true, rationale: "Correto!" }, { text: "Falso", isCorrect: false, rationale: "Incorreto." } ], answer: true }
-        ];
+    // --- BLOCO 4: PREFERENCES (6 Questões) ---
+    { type: 'mcq', question: "Traduza: 'I PREFER'.", topic: "Preferences", hint: "DICA 1: Escolha.", hint_2: "DICA 2: Eu pre...", options: [ { text: "Eu prefiro", isCorrect: true, rationale: "Correto!" }, { text: "Eu gosto", isCorrect: false, rationale: "Incorreto." }, { text: "Eu amo", isCorrect: false, rationale: "Incorreto." }, { text: "Eu odeio", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "What ___ of movies do you prefer?", topic: "Preferences", hint: "DICA 1: Tipo.", hint_2: "DICA 2: Ki...", options: [ { text: "Kind", isCorrect: true, rationale: "Correto! What kind (Que tipo)." }, { text: "Time", isCorrect: false, rationale: "Incorreto." }, { text: "Name", isCorrect: false, rationale: "Incorreto." }, { text: "Do", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'I LOVE'.", topic: "Preferences", hint: "DICA 1: Coração.", hint_2: "DICA 2: Eu a...", options: [ { text: "Eu amo", isCorrect: true, rationale: "Correto!" }, { text: "Eu gosto", isCorrect: false, rationale: "Incorreto." }, { text: "Eu vejo", isCorrect: false, rationale: "Incorreto." }, { text: "Eu faço", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I ______ (Gosto) of action movies.", topic: "Preferences", hint: "DICA 1: Curto.", hint_2: "DICA 2: Li...", answer: ["like"], rationale: "Correto. Like." },
+    { type: 'drag-drop', question: "Pergunta: Do ______ prefer drama?", topic: "Preferences", hint: "DICA 1: Você.", hint_2: "DICA 2: Yo...", options: ["You", "I", "We"], answer: "You", rationale: "Correto." },
+    { type: 'tf', question: "'Prefer' significa Odiar.", topic: "Preferences", hint: "DICA 1: Escolha.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
 
-        // --- FUNÇÕES COMPARTILHADAS DE LÓGICA (BASE ESTÁVEL DO 4º ANO) ---
+    // --- BLOCO 5: ADVERBS & NUMBERS (6 Questões) ---
+    { type: 'mcq', question: "What means 'ALWAYS'?", topic: "Frequency", hint: "DICA 1: 100%.", hint_2: "DICA 2: Sem...", options: [ { text: "Sempre", isCorrect: true, rationale: "Correto!" }, { text: "Nunca", isCorrect: false, rationale: "Incorreto." }, { text: "Às vezes", isCorrect: false, rationale: "Incorreto." }, { text: "Raramente", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "What means 'NEVER'?", topic: "Frequency", hint: "DICA 1: 0%.", hint_2: "DICA 2: Nun...", options: [ { text: "Nunca", isCorrect: true, rationale: "Correto!" }, { text: "Sempre", isCorrect: false, rationale: "Incorreto." }, { text: "Geralmente", isCorrect: false, rationale: "Incorreto." }, { text: "Frequentemente", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'mcq', question: "Traduza: 'SOMETIMES'.", topic: "Frequency", hint: "DICA 1: 50%.", hint_2: "DICA 2: Às v...", options: [ { text: "Às vezes", isCorrect: true, rationale: "Correto! (Questão da Prova)." }, { text: "Sempre", isCorrect: false, rationale: "Incorreto." }, { text: "Nunca", isCorrect: false, rationale: "Incorreto." }, { text: "Raramente", isCorrect: false, rationale: "Incorreto." } ] },
+    { type: 'fill-in', question: "I ______ (Geralmente) watch TV at night.", topic: "Frequency", hint: "DICA 1: Normal.", hint_2: "DICA 2: Usu...", answer: ["usually"], rationale: "Correto. Usually." },
+    { type: 'tf', question: "'Rarely' significa Frequentemente.", topic: "Frequency", hint: "DICA 1: Quase nunca.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. Rarely é Raramente." }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false },
+    { type: 'tf', question: "'Twenty-seven' em português é 207.", topic: "Frequency", hint: "DICA 1: Número.", hint_2: "DICA 2: Falso.", options: [ { text: "Verdadeiro", isCorrect: false, rationale: "Falso. É 27. (Questão da Prova)" }, { text: "Falso", isCorrect: true, rationale: "Correto!" } ], answer: false }
+];
+
+// MANTENHA VAZIO PARA NÃO QUEBRAR O CÓDIGO
+const VOCAB_QUESTIONS = [];
+   
+        
+
+// --- FUNÇÕES COMPARTILHADAS DE LÓGICA ---
 
         function shuffleArray(array) {
              for (let i = array.length - 1; i > 0; i--) {
@@ -661,711 +659,737 @@
             }
             return html;
         }
+                 
 
-        // --- ESTRUTURA BASE DO QUIZ (VERSÃO BLINDADA) ---
-        const quizBase = {
-            currentQuestionIndex: 0,
-            score: 0,
-            userAnswers: {},
-            validatedStudentName: '',
-            validatedStudentCode: '',
-            questions: [],
-            shuffledQuestions: [],
-            hintLevel: 0,
-            summaries: TOPIC_SUMMARIES,
-            elements: {}, 
+
+// --- ESTRUTURA BASE DO QUIZ (VERSÃO BLINDADA: CORRIGE TRAVAMENTO E NUMERAÇÃO) ---
+const quizBase = {
+    currentQuestionIndex: 0,
+    score: 0,
+    userAnswers: {},
+    validatedStudentName: '',
+    validatedStudentCode: '',
+    questions: [],
+    shuffledQuestions: [],
+    hintLevel: 0,
+    summaries: TOPIC_SUMMARIES,
+    elements: {}, 
+    
+    // Prefixos padrão (serão ajustados automaticamente)
+    statePrefix: 'quizState',
+    storagePrefix: 'quizReport',
+
+    shuffleArray,
+    getCorrectAnswerForQuestion,
+    generateFullReportHtml,
+    generatePersonalReportHtml,
+
+    updateProgressBar: function() {
+        // Usa o total de questões originais (20) para a barra não pular
+        const totalQuestions = this.initialQuestions ? this.initialQuestions.length : 20;
+        const answeredCount = Object.keys(this.userAnswers).length;
+        const percentage = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
+        
+        if (this.elements.progressBar) {
+            this.elements.progressBar.style.width = percentage + '%';
+            this.elements.progressBar.textContent = percentage + '%';
+        }
+    },
+
+    startQuiz: function(continueSaved) {
+        // 1. AUTO-CORREÇÃO DE PREFIXOS (Evita conflito entre Gramática e Vocabulário)
+        if (this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
+            this.statePrefix = 'vocabQuizState';
+            this.storagePrefix = 'vocabQuizReport';
+        } else {
+            this.statePrefix = 'quizState';
+            this.storagePrefix = 'quizReport';
+        }
+
+        // 2. PROTEÇÃO DE CÓDIGO (Corrige o erro "Not Running")
+        // Verifica se o input existe antes de tentar ler o valor
+        let code = this.validatedStudentCode;
+        if (this.elements.studentCodeInput) {
+            const inputVal = this.elements.studentCodeInput.value.trim().toUpperCase();
+            if (inputVal) code = inputVal;
+        }
+
+        if (!code || !STUDENT_DATA[code]) {
+            alert("Código inválido ou quiz não iniciado corretamente. Volte ao início.");
+            showCard('intro-card', document.querySelector('.tab-inicio'));
+            return;
+        }
+
+        this.validatedStudentCode = code;
+        this.validatedStudentName = STUDENT_DATA[code];
+
+        // Configura links de admin se necessário
+        if (typeof setupAdminLinks === 'function') {
+            setupAdminLinks(code === '123');
+        }
+
+        let loadedSuccessfully = false;
+        if (continueSaved) {
+            loadedSuccessfully = this.loadQuizState(this.validatedStudentCode);
+        }
+
+        // Se for início limpo ou falha ao carregar
+        if (!continueSaved || !loadedSuccessfully) {
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.userAnswers = {};
             
-            statePrefix: 'quizState',
-            storagePrefix: 'quizReport',
-
-            shuffleArray,
-            getCorrectAnswerForQuestion,
-            generateFullReportHtml,
-            generatePersonalReportHtml,
-
-            updateProgressBar: function() {
-                const totalQuestions = this.initialQuestions ? this.initialQuestions.length : 20;
-                const answeredCount = Object.keys(this.userAnswers).length;
-                const percentage = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
-                
-                if (this.elements.progressBar) {
-                    this.elements.progressBar.style.width = percentage + '%';
-                    this.elements.progressBar.textContent = percentage + '%';
-                }
-            },
-
-            startQuiz: function(continueSaved) {
-                if (this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
-                    this.statePrefix = 'vocabQuizState';
-                    this.storagePrefix = 'vocabQuizReport';
-                } else {
-                    this.statePrefix = 'quizState';
-                    this.storagePrefix = 'quizReport';
-                }
-
-                let code = this.validatedStudentCode;
-                if (this.elements.studentCodeInput) {
-                    const inputVal = this.elements.studentCodeInput.value.trim().toUpperCase();
-                    if (inputVal) code = inputVal;
-                }
-
-                if (!code || !STUDENT_DATA[code]) {
-                    alert("Código inválido ou quiz não iniciado corretamente. Volte ao início.");
-                    showCard('intro-card', document.querySelector('.tab-inicio'));
-                    return;
-                }
-
-                this.validatedStudentCode = code;
-                this.validatedStudentName = STUDENT_DATA[code];
-
-                if (typeof setupAdminLinks === 'function') {
-                    setupAdminLinks(code === '123');
-                }
-
-                let loadedSuccessfully = false;
-                if (continueSaved) {
-                    loadedSuccessfully = this.loadQuizState(this.validatedStudentCode);
-                }
-
-                if (!continueSaved || !loadedSuccessfully) {
-                    this.currentQuestionIndex = 0;
-                    this.score = 0;
-                    this.userAnswers = {};
-                    
-                    if (!this.initialQuestions || this.initialQuestions.length === 0) {
-                        alert("Erro: Questões não carregadas. Recarregue a página.");
-                        return;
-                    }
-
-                    this.shuffledQuestions = this.shuffleArray([...this.initialQuestions]);
-                    this.questions = [...this.shuffledQuestions]; 
-                    
-                    localStorage.removeItem(this.statePrefix + '_' + this.validatedStudentCode);
-                }
-
-                if (this.elements.quizCard.id === 'question-card') {
-                    showCard('question-card', document.querySelector('.tab-quiz-g'));
-                } else {
-                    showCard('vocab-quiz-card', document.querySelector('.tab-quiz-v'));
-                }
-
-                setTimeout(() => { this.displayQuestion(); }, 100);
-            },
-
-            displayQuestion: function() {
-                if (!this.questions || this.questions.length === 0) {
-                    if (this.initialQuestions && Object.keys(this.userAnswers).length >= this.initialQuestions.length) {
-                        this.showResults();
-                        return;
-                    }
-                }
-                
-                if (this.currentQuestionIndex >= this.questions.length) {
-                     const totalAnswered = Object.keys(this.userAnswers).length;
-                     if (this.initialQuestions && totalAnswered < this.initialQuestions.length) {
-                         this.currentQuestionIndex = 0; 
-                     } else {
-                         this.showResults(); 
-                         return;
-                     }
-                }
-
-                const q = this.questions[this.currentQuestionIndex];
-                
-                const originalIndex = this.initialQuestions.findIndex(iQ => iQ.question === q.question);
-                
-                if (this.userAnswers[originalIndex]) {
-                    this.currentQuestionIndex++;
-                    this.displayQuestion();
-                    return;
-                }
-
-                this.updateProgressBar();
-                
-                this.elements.performanceDisplay.style.display = 'none';
-                this.elements.justificationContainer.innerHTML = '';
-                this.elements.hintText.style.display = 'none';
-                this.elements.summaryText.style.display = 'none';
-                this.elements.summaryButton.style.display = 'none';
-                
-                this.elements.skipButton.style.display = 'block'; 
-                this.elements.nextButton.style.display = 'none';
-
-                this.elements.translationDisplay.style.display = 'none';
-                this.elements.translateButton.style.display = 'inline-block';
-                this.elements.translateButton.disabled = false;
-                this.elements.translateButton.textContent = '🌐';
-
-                this.elements.audioContainer.innerHTML = '';
-                this.elements.audioPlayContainer.innerHTML = '';
-                this.elements.questionText.style.display = 'flex';
-
-                this.hintLevel = 0;
-                this.elements.hintButton.textContent = 'Dica';
-                this.elements.hintButton.style.background = '';
-                this.elements.hintButton.disabled = false;
-                
-                const currentProgressNum = Object.keys(this.userAnswers).length + 1;
-                if (this.elements.currentQuestionNumSpan) {
-                    this.elements.currentQuestionNumSpan.textContent = currentProgressNum;
-                }
-
-                const originalNumToDisplay = originalIndex + 1;
-
-                this.elements.optionsList.innerHTML = '';
-
-                if (q.type === 'mcq' || q.type === 'tf') this.renderMCQ(q, originalNumToDisplay);
-                else if (q.type === 'fill-in') this.renderFillIn(q, originalNumToDisplay);
-                else if (q.type === 'drag-drop') this.renderDragDrop(q, originalNumToDisplay);
-                else if (q.type === 'audio_mcq') this.renderAudioMCQ(q, originalNumToDisplay);
-
-                this.elements.hintButton.onclick = () => this.showHint();
-            },
-
-            renderMCQ: function(q, num) {
-                this.elements.questionText.innerHTML = `<strong>${num}.</strong>&nbsp;${q.question}`;
-                
-                if (q.type !== 'audio_mcq') this.elements.translateButton.style.display = 'inline-block';
-                this.shuffleArray(q.options).forEach(opt => {
-                    const li = document.createElement('li');
-                    li.className = 'option-item';
-                    li.textContent = opt.text;
-                    li.onclick = () => this.selectOption(li, opt, q);
-                    this.elements.optionsList.appendChild(li);
-                });
-            },
-
-            renderFillIn: function(q, num) {
-                this.elements.questionText.innerHTML = `<strong>${num}.</strong>&nbsp;${q.question}`;
-                this.elements.translateButton.style.display = 'inline-block'; 
-                
-                const input = document.createElement('input');
-                input.id = 'fill-in-input';
-                input.placeholder = "Digite sua resposta...";
-                const checkButton = document.createElement('button');
-                checkButton.textContent = 'Verificar';
-                checkButton.className = 'btn check-btn';
-                checkButton.onclick = () => {
-                    const userAnswer = input.value.trim().toLowerCase();
-                    const isCorrect = q.answer.map(ans => ans.toLowerCase()).includes(userAnswer);
-                    this.handleAnswer(isCorrect, q.rationale, input.value.trim(), q.answer[0]);
-                    input.disabled = true;
-                    checkButton.style.display = 'none';
-                    input.classList.add(isCorrect ? 'correct' : 'incorrect');
-                };
-                this.elements.optionsList.appendChild(input);
-                this.elements.optionsList.appendChild(checkButton);
-            },
-            
-            renderDragDrop: function(q, num) {
-                const dropZone = document.createElement('span');
-                dropZone.id = 'drop-zone';
-                dropZone.textContent = '???'; 
-                
-                const displayNum = num || (this.currentQuestionIndex + 1); 
-                const questionTextHTML = `<strong>${displayNum}.</strong>&nbsp;` + q.question.replace('______', dropZone.outerHTML);
-                
-                this.elements.questionText.innerHTML = questionTextHTML; 
-                
-                if(this.elements.translateButton) this.elements.translateButton.style.display = 'inline-block'; 
-                
-                const actualDropZone = this.elements.questionText.querySelector('#drop-zone');
-                
-                const dragOptionsWrapper = document.createElement('div');
-                dragOptionsWrapper.className = 'drag-options-wrapper';
-                
-                const instruction = document.createElement('p');
-                instruction.style.width = '100%';
-                instruction.style.textAlign = 'center';
-                instruction.style.fontSize = '0.9rem';
-                instruction.style.color = '#888';
-                instruction.style.margin = '0 0 10px 0';
-                instruction.innerText = 'Toque ou arraste a opção correta';
-                dragOptionsWrapper.appendChild(instruction);
-
-                this.shuffleArray(q.options).forEach(opt => {
-                    const optionEl = document.createElement('div');
-                    optionEl.textContent = opt;
-                    optionEl.className = 'drag-option';
-                    optionEl.draggable = true; 
-                    
-                    optionEl.ondragstart = (e) => { 
-                        e.dataTransfer.setData('text/plain', opt);
-                        optionEl.classList.add('is-dragging');
-                    };
-                    optionEl.ondragend = () => { optionEl.classList.remove('is-dragging'); };
-
-                    optionEl.onclick = () => {
-                        if (actualDropZone.classList.contains('correct') || actualDropZone.classList.contains('incorrect')) return;
-                        this.processDrop(actualDropZone, opt, q);
-                    };
-
-                    dragOptionsWrapper.appendChild(optionEl);
-                });
-                
-                this.elements.optionsList.appendChild(dragOptionsWrapper);
-                
-                actualDropZone.ondragover = (e) => { 
-                    e.preventDefault(); 
-                    actualDropZone.classList.add('over');
-                };
-                actualDropZone.ondragleave = () => { 
-                    actualDropZone.classList.remove('over'); 
-                };
-                actualDropZone.ondrop = (e) => {
-                    e.preventDefault();
-                    actualDropZone.classList.remove('over');
-                    const droppedValue = e.dataTransfer.getData('text/plain');
-                    this.processDrop(actualDropZone, droppedValue, q);
-                };
-            },
-
-            processDrop: function(dropZoneEl, selectedValue, questionObj) {
-                const isCorrect = (selectedValue.toLowerCase() === questionObj.answer.toLowerCase());
-                
-                dropZoneEl.textContent = selectedValue;
-                dropZoneEl.classList.remove('filled', 'correct', 'incorrect');
-                dropZoneEl.classList.add('filled');
-                dropZoneEl.classList.add(isCorrect ? 'correct' : 'incorrect');
-                
-                this.handleAnswer(isCorrect, questionObj.rationale, selectedValue, questionObj.answer);
-                
-                const allOptions = this.elements.optionsList.querySelectorAll('.drag-option');
-                allOptions.forEach(el => el.classList.add('disabled'));
-            },
-            
-            renderAudioMCQ: function(q, num) {
-                this.elements.audioContainer.innerHTML = ''; 
-                const audioEl = document.createElement('audio');
-                audioEl.src = q.audioSrc;
-                audioEl.preload = 'auto'; 
-                this.elements.audioContainer.appendChild(audioEl);
-
-                this.elements.audioPlayContainer.innerHTML = ''; 
-                const playBtn = document.createElement('button');
-                playBtn.className = 'btn audio-play-btn';
-                playBtn.textContent = 'Ouvir Questão 🎧';
-                playBtn.onclick = () => audioEl.play();
-                this.elements.audioPlayContainer.appendChild(playBtn);
-                
-                this.elements.translateButton.style.display = 'none';
-                this.renderMCQ(q, num);
-            },
-            
-            selectOption: function(selectedElement, selectedOption, currentQuestion) {
-                this.elements.optionsList.querySelectorAll('.option-item').forEach(option => option.style.pointerEvents = 'none');
-                const isCorrect = selectedOption.isCorrect;
-                
-                selectedElement.classList.add(isCorrect ? 'correct' : 'incorrect');
-                this.handleAnswer(isCorrect, selectedOption.rationale, selectedOption.text, currentQuestion.options.find(o => o.isCorrect).text);
-
-                if (!isCorrect) {
-                    const correctText = currentQuestion.options.find(opt => opt.isCorrect).text;
-                    const correctElement = Array.from(this.elements.optionsList.querySelectorAll('.option-item')).find(el => el.textContent === correctText);
-                    if (correctElement) correctElement.classList.add('correct');
-                }
-            },
-
-            handleAnswer: function(isCorrect, rationale, userAns, correctAns) {
-                if (isCorrect) {
-                    this.score++;
-                    this.elements.summaryButton.style.display = 'none';
-                } else {
-                    this.elements.summaryButton.style.display = 'inline-block';
-                }
-
-                const q = this.questions[this.currentQuestionIndex];
-                const originalIndex = this.initialQuestions.findIndex(iQ => iQ.question === q.question);
-
-                this.userAnswers[originalIndex] = {
-                    question: q.question,
-                    isCorrect,
-                    userAns,
-                    correctAns,
-                    rationale,
-                    topic: q.topic
-                };
-
-                const div = document.createElement('div');
-                div.className = 'justification';
-                div.innerHTML = rationale;
-                div.style.borderLeftColor = isCorrect ? '#28a745' : '#dc3545';
-                this.elements.justificationContainer.appendChild(div);
-
-                this.elements.nextButton.style.display = 'block'; 
-                this.elements.skipButton.style.display = 'none';  
-                this.saveQuizState();
-            },
-
-            nextQuestion: function() {
-                this.currentQuestionIndex++;
-                this.displayQuestion();
-            },
-
-            skipQuestion: function() {
-                const skippedQuestion = this.questions[this.currentQuestionIndex];
-                this.questions.splice(this.currentQuestionIndex, 1);
-                this.questions.push(skippedQuestion);
-                this.displayQuestion();
-            },
-            
-            showHint: function() {
-                const display = this.elements.hintText;
-                const button = this.elements.hintButton; 
-                const currentQuestion = this.questions[this.currentQuestionIndex];
-
-                this.elements.performanceDisplay.style.display = 'none';
-                this.elements.summaryText.style.display = 'none';
-
-                if (currentQuestion.hint_2) { 
-                    let hint1 = currentQuestion.hint;
-                    let hint2 = currentQuestion.hint_2;
-
-                    if (this.hintLevel === 0) { 
-                        display.innerHTML = hint1; 
-                        display.style.display = 'block';
-                        button.textContent = 'DICA 2';
-                        this.hintLevel = 1; 
-                    } else if (this.hintLevel === 1) { 
-                        display.innerHTML = hint1 + '<br><br>' + hint2; 
-                        display.style.display = 'block';
-                        button.textContent = 'Ocultar Dicas'; 
-                        button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
-                        this.hintLevel = 2; 
-                    } else if (this.hintLevel === 2) { 
-                        display.style.display = 'none';
-                        button.textContent = 'Mostrar Dicas';
-                        button.style.background = '';
-                        this.hintLevel = 3; 
-                    } else if (this.hintLevel === 3) { 
-                        display.innerHTML = hint1 + '<br><br>' + hint2; 
-                        display.style.display = 'block';
-                        button.textContent = 'Ocultar Dicas';
-                        button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
-                        this.hintLevel = 2; 
-                    }
-                } 
-                else { 
-                    if (display.style.display === 'block') {
-                        display.style.display = 'none';
-                    } else {
-                        if (currentQuestion && currentQuestion.hint) {
-                            display.innerText = currentQuestion.hint;
-                            display.style.display = 'block';
-                        }
-                    }
-                }
-            },
-
-            showSummary: function() {
-                const display = this.elements.summaryText;
-                if (display.style.display === 'block') {
-                    display.style.display = 'none';
-                } else {
-                    const q = this.questions[this.currentQuestionIndex];
-                    const topic = q.topic;
-                    if (topic && this.summaries[topic]) {
-                        display.textContent = this.summaries[topic];
-                        display.style.display = 'block';
-                        this.elements.performanceDisplay.style.display = 'none';
-                        this.elements.hintText.style.display = 'none';
-                    } else {
-                        display.textContent = "Sem resumo disponível para este tópico.";
-                        display.style.display = 'block';
-                    }
-                }
-            },
-            
-            showPerformance: function() {
-                const display = this.elements.performanceDisplay;
-                if (display.style.display === 'block') {
-                    display.style.display = 'none';
-                } else {
-                    const answeredCount = Object.keys(this.userAnswers).length;
-                    const incorrectCount = answeredCount - this.score;
-                    display.innerHTML = `<strong style="color: #333;">Até agora:</strong> <span style="color: #28a745;">${this.score} acertos</span> <strong style="color: #333;">e</strong> <span style="color: #dc3545;">${incorrectCount} erros</span>!`;
-                    display.style.display = 'block';
-                    this.elements.hintText.style.display = 'none';
-                    this.elements.summaryText.style.display = 'none';
-                }
-            },
-
-            translateQuestion: function() {
-                const button = this.elements.translateButton;
-                const display = this.elements.translationDisplay;
-                
-                if (display.style.display === 'block') { display.style.display = 'none'; button.textContent = '🌐'; return; }
-                
-                let textToTranslate = this.elements.questionText.textContent;
-                textToTranslate = textToTranslate.replace(/^\d+\.\s*/, '');
-
-                display.textContent = 'Traduzindo...'; display.style.display = 'block';
-                button.disabled = true;
-
-                fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|pt`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data && data.responseData && data.responseData.translatedText) {
-                            display.textContent = data.responseData.translatedText;
-                        } else {
-                            display.textContent = 'Erro ao traduzir. Tente novamente.';
-                        }
-                        button.disabled = false;
-                        button.textContent = '🙈'; 
-                    })
-                    .catch(() => {
-                        display.textContent = 'Não foi possível conectar ao serviço de tradução.';
-                        button.disabled = false;
-                        button.textContent = '🌐';
-                    });
-            },
-
-            showResults: function() {
-                showCard('results-card', document.getElementById('results-tab-btn'));
-                const totalQs = this.initialQuestions ? this.initialQuestions.length : Object.keys(this.userAnswers).length;
-                const pct = totalQs > 0 ? Math.round((this.score / totalQs) * 100) : 0;
-
-                let classification = "Insatisfatório!";
-                if(pct >= 86) { classification = "Excelente!!!"; confetti({ particleCount: 600, spread: 70, origin: { y: 0.6 } }); }
-                else if(pct >= 71) classification = "Muito Bom!!";
-                else if(pct >= 51) classification = "Bom!";
-
-                this.elements.reportStudentName.textContent = this.validatedStudentName;
-                this.elements.reportStudentCode.textContent = this.validatedStudentCode;
-                this.elements.scoreDisplay.textContent = `${this.score} de ${totalQs}`;
-                this.elements.percentageDisplay.textContent = `${pct}%`;
-                this.elements.classificationDisplay.textContent = classification;
-
-                const reportData = {
-                    studentName: this.validatedStudentName, 
-                    studentCode: this.validatedStudentCode,
-                    score: this.score, 
-                    totalQuestions: totalQs, 
-                    percentage: pct, 
-                    classification,
-                    userAnswers: this.userAnswers, 
-                    isCompleted: true, 
-                    originalQuestions: this.initialQuestions
-                };
-                localStorage.setItem(`${this.storagePrefix}_${this.validatedStudentCode}`, JSON.stringify(reportData));
-                localStorage.removeItem(`${this.statePrefix}_${this.validatedStudentCode}`);
-
-                const restartBtn = document.querySelector('.results-actions .restart-btn');
-                if(restartBtn) {
-                    const newBtn = restartBtn.cloneNode(true);
-                    restartBtn.parentNode.replaceChild(newBtn, restartBtn);
-                    newBtn.onclick = () => { this.startQuiz(false); };
-                }
-
-                this.elements.fullReportContainer.innerHTML = this.generateFullReportHtml(this);
-                this.elements.personalReportContainer.innerHTML = this.generatePersonalReportHtml(this);
-
-                const isGrammar = this.elements.quizCard.id === 'question-card';
-                this.elements.sendReportLink.textContent = isGrammar ? 'Relatório Enviado (Grammar)' : 'Relatório Enviado (Vocab)';
-                this.elements.sendReportLink.style.background = '#ccc';
-                this.elements.sendReportLink.onclick = (e) => e.preventDefault();
-            },
-
-            retrieveReport: function(code) {
-                let currentStoragePrefix = 'quizReport';
-                if(this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
-                     currentStoragePrefix = 'vocabQuizReport';
-                }
-
-                const storageKey = currentStoragePrefix + '_' + code;
-                const rJSON = localStorage.getItem(storageKey);
-                
-                if (rJSON) {
-                    const r = JSON.parse(rJSON);
-                    if(r && r.isCompleted) {
-                        this.validatedStudentName = r.studentName;
-                        this.validatedStudentCode = r.studentCode;
-                        this.score = r.score;
-                        this.userAnswers = r.userAnswers;
-                        this.initialQuestions = r.originalQuestions;
-                        this.questions = r.originalQuestions;
-                        
-                        this.storagePrefix = currentStoragePrefix;
-                        this.statePrefix = currentStoragePrefix.replace('Report', 'State');
-                        
-                        this.showResults();
-                    } else {
-                        alert('Relatório incompleto ou não encontrado.');
-                    }
-                } else {
-                    alert('Relatório não encontrado.');
-                }
-            },
-            
-            saveQuizState: function() {
-                if (!this.validatedStudentCode) return;
-                const state = {
-                    isCompleted: false,
-                    currentQuestionIndex: this.currentQuestionIndex,
-                    score: this.score,
-                    userAnswers: this.userAnswers,
-                    shuffledQuestions: this.questions 
-                };
-                localStorage.setItem(this.statePrefix + '_' + this.validatedStudentCode, JSON.stringify(state));
-            },
-
-            loadQuizState: function(studentCode) {
-                try {
-                    const savedState = localStorage.getItem(this.statePrefix + '_' + studentCode);
-                    if (savedState) {
-                        const state = JSON.parse(savedState);
-                        if (!state.isCompleted) {
-                            if (!state.shuffledQuestions || state.shuffledQuestions.length === 0) {
-                                return false;
-                            }
-                            this.currentQuestionIndex = state.currentQuestionIndex;
-                            this.score = state.score;
-                            this.userAnswers = state.userAnswers;
-                            this.questions = state.shuffledQuestions; 
-                            return true;
-                        }
-                    }
-                } catch (e) {
-                    console.error("Erro ao carregar estado:", e);
-                    localStorage.removeItem(this.statePrefix + '_' + studentCode);
-                }
-                return false;
-            },
-            
-            updateAttemptsDisplay: function(code) {
-                 let tempStatePrefix = 'quizState';
-                 let tempReportPrefix = 'quizReport';
-                 if(this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
-                     tempStatePrefix = 'vocabQuizState';
-                     tempReportPrefix = 'vocabQuizReport';
-                 }
-
-                 const stateKey = tempStatePrefix + '_' + code;
-                 const reportKey = tempReportPrefix + '_' + code;
-                 const savedStateJSON = localStorage.getItem(stateKey); 
-                 const finalReportJSON = localStorage.getItem(reportKey); 
-                 const correctName = STUDENT_DATA[code];
-
-                if (correctName) {
-                    this.elements.personalizedWelcome.textContent = `Seja bem-vindo(a), ${correctName}! Boa sorte!`;
-                    this.elements.personalizedWelcome.style.display = 'block';
-                }
-
-                let state = null;
-                let finalReport = null;
-                try { if (savedStateJSON) state = JSON.parse(savedStateJSON); } catch (e) { localStorage.removeItem(stateKey); }
-                try { if (finalReportJSON) finalReport = JSON.parse(finalReportJSON); } catch (e) { localStorage.removeItem(reportKey); }
-
-                let buttonsHtml = '';
-                const appName = (this.elements.quizCard.id === 'vocab-quiz-card') ? 'vocabQuizApp' : 'quizApp';
-
-                if (state && !state.isCompleted && state.shuffledQuestions && state.shuffledQuestions.length > 0) {
-                    buttonsHtml = `
-                        <p style="font-weight: bold; color: #007bff;">Encontramos um progresso salvo.</p>
-                        <button class="btn continue-btn" onclick="${appName}.startQuiz(true)">Continuar</button>
-                        <button class="btn restart-btn" style="margin-left: 10px;" onclick="${appName}.startQuiz(false)">Reiniciar</button>
-                    `;
-                } else if (state && state.isCompleted) {
-                    buttonsHtml = `
-                        <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
-                        <button class="btn restart-btn" onclick="${appName}.startQuiz(false)">Reiniciar Quiz</button>
-                    `;
-                } else {
-                    buttonsHtml = `
-                        <button class="start-btn" onclick="${appName}.startQuiz(false)">Start Quiz</button>
-                    `;
-                }
-
-                if (finalReport) {
-                    if (state && state.isCompleted) {
-                        buttonsHtml = `
-                            <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
-                            <button class="btn restart-btn" onclick="${appName}.startQuiz(false)">Reiniciar Quiz</button>
-                            <button class="btn continue-btn" style="margin-left: 10px;" onclick="${appName}.retrieveReport('${code}')">Resgatar Relatório</button>
-                        `;
-                    } else {
-                        buttonsHtml += `
-                            <button class="btn continue-btn" style="margin-left: 10px;" onclick="${appName}.retrieveReport('${code}')">Resgatar Último Relatório</button>
-                        `;
-                    }
-                }
-                
-                this.elements.startActionsDiv.innerHTML = buttonsHtml;
-            },
-            
-            printPersonalReport: function() { 
-                this.elements.fullReportContainer.style.display = 'none';
-                this.elements.personalReportContainer.style.display = 'block';
-                window.print();
-            },
-            printReport: function() { 
-                this.elements.personalReportContainer.style.display = 'none';
-                this.elements.fullReportContainer.style.display = 'block';
-                window.print();
-            },
-
-            saveReport: function() {
-                const reportApp = this.elements.quizCard.id === 'question-card' ? quizApp : vocabQuizApp;
-                
-                let typeLabel = "Gramática";
-                let typeFileLabel = "Gramatica"; 
-                
-                if (this.elements.quizCard.id !== 'question-card') {
-                    typeLabel = "Vocabulário";
-                    typeFileLabel = "Vocabulario";
-                }
-                
-                const studentName = reportApp.validatedStudentName;
-                const studentCode = reportApp.validatedStudentCode;
-                const score = reportApp.elements.scoreDisplay.textContent;
-                const percentage = reportApp.elements.percentageDisplay.textContent;
-                const classification = reportApp.elements.classificationDisplay.textContent;
-                
-                const detailedReportHtml = reportApp.generateFullReportHtml(reportApp);
-                const personalReportHtml = reportApp.generatePersonalReportHtml(reportApp);
-
-                const fullHtmlContent = `
-                    <!DOCTYPE html>
-                    <html lang="pt-BR">
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Relatório ${typeLabel} - ${studentName}</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
-                            h1, h3 { color: #007bff; }
-                            h4 { color: #856404; }
-                            p { margin: 5px 0; }
-                            .report-question-item { background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; page-break-inside: avoid; }
-                            .option-item-report.correct { background-color: #d4edda; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-                            .option-item-report.incorrect { background-color: #f8d7da; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
-                            .personal-summary-item { background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 15px; margin-bottom: 15px; page-break-inside: avoid; }
-                        </style>
-                    </head>
-                    <body>
-                        <h1>Relatório Final de ${typeLabel}</h1>
-                        <p><strong>Nome:</strong> ${studentName}</p>
-                        <p><strong>Código de Acesso:</strong> ${studentCode}</p>
-                        <p><strong>Pontuação:</strong> ${score}</p>
-                        <p><strong>Percentual de Acerto:</strong> ${percentage}</p>
-                        <p><strong>Classificação:</strong> ${classification}</p>
-                        <hr>
-                        <div id="personal-report-container">${personalReportHtml}</div>
-                        <hr>
-                        <div id="full-report-container">${detailedReportHtml}</div>
-                    </body>
-                    </html>
-                `;
-
-                const blob = new Blob([fullHtmlContent], { type: 'text/html' });
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = `Relatorio_Final_de_${typeFileLabel}_${studentName.replace(/\s+/g, '_')}_${studentCode}.html`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(a.href);
+            // Garante que as questões existem
+            if (!this.initialQuestions || this.initialQuestions.length === 0) {
+                alert("Erro: Questões não carregadas. Recarregue a página.");
+                return;
             }
+
+            // Embaralha novamente
+            this.shuffledQuestions = this.shuffleArray([...this.initialQuestions]);
+            this.questions = [...this.shuffledQuestions]; 
+            
+            localStorage.removeItem(this.statePrefix + '_' + this.validatedStudentCode);
+        }
+
+        // Exibe o card correto
+        if (this.elements.quizCard.id === 'question-card') {
+            showCard('question-card', document.querySelector('.tab-quiz-g'));
+        } else {
+            showCard('vocab-quiz-card', document.querySelector('.tab-quiz-v'));
+        }
+
+        // Pequeno delay para garantir que a tela abriu antes de desenhar a questão
+        setTimeout(() => { this.displayQuestion(); }, 100);
+    },
+
+    displayQuestion: function() {
+        // Verifica se acabou as questões
+        if (!this.questions || this.questions.length === 0) {
+            if (this.initialQuestions && Object.keys(this.userAnswers).length >= this.initialQuestions.length) {
+                this.showResults();
+                return;
+            }
+        }
+        
+        // Verifica índice
+        if (this.currentQuestionIndex >= this.questions.length) {
+             const totalAnswered = Object.keys(this.userAnswers).length;
+             if (this.initialQuestions && totalAnswered < this.initialQuestions.length) {
+                 this.currentQuestionIndex = 0; // Volta ao início para buscar as puladas
+             } else {
+                 this.showResults(); 
+                 return;
+             }
+        }
+
+        const q = this.questions[this.currentQuestionIndex];
+        
+        // --- LÓGICA DO NÚMERO ORIGINAL ---
+        // Encontra qual é o número dessa questão no banco de dados original
+        const originalIndex = this.initialQuestions.findIndex(iQ => iQ.question === q.question);
+        
+        // Se já respondida, pula
+        if (this.userAnswers[originalIndex]) {
+            this.currentQuestionIndex++;
+            this.displayQuestion();
+            return;
+        }
+
+        this.updateProgressBar();
+        
+        // Limpa elementos visuais
+        this.elements.performanceDisplay.style.display = 'none';
+        this.elements.justificationContainer.innerHTML = '';
+        this.elements.hintText.style.display = 'none';
+        this.elements.summaryText.style.display = 'none';
+        this.elements.summaryButton.style.display = 'none';
+        
+        this.elements.skipButton.style.display = 'block'; 
+        this.elements.nextButton.style.display = 'none';
+
+        this.elements.translationDisplay.style.display = 'none';
+        this.elements.translateButton.style.display = 'inline-block';
+        this.elements.translateButton.disabled = false;
+        this.elements.translateButton.textContent = '🌐';
+
+        this.elements.audioContainer.innerHTML = '';
+        this.elements.audioPlayContainer.innerHTML = '';
+        this.elements.questionText.style.display = 'flex';
+
+        this.hintLevel = 0;
+        this.elements.hintButton.textContent = 'Dica';
+        this.elements.hintButton.style.background = '';
+        this.elements.hintButton.disabled = false;
+        
+        // --- NUMERAÇÃO ---
+        // 1. Contador Sequencial (Ex: 1 de 40) no topo
+        const currentProgressNum = Object.keys(this.userAnswers).length + 1;
+        if (this.elements.currentQuestionNumSpan) {
+            this.elements.currentQuestionNumSpan.textContent = currentProgressNum;
+        }
+
+        // 2. Número Original (Ex: 15., 3., 8.) no texto da pergunta
+        const originalNumToDisplay = originalIndex + 1;
+
+        this.elements.optionsList.innerHTML = '';
+
+        if (q.type === 'mcq' || q.type === 'tf') this.renderMCQ(q, originalNumToDisplay);
+        else if (q.type === 'fill-in') this.renderFillIn(q, originalNumToDisplay);
+        else if (q.type === 'drag-drop') this.renderDragDrop(q, originalNumToDisplay);
+        else if (q.type === 'audio_mcq') this.renderAudioMCQ(q, originalNumToDisplay);
+
+        this.elements.hintButton.onclick = () => this.showHint();
+    },
+
+    renderMCQ: function(q, num) {
+        // Usa 'num' (original) aqui
+        this.elements.questionText.innerHTML = `<strong>${num}.</strong>&nbsp;${q.question}`;
+        
+        if (q.type !== 'audio_mcq') this.elements.translateButton.style.display = 'inline-block';
+        this.shuffleArray(q.options).forEach(opt => {
+            const li = document.createElement('li');
+            li.className = 'option-item';
+            li.textContent = opt.text;
+            li.onclick = () => this.selectOption(li, opt, q);
+            this.elements.optionsList.appendChild(li);
+        });
+    },
+
+    renderFillIn: function(q, num) {
+        this.elements.questionText.innerHTML = `<strong>${num}.</strong>&nbsp;${q.question}`;
+        this.elements.translateButton.style.display = 'inline-block'; 
+        
+        const input = document.createElement('input');
+        input.id = 'fill-in-input';
+        input.placeholder = "Digite sua resposta...";
+        const checkButton = document.createElement('button');
+        checkButton.textContent = 'Verificar';
+        checkButton.className = 'btn check-btn';
+        checkButton.onclick = () => {
+            const userAnswer = input.value.trim().toLowerCase();
+            const isCorrect = q.answer.map(ans => ans.toLowerCase()).includes(userAnswer);
+            this.handleAnswer(isCorrect, q.rationale, input.value.trim(), q.answer[0]);
+            input.disabled = true;
+            checkButton.style.display = 'none';
+            input.classList.add(isCorrect ? 'correct' : 'incorrect');
         };
+        this.elements.optionsList.appendChild(input);
+        this.elements.optionsList.appendChild(checkButton);
+    },
+    
+    renderDragDrop: function(q, num) { // Certifique-se que recebe (q, num)
+        const dropZone = document.createElement('span');
+        dropZone.id = 'drop-zone';
+        dropZone.textContent = '???'; // <--- MUDANÇA AQUI (Texto curto)
+        
+        // Mantém a lógica de mostrar o número original
+        const displayNum = num || (this.currentQuestionIndex + 1); 
+        const questionTextHTML = `<strong>${displayNum}.</strong>&nbsp;` + q.question.replace('______', dropZone.outerHTML);
+        
+        this.elements.questionText.innerHTML = questionTextHTML; 
+        
+        if(this.elements.translateButton) this.elements.translateButton.style.display = 'inline-block'; 
+        
+        const actualDropZone = this.elements.questionText.querySelector('#drop-zone');
+        
+        const dragOptionsWrapper = document.createElement('div');
+        dragOptionsWrapper.className = 'drag-options-wrapper';
+        
+        const instruction = document.createElement('p');
+        instruction.style.width = '100%';
+        instruction.style.textAlign = 'center';
+        instruction.style.fontSize = '0.9rem';
+        instruction.style.color = '#888';
+        instruction.style.margin = '0 0 10px 0';
+        instruction.innerText = 'Toque ou arraste a opção correta';
+        dragOptionsWrapper.appendChild(instruction);
+
+        this.shuffleArray(q.options).forEach(opt => {
+            const optionEl = document.createElement('div');
+            optionEl.textContent = opt;
+            optionEl.className = 'drag-option';
+            optionEl.draggable = true; 
+            
+            optionEl.ondragstart = (e) => { 
+                e.dataTransfer.setData('text/plain', opt);
+                optionEl.classList.add('is-dragging');
+            };
+            optionEl.ondragend = () => { optionEl.classList.remove('is-dragging'); };
+
+            optionEl.onclick = () => {
+                if (actualDropZone.classList.contains('correct') || actualDropZone.classList.contains('incorrect')) return;
+                this.processDrop(actualDropZone, opt, q);
+            };
+
+            dragOptionsWrapper.appendChild(optionEl);
+        });
+        
+        this.elements.optionsList.appendChild(dragOptionsWrapper);
+        
+        actualDropZone.ondragover = (e) => { 
+            e.preventDefault(); 
+            actualDropZone.classList.add('over');
+        };
+        actualDropZone.ondragleave = () => { 
+            actualDropZone.classList.remove('over'); 
+        };
+        actualDropZone.ondrop = (e) => {
+            e.preventDefault();
+            actualDropZone.classList.remove('over');
+            const droppedValue = e.dataTransfer.getData('text/plain');
+            this.processDrop(actualDropZone, droppedValue, q);
+        };
+    },
+
+    processDrop: function(dropZoneEl, selectedValue, questionObj) {
+        const isCorrect = (selectedValue.toLowerCase() === questionObj.answer.toLowerCase());
+        
+        dropZoneEl.textContent = selectedValue;
+        dropZoneEl.classList.remove('filled', 'correct', 'incorrect');
+        dropZoneEl.classList.add('filled');
+        dropZoneEl.classList.add(isCorrect ? 'correct' : 'incorrect');
+        
+        this.handleAnswer(isCorrect, questionObj.rationale, selectedValue, questionObj.answer);
+        
+        const allOptions = this.elements.optionsList.querySelectorAll('.drag-option');
+        allOptions.forEach(el => el.classList.add('disabled'));
+    },
+            
+    renderAudioMCQ: function(q, num) {
+        this.elements.audioContainer.innerHTML = ''; 
+        const audioEl = document.createElement('audio');
+        audioEl.src = q.audioSrc;
+        audioEl.preload = 'auto'; 
+        this.elements.audioContainer.appendChild(audioEl);
+
+        this.elements.audioPlayContainer.innerHTML = ''; 
+        const playBtn = document.createElement('button');
+        playBtn.className = 'btn audio-play-btn';
+        playBtn.textContent = 'Ouvir Questão 🎧';
+        playBtn.onclick = () => audioEl.play();
+        this.elements.audioPlayContainer.appendChild(playBtn);
+        
+        this.elements.translateButton.style.display = 'none';
+        this.renderMCQ(q, num);
+    },
+            
+    selectOption: function(selectedElement, selectedOption, currentQuestion) {
+        this.elements.optionsList.querySelectorAll('.option-item').forEach(option => option.style.pointerEvents = 'none');
+        const isCorrect = selectedOption.isCorrect;
+        
+        selectedElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+        this.handleAnswer(isCorrect, selectedOption.rationale, selectedOption.text, currentQuestion.options.find(o => o.isCorrect).text);
+
+        if (!isCorrect) {
+            const correctText = currentQuestion.options.find(opt => opt.isCorrect).text;
+            const correctElement = Array.from(this.elements.optionsList.querySelectorAll('.option-item')).find(el => el.textContent === correctText);
+            if (correctElement) correctElement.classList.add('correct');
+        }
+    },
+
+    handleAnswer: function(isCorrect, rationale, userAns, correctAns) {
+        if (isCorrect) {
+            this.score++;
+            this.elements.summaryButton.style.display = 'none';
+        } else {
+            this.elements.summaryButton.style.display = 'inline-block';
+        }
+
+        const q = this.questions[this.currentQuestionIndex];
+        const originalIndex = this.initialQuestions.findIndex(iQ => iQ.question === q.question);
+
+        this.userAnswers[originalIndex] = {
+            question: q.question,
+            isCorrect,
+            userAns,
+            correctAns,
+            rationale,
+            topic: q.topic
+        };
+
+        const div = document.createElement('div');
+        div.className = 'justification';
+        div.innerHTML = rationale;
+        div.style.borderLeftColor = isCorrect ? '#28a745' : '#dc3545';
+        this.elements.justificationContainer.appendChild(div);
+
+        this.elements.nextButton.style.display = 'block'; 
+        this.elements.skipButton.style.display = 'none';  
+        this.saveQuizState();
+    },
+
+    nextQuestion: function() {
+        this.currentQuestionIndex++;
+        this.displayQuestion();
+    },
+
+    skipQuestion: function() {
+        const skippedQuestion = this.questions[this.currentQuestionIndex];
+        this.questions.splice(this.currentQuestionIndex, 1);
+        this.questions.push(skippedQuestion);
+        this.displayQuestion();
+    },
+    
+    showHint: function() {
+        const display = this.elements.hintText;
+        const button = this.elements.hintButton; 
+        const currentQuestion = this.questions[this.currentQuestionIndex];
+
+        this.elements.performanceDisplay.style.display = 'none';
+        this.elements.summaryText.style.display = 'none';
+
+        if (currentQuestion.hint_2) { 
+            let hint1 = currentQuestion.hint;
+            let hint2 = currentQuestion.hint_2;
+
+            if (this.hintLevel === 0) { 
+                display.innerHTML = hint1; 
+                display.style.display = 'block';
+                button.textContent = 'DICA 2';
+                this.hintLevel = 1; 
+            } else if (this.hintLevel === 1) { 
+                display.innerHTML = hint1 + '<br><br>' + hint2; 
+                display.style.display = 'block';
+                button.textContent = 'Ocultar Dicas'; 
+                button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
+                this.hintLevel = 2; 
+            } else if (this.hintLevel === 2) { 
+                display.style.display = 'none';
+                button.textContent = 'Mostrar Dicas';
+                button.style.background = '';
+                this.hintLevel = 3; 
+            } else if (this.hintLevel === 3) { 
+                display.innerHTML = hint1 + '<br><br>' + hint2; 
+                display.style.display = 'block';
+                button.textContent = 'Ocultar Dicas';
+                button.style.background = 'linear-gradient(45deg, #28a745, #218838)';
+                this.hintLevel = 2; 
+            }
+        } 
+        else { 
+            if (display.style.display === 'block') {
+                display.style.display = 'none';
+            } else {
+                if (currentQuestion && currentQuestion.hint) {
+                    display.innerText = currentQuestion.hint;
+                    display.style.display = 'block';
+                }
+            }
+        }
+    },
+
+    showSummary: function() {
+        const display = this.elements.summaryText;
+        if (display.style.display === 'block') {
+            display.style.display = 'none';
+        } else {
+            const q = this.questions[this.currentQuestionIndex];
+            const topic = q.topic;
+            if (topic && this.summaries[topic]) {
+                display.textContent = this.summaries[topic];
+                display.style.display = 'block';
+                this.elements.performanceDisplay.style.display = 'none';
+                this.elements.hintText.style.display = 'none';
+            } else {
+                display.textContent = "Sem resumo disponível para este tópico.";
+                display.style.display = 'block';
+            }
+        }
+    },
+            
+    showPerformance: function() {
+        const display = this.elements.performanceDisplay;
+        if (display.style.display === 'block') {
+            display.style.display = 'none';
+        } else {
+            const answeredCount = Object.keys(this.userAnswers).length;
+            const incorrectCount = answeredCount - this.score;
+            display.innerHTML = `<strong style="color: #333;">Até agora:</strong> <span style="color: #28a745;">${this.score} acertos</span> <strong style="color: #333;">e</strong> <span style="color: #dc3545;">${incorrectCount} erros</span>!`;
+            display.style.display = 'block';
+            this.elements.hintText.style.display = 'none';
+            this.elements.summaryText.style.display = 'none';
+        }
+    },
+
+    translateQuestion: function() {
+        const button = this.elements.translateButton;
+        const display = this.elements.translationDisplay;
+        
+        if (display.style.display === 'block') { display.style.display = 'none'; button.textContent = '🌐'; return; }
+        
+        let textToTranslate = this.elements.questionText.textContent;
+        // Limpa o número (ex: "15.") para não bugar a tradução
+        textToTranslate = textToTranslate.replace(/^\d+\.\s*/, '');
+
+        display.textContent = 'Traduzindo...'; display.style.display = 'block';
+        button.disabled = true;
+
+        fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|pt`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.responseData && data.responseData.translatedText) {
+                    display.textContent = data.responseData.translatedText;
+                } else {
+                    display.textContent = 'Erro ao traduzir. Tente novamente.';
+                }
+                button.disabled = false;
+                button.textContent = '🙈'; 
+            })
+            .catch(() => {
+                display.textContent = 'Não foi possível conectar ao serviço de tradução.';
+                button.disabled = false;
+                button.textContent = '🌐';
+            });
+    },
+
+    showResults: function() {
+        showCard('results-card', document.getElementById('results-tab-btn'));
+        const totalQs = this.initialQuestions ? this.initialQuestions.length : Object.keys(this.userAnswers).length;
+        const pct = totalQs > 0 ? Math.round((this.score / totalQs) * 100) : 0;
+
+        let classification = "Insatisfatório!";
+        if(pct >= 86) { classification = "Excelente!!!"; confetti({ particleCount: 600, spread: 70, origin: { y: 0.6 } }); }
+        else if(pct >= 71) classification = "Muito Bom!!";
+        else if(pct >= 51) classification = "Bom!";
+
+        this.elements.reportStudentName.textContent = this.validatedStudentName;
+        this.elements.reportStudentCode.textContent = this.validatedStudentCode;
+        this.elements.scoreDisplay.textContent = `${this.score} de ${totalQs}`;
+        this.elements.percentageDisplay.textContent = `${pct}%`;
+        this.elements.classificationDisplay.textContent = classification;
+
+        const reportData = {
+            studentName: this.validatedStudentName, 
+            studentCode: this.validatedStudentCode,
+            score: this.score, 
+            totalQuestions: totalQs, 
+            percentage: pct, 
+            classification,
+            userAnswers: this.userAnswers, 
+            isCompleted: true, 
+            originalQuestions: this.initialQuestions
+        };
+        localStorage.setItem(`${this.storagePrefix}_${this.validatedStudentCode}`, JSON.stringify(reportData));
+        localStorage.removeItem(`${this.statePrefix}_${this.validatedStudentCode}`);
+
+        const restartBtn = document.querySelector('.results-actions .restart-btn');
+        if(restartBtn) {
+            const newBtn = restartBtn.cloneNode(true);
+            restartBtn.parentNode.replaceChild(newBtn, restartBtn);
+            newBtn.onclick = () => { this.startQuiz(false); };
+        }
+
+        this.elements.fullReportContainer.innerHTML = this.generateFullReportHtml(this);
+        this.elements.personalReportContainer.innerHTML = this.generatePersonalReportHtml(this);
+
+        const isGrammar = this.elements.quizCard.id === 'question-card';
+        this.elements.sendReportLink.textContent = isGrammar ? 'Relatório Enviado (Grammar)' : 'Relatório Enviado (Vocab)';
+        this.elements.sendReportLink.style.background = '#ccc';
+        this.elements.sendReportLink.onclick = (e) => e.preventDefault();
+    },
+
+    retrieveReport: function(code) {
+        // Auto-detecção na recuperação do relatório
+        let currentStoragePrefix = 'quizReport';
+        if(this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
+             currentStoragePrefix = 'vocabQuizReport';
+        }
+
+        const storageKey = currentStoragePrefix + '_' + code;
+        const rJSON = localStorage.getItem(storageKey);
+        
+        if (rJSON) {
+            const r = JSON.parse(rJSON);
+            if(r && r.isCompleted) {
+                this.validatedStudentName = r.studentName;
+                this.validatedStudentCode = r.studentCode;
+                this.score = r.score;
+                this.userAnswers = r.userAnswers;
+                this.initialQuestions = r.originalQuestions;
+                this.questions = r.originalQuestions;
+                
+                this.storagePrefix = currentStoragePrefix;
+                this.statePrefix = currentStoragePrefix.replace('Report', 'State');
+                
+                this.showResults();
+            } else {
+                alert('Relatório incompleto ou não encontrado.');
+            }
+        } else {
+            alert('Relatório não encontrado.');
+        }
+    },
+    
+    saveQuizState: function() {
+        if (!this.validatedStudentCode) return;
+        const state = {
+            isCompleted: false,
+            currentQuestionIndex: this.currentQuestionIndex,
+            score: this.score,
+            userAnswers: this.userAnswers,
+            shuffledQuestions: this.questions 
+        };
+        localStorage.setItem(this.statePrefix + '_' + this.validatedStudentCode, JSON.stringify(state));
+    },
+
+    loadQuizState: function(studentCode) {
+        try {
+            const savedState = localStorage.getItem(this.statePrefix + '_' + studentCode);
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                if (!state.isCompleted) {
+                    if (!state.shuffledQuestions || state.shuffledQuestions.length === 0) {
+                        return false;
+                    }
+                    this.currentQuestionIndex = state.currentQuestionIndex;
+                    this.score = state.score;
+                    this.userAnswers = state.userAnswers;
+                    this.questions = state.shuffledQuestions; 
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.error("Erro ao carregar estado:", e);
+            localStorage.removeItem(this.statePrefix + '_' + studentCode);
+        }
+        return false;
+    },
+    
+    updateAttemptsDisplay: function(code) {
+         let tempStatePrefix = 'quizState';
+         let tempReportPrefix = 'quizReport';
+         if(this.elements && this.elements.quizCard && this.elements.quizCard.id === 'vocab-quiz-card') {
+             tempStatePrefix = 'vocabQuizState';
+             tempReportPrefix = 'vocabQuizReport';
+         }
+
+         const stateKey = tempStatePrefix + '_' + code;
+         const reportKey = tempReportPrefix + '_' + code;
+         const savedStateJSON = localStorage.getItem(stateKey); 
+         const finalReportJSON = localStorage.getItem(reportKey); 
+         const correctName = STUDENT_DATA[code];
+
+        if (correctName) {
+            this.elements.personalizedWelcome.textContent = `Seja bem-vindo(a), ${correctName}! Boa sorte!`;
+            this.elements.personalizedWelcome.style.display = 'block';
+        }
+
+        let state = null;
+        let finalReport = null;
+        try { if (savedStateJSON) state = JSON.parse(savedStateJSON); } catch (e) { localStorage.removeItem(stateKey); }
+        try { if (finalReportJSON) finalReport = JSON.parse(finalReportJSON); } catch (e) { localStorage.removeItem(reportKey); }
+
+        let buttonsHtml = '';
+        const appName = (this.elements.quizCard.id === 'vocab-quiz-card') ? 'vocabQuizApp' : 'quizApp';
+
+        if (state && !state.isCompleted && state.shuffledQuestions && state.shuffledQuestions.length > 0) {
+            buttonsHtml = `
+                <p style="font-weight: bold; color: #007bff;">Encontramos um progresso salvo.</p>
+                <button class="btn continue-btn" onclick="${appName}.startQuiz(true)">Continuar</button>
+                <button class="btn restart-btn" style="margin-left: 10px;" onclick="${appName}.startQuiz(false)">Reiniciar</button>
+            `;
+        } else if (state && state.isCompleted) {
+            buttonsHtml = `
+                <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
+                <button class="btn restart-btn" onclick="${appName}.startQuiz(false)">Reiniciar Quiz</button>
+            `;
+        } else {
+            buttonsHtml = `
+                <button class="start-btn" onclick="${appName}.startQuiz(false)">Start Quiz</button>
+            `;
+        }
+
+        if (finalReport) {
+            if (state && state.isCompleted) {
+                buttonsHtml = `
+                    <p style="font-weight: bold; color: #007bff;">Você já completou este quiz.</p>
+                    <button class="btn restart-btn" onclick="${appName}.startQuiz(false)">Reiniciar Quiz</button>
+                    <button class="btn continue-btn" style="margin-left: 10px;" onclick="${appName}.retrieveReport('${code}')">Resgatar Relatório</button>
+                `;
+            } else {
+                buttonsHtml += `
+                    <button class="btn continue-btn" style="margin-left: 10px;" onclick="${appName}.retrieveReport('${code}')">Resgatar Último Relatório</button>
+                `;
+            }
+        }
+        
+        this.elements.startActionsDiv.innerHTML = buttonsHtml;
+    },
+    
+    printPersonalReport: function() { 
+        this.elements.fullReportContainer.style.display = 'none';
+        this.elements.personalReportContainer.style.display = 'block';
+        window.print();
+    },
+    printReport: function() { 
+        this.elements.personalReportContainer.style.display = 'none';
+        this.elements.fullReportContainer.style.display = 'block';
+        window.print();
+    },
+
+    saveReport: function() {
+        const reportApp = this.elements.quizCard.id === 'question-card' ? quizApp : vocabQuizApp;
+        
+        let typeLabel = "Gramática";
+        let typeFileLabel = "Gramatica"; 
+        
+        if (this.elements.quizCard.id !== 'question-card') {
+            typeLabel = "Vocabulário";
+            typeFileLabel = "Vocabulario";
+        }
+        
+        const studentName = reportApp.validatedStudentName;
+        const studentCode = reportApp.validatedStudentCode;
+        const score = reportApp.elements.scoreDisplay.textContent;
+        const percentage = reportApp.elements.percentageDisplay.textContent;
+        const classification = reportApp.elements.classificationDisplay.textContent;
+        
+        const detailedReportHtml = reportApp.generateFullReportHtml(reportApp);
+        const personalReportHtml = reportApp.generatePersonalReportHtml(reportApp);
+
+        const fullHtmlContent = `
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <title>Relatório ${typeLabel} - ${studentName}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+                    h1, h3 { color: #007bff; }
+                    h4 { color: #856404; }
+                    p { margin: 5px 0; }
+                    .report-question-item { background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px; page-break-inside: avoid; }
+                    .option-item-report.correct { background-color: #d4edda; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+                    .option-item-report.incorrect { background-color: #f8d7da; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
+                    .personal-summary-item { background-color: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; padding: 15px; margin-bottom: 15px; page-break-inside: avoid; }
+                </style>
+            </head>
+            <body>
+                <h1>Relatório Final de ${typeLabel}</h1>
+                <p><strong>Nome:</strong> ${studentName}</p>
+                <p><strong>Código de Acesso:</strong> ${studentCode}</p>
+                <p><strong>Pontuação:</strong> ${score}</p>
+                <p><strong>Percentual de Acerto:</strong> ${percentage}</p>
+                <p><strong>Classificação:</strong> ${classification}</p>
+                <hr>
+                <div id="personal-report-container">${personalReportHtml}</div>
+                <hr>
+                <div id="full-report-container">${detailedReportHtml}</div>
+            </body>
+            </html>
+        `;
+
+        const blob = new Blob([fullHtmlContent], { type: 'text/html' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Relatorio_Final_de_${typeFileLabel}_${studentName.replace(/\s+/g, '_')}_${studentCode}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(a.href);
+    }
+};
 
         // --- INSTÂNCIAS ESPECÍFICAS (GRAMMAR E VOCABULARY) ---
 
@@ -1448,61 +1472,63 @@
         }
 
         function checkLoginAndShowResults(cardId, element) {
-            if (!quizApp.validatedStudentCode) {
-                alert('Por favor, faça o login na aba "Início" primeiro!');
-                showCard('intro-card', document.querySelector('.tab-inicio'));
-                return;
-            }
+    if (!quizApp.validatedStudentCode) {
+        alert('Por favor, faça o login na aba "Início" primeiro!');
+        showCard('intro-card', document.querySelector('.tab-inicio'));
+        return;
+    }
 
-            const code = quizApp.validatedStudentCode;
-            const grammarReportJSON = localStorage.getItem(`quizReport_${code}`);
-            const vocabReportJSON = localStorage.getItem(`vocabQuizReport_${code}`);
+    const code = quizApp.validatedStudentCode;
+    const grammarReportJSON = localStorage.getItem(`quizReport_${code}`);
+    const vocabReportJSON = localStorage.getItem(`vocabQuizReport_${code}`);
 
-            // Se tiver os dois relatórios
-            if (grammarReportJSON && vocabReportJSON) {
-                // Cria um modal simples ou usa confirm para decidir
-                const choice = prompt("Você possui dois relatórios concluídos.\nDigite 'G' para Gramática ou 'V' para Vocabulário:");
-                if (choice && choice.toUpperCase() === 'V') {
-                    vocabQuizApp.retrieveReport(code);
-                } else {
-                    // Padrão vai para Gramática se não digitar V
-                    quizApp.retrieveReport(code);
-                }
-            } 
-            // Se só tiver Gramática
-            else if (grammarReportJSON) {
-                quizApp.retrieveReport(code);
-            } 
-            // Se só tiver Vocabulário
-            else if (vocabReportJSON) {
-                vocabQuizApp.retrieveReport(code);
-            } 
-            else {
-                alert("Você ainda não completou nenhum quiz para ver os resultados. Termine um quiz primeiro!");
-                showCard('intro-card', document.querySelector('.tab-inicio'));
-            }
+    // Se tiver os dois relatórios
+    if (grammarReportJSON && vocabReportJSON) {
+        // Cria um modal simples ou usa confirm para decidir
+        const choice = prompt("Você possui dois relatórios concluídos.\nDigite 'G' para Gramática ou 'V' para Vocabulário:");
+        if (choice && choice.toUpperCase() === 'V') {
+            vocabQuizApp.retrieveReport(code);
+        } else {
+            // Padrão vai para Gramática se não digitar V
+            quizApp.retrieveReport(code);
         }
+    } 
+    // Se só tiver Gramática
+    else if (grammarReportJSON) {
+        quizApp.retrieveReport(code);
+    } 
+    // Se só tiver Vocabulário
+    else if (vocabReportJSON) {
+        vocabQuizApp.retrieveReport(code);
+    } 
+    else {
+        alert("Você ainda não completou nenhum quiz para ver os resultados. Termine um quiz primeiro!");
+        showCard('intro-card', document.querySelector('.tab-inicio'));
+    }
+}
 
         function startVocabQuiz(element) {
-            if (!quizApp.validatedStudentCode) {
-                alert('Por favor, faça o login na aba "Início" primeiro!');
-                showCard('intro-card', document.querySelector('.tab-inicio'));
-                return;
-            }
-            
-            // CORREÇÃO: Se o quiz já estiver rodando (questões carregadas), só mostra a aba e sai.
-            if (vocabQuizApp.questions.length > 0) {
-                showCard('vocab-quiz-card', element);
-                return;
-            }
+    if (!quizApp.validatedStudentCode) {
+        alert('Por favor, faça o login na aba "Início" primeiro!');
+        showCard('intro-card', document.querySelector('.tab-inicio'));
+        return;
+    }
+    
+    // CORREÇÃO: Se o quiz já estiver rodando (questões carregadas), só mostra a aba e sai.
+    // Isso impede que ele resete o progresso ou mude a questão ao trocar de aba.
+    if (vocabQuizApp.questions.length > 0) {
+        showCard('vocab-quiz-card', element);
+        return;
+    }
 
-            // Se for a primeira vez que clica, aí sim inicia:
-            vocabQuizApp.validatedStudentName = quizApp.validatedStudentName;
-            vocabQuizApp.validatedStudentCode = quizApp.validatedStudentCode;
-            showCard('vocab-quiz-card', element);
-            
-            vocabQuizApp.startQuiz(true); 
-        }
+    // Se for a primeira vez que clica, aí sim inicia:
+    vocabQuizApp.validatedStudentName = quizApp.validatedStudentName;
+    vocabQuizApp.validatedStudentCode = quizApp.validatedStudentCode;
+    showCard('vocab-quiz-card', element);
+    
+    // Usa true para tentar recuperar um backup se houver, ou começar do zero se não houver
+    vocabQuizApp.startQuiz(true); 
+}
         
         // --- FUNÇÕES DE CONTEÚDO E MODAL ---
         
